@@ -1,0 +1,36 @@
+{
+    "name": "inventory_db_to_testdb_1746169475495",
+    "status": "onProgress",
+    "lastRunTime": "",
+    "sourceConnection": {
+      "name": "Mysql for Test",
+      "type": "mysql",
+      "host": "192.168.0.169",
+      "port": 3306,
+      "username": "root",
+      "database": "inventory_db",
+      "password": "root"
+    },
+    "targetConnection": {
+      "name": "MSsql for Test",
+      "type": "mssql",
+      "host": "192.168.0.169",
+      "port": 1433,
+      "username": "sa",
+      "database": "testdb",
+      "password": "YourStrongPassword123"
+    },
+    "tables": [
+      {
+        "name": "audits",
+        "selected": true,
+        "columns": [
+          { "name": "id", "type": "int", "isPrimaryKey": true, "selected": false },
+          { "name": "employee_id", "type": "int", "isPrimaryKey": false, "selected": false },
+          { "name": "audit_date", "type": "date", "isPrimaryKey": false, "selected": false },
+          { "name": "notes", "type": "text", "isPrimaryKey": false, "selected": false }
+        ]
+      }
+    ]
+  }
+  

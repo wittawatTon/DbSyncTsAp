@@ -1,0 +1,1436 @@
+[{
+  "_id": {
+    "$oid": "6818a192b81d0f11d7d7fb6f"
+  },
+  "name": "inventory_db_to_testdb_1746444690611",
+  "status": "onProgress",
+  "lastRunTime": null,
+  "sourceConnection": {
+    "name": "Mysql for order",
+    "dbType": "mysql",
+    "host": "192.168.0.169",
+    "port": 3306,
+    "username": "root",
+    "database": "inventory_db",
+    "password": "root"
+  },
+  "targetConnection": {
+    "name": "MSsql for order",
+    "dbType": "mssql",
+    "host": "192.168.0.169",
+    "port": 1433,
+    "username": "sa",
+    "database": "testdb",
+    "password": "YourStrongPassword123"
+  },
+  "sourceConnectorConfig": {
+    "name": "mysql_for_order_1746444690754",
+    "config": {
+      "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+      "database.hostname": "192.168.0.169",
+      "database.port": "3306",
+      "database.user": "root",
+      "database.password": "root",
+      "database.server.id": "1",
+      "database.server.name": "inventory_db",
+      "database.include.list": "inventory_db",
+      "table.include.list": "inventory_db.orders",
+      "column.include.list": "inventory_db.orders.id,inventory_db.orders.customer_id,inventory_db.orders.order_date",
+      "topic.prefix": "192_168_0_169",
+      "database.history.kafka.bootstrap.servers": "kafka:9092",
+      "database.history.kafka.topic": "dbhistory.inventory_db",
+      "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
+      "schema.history.internal.kafka.topic": "dbhistory.internal.inventory_db",
+      "snapshot.mode": "initial",
+      "snapshot.locking.mode": "extended"
+    }
+  },
+  "sinkConnectorConfig": {
+    "name": "mssql_for_order_1746444690754",
+    "config": {
+      "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+      "tasks.max": "1",
+      "connection.url": "jdbc:sqlserver://192.168.0.169:1433;databaseName=testdb",
+      "connection.user": "sa",
+      "connection.password": "YourStrongPassword123",
+      "connection.driver": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+      "insert.mode": "upsert",
+      "pk.mode": "record_key",
+      "auto.create": "true",
+      "auto.evolve": "true",
+      "topics": "192_168_0_169.inventory_db.orders",
+      "transforms": "RenameTopic,unwrap",
+      "transforms.RenameTopic.type": "org.apache.kafka.connect.transforms.RegexRouter",
+      "transforms.RenameTopic.regex": "([a-zA-Z0-9_]+)\\.([a-zA-Z0-9_]+)\\.(.*)",
+      "transforms.RenameTopic.replacement": "$3",
+      "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+      "transforms.unwrap.drop.tombstones": "false",
+      "transforms.unwrap.delete.handling.mode": "rewrite",
+      "transforms.unwrap.add.fields": "op,table"
+    }
+  },
+  "tables": [
+    {
+      "name": "audits",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "employee_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "audit_date",
+          "type": "date",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "categories",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "customers",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "email",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "employees",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "position",
+          "type": "varchar(50)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "warehouse_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "order_items",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "order_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "product_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "quantity",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "orders",
+      "selected": true,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "customer_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "order_date",
+          "type": "date",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "products",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "price",
+          "type": "decimal(10,2)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "category_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "supplier_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "stock_levels",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "product_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "warehouse_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "quantity",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "suppliers",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "contact_email",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "warehouses",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "location",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    }
+  ],
+  "logs": [],
+  "createdBy": "TODO",
+  "createdAt": {
+    "$date": "2025-05-05T11:31:30.755Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-05T11:31:30.755Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6818a1ffb81d0f11d7d7fb77"
+  },
+  "name": "inventory_db_to_testdb_1746444799014",
+  "status": "onProgress",
+  "lastRunTime": null,
+  "sourceConnection": {
+    "name": "Mysql for product",
+    "dbType": "mysql",
+    "host": "192.168.0.169",
+    "port": 3306,
+    "username": "root",
+    "database": "inventory_db",
+    "password": "root"
+  },
+  "targetConnection": {
+    "name": "MSsql for product",
+    "dbType": "mssql",
+    "host": "192.168.0.169",
+    "port": 1433,
+    "username": "sa",
+    "database": "testdb",
+    "password": "YourStrongPassword123"
+  },
+  "sourceConnectorConfig": {
+    "name": "mysql_for_product_1746444799054",
+    "config": {
+      "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+      "database.hostname": "192.168.0.169",
+      "database.port": "3306",
+      "database.user": "root",
+      "database.password": "root",
+      "database.server.id": "2",
+      "database.server.name": "inventory_db",
+      "database.include.list": "inventory_db",
+      "table.include.list": "inventory_db.products",
+      "column.include.list": "inventory_db.products.id,inventory_db.products.name,inventory_db.products.price,inventory_db.products.category_id,inventory_db.products.supplier_id",
+      "topic.prefix": "192_168_0_169",
+      "database.history.kafka.bootstrap.servers": "kafka:9092",
+      "database.history.kafka.topic": "dbhistory.inventory_db",
+      "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
+      "schema.history.internal.kafka.topic": "dbhistory.internal.inventory_db",
+      "snapshot.mode": "initial",
+      "snapshot.locking.mode": "extended"
+    }
+  },
+  "sinkConnectorConfig": {
+    "name": "mssql_for_product_1746444799055",
+    "config": {
+      "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+      "tasks.max": "1",
+      "connection.url": "jdbc:sqlserver://192.168.0.169:1433;databaseName=testdb",
+      "connection.user": "sa",
+      "connection.password": "YourStrongPassword123",
+      "connection.driver": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+      "insert.mode": "upsert",
+      "pk.mode": "record_key",
+      "auto.create": "true",
+      "auto.evolve": "true",
+      "topics": "192_168_0_169.inventory_db.products",
+      "transforms": "RenameTopic,unwrap",
+      "transforms.RenameTopic.type": "org.apache.kafka.connect.transforms.RegexRouter",
+      "transforms.RenameTopic.regex": "([a-zA-Z0-9_]+)\\.([a-zA-Z0-9_]+)\\.(.*)",
+      "transforms.RenameTopic.replacement": "$3",
+      "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+      "transforms.unwrap.drop.tombstones": "false",
+      "transforms.unwrap.delete.handling.mode": "rewrite",
+      "transforms.unwrap.add.fields": "op,table"
+    }
+  },
+  "tables": [
+    {
+      "name": "audits",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "employee_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "audit_date",
+          "type": "date",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "categories",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "customers",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "email",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "employees",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "position",
+          "type": "varchar(50)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "warehouse_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "order_items",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "order_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "product_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "quantity",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "orders",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "customer_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "order_date",
+          "type": "date",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "products",
+      "selected": true,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "price",
+          "type": "decimal(10,2)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "category_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "supplier_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "stock_levels",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "product_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "warehouse_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "quantity",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "suppliers",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "contact_email",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "warehouses",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "location",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    }
+  ],
+  "logs": [],
+  "createdBy": "TODO",
+  "createdAt": {
+    "$date": "2025-05-05T11:33:19.055Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-05T11:33:19.055Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6818a27bb81d0f11d7d7fb81"
+  },
+  "name": "inventory_db_to_testdb_1746444923602",
+  "status": "onProgress",
+  "lastRunTime": null,
+  "sourceConnection": {
+    "name": "Mysql for audit",
+    "dbType": "mysql",
+    "host": "192.168.0.169",
+    "port": 3306,
+    "username": "root",
+    "database": "inventory_db",
+    "password": "root"
+  },
+  "targetConnection": {
+    "name": "MSsql for audit",
+    "dbType": "mssql",
+    "host": "192.168.0.169",
+    "port": 1433,
+    "username": "sa",
+    "database": "testdb",
+    "password": "YourStrongPassword123"
+  },
+  "sourceConnectorConfig": {
+    "name": "mysql_for_audit_1746444923694",
+    "config": {
+      "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+      "database.hostname": "192.168.0.169",
+      "database.port": "3306",
+      "database.user": "root",
+      "database.password": "root",
+      "database.server.id": "3",
+      "database.server.name": "inventory_db",
+      "database.include.list": "inventory_db",
+      "table.include.list": "inventory_db.audits",
+      "column.include.list": "inventory_db.audits.id,inventory_db.audits.employee_id,inventory_db.audits.audit_date,inventory_db.audits.notes",
+      "topic.prefix": "192_168_0_169",
+      "database.history.kafka.bootstrap.servers": "kafka:9092",
+      "database.history.kafka.topic": "dbhistory.inventory_db",
+      "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
+      "schema.history.internal.kafka.topic": "dbhistory.internal.inventory_db",
+      "snapshot.mode": "initial",
+      "snapshot.locking.mode": "extended"
+    }
+  },
+  "sinkConnectorConfig": {
+    "name": "mssql_for_audit_1746444923695",
+    "config": {
+      "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+      "tasks.max": "1",
+      "connection.url": "jdbc:sqlserver://192.168.0.169:1433;databaseName=testdb",
+      "connection.user": "sa",
+      "connection.password": "YourStrongPassword123",
+      "connection.driver": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+      "insert.mode": "upsert",
+      "pk.mode": "record_key",
+      "auto.create": "true",
+      "auto.evolve": "true",
+      "topics": "192_168_0_169.inventory_db.audits",
+      "transforms": "RenameTopic,unwrap",
+      "transforms.RenameTopic.type": "org.apache.kafka.connect.transforms.RegexRouter",
+      "transforms.RenameTopic.regex": "([a-zA-Z0-9_]+)\\.([a-zA-Z0-9_]+)\\.(.*)",
+      "transforms.RenameTopic.replacement": "$3",
+      "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+      "transforms.unwrap.drop.tombstones": "false",
+      "transforms.unwrap.delete.handling.mode": "rewrite",
+      "transforms.unwrap.add.fields": "op,table"
+    }
+  },
+  "tables": [
+    {
+      "name": "audits",
+      "selected": true,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "employee_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "audit_date",
+          "type": "date",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "categories",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "customers",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "email",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "employees",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "position",
+          "type": "varchar(50)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "warehouse_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "order_items",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "order_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "product_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "quantity",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "orders",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "customer_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "order_date",
+          "type": "date",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "products",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "price",
+          "type": "decimal(10,2)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "category_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "supplier_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "stock_levels",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "product_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "warehouse_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "quantity",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "suppliers",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "contact_email",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "warehouses",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "location",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    }
+  ],
+  "logs": [],
+  "createdBy": "TODO",
+  "createdAt": {
+    "$date": "2025-05-05T11:35:23.695Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-05T11:35:23.695Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6818aa9faff44d8221d9ae32"
+  },
+  "name": "inventory_db_to_testdb_1746447006991",
+  "status": "onProgress",
+  "lastRunTime": null,
+  "sourceConnection": {
+    "name": "Mysql for 2 table",
+    "dbType": "mysql",
+    "host": "192.168.0.169",
+    "port": 3306,
+    "username": "root",
+    "database": "inventory_db",
+    "password": "root"
+  },
+  "targetConnection": {
+    "name": "MSsql for  2 table",
+    "dbType": "mssql",
+    "host": "192.168.0.169",
+    "port": 1433,
+    "username": "sa",
+    "database": "testdb",
+    "password": "YourStrongPassword123"
+  },
+  "sourceConnectorConfig": {
+    "name": "mysql_for_2_table_1746447007046",
+    "config": {
+      "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+      "database.hostname": "192.168.0.169",
+      "database.port": "3306",
+      "database.user": "root",
+      "database.password": "root",
+      "database.server.id": "4",
+      "database.server.name": "inventory_db",
+      "database.include.list": "inventory_db",
+      "table.include.list": "inventory_db.suppliers,inventory_db.warehouses",
+      "column.include.list": "inventory_db.suppliers.id,inventory_db.suppliers.name,inventory_db.suppliers.contact_email,inventory_db.warehouses.id,inventory_db.warehouses.name,inventory_db.warehouses.location",
+      "topic.prefix": "192_168_0_169",
+      "database.history.kafka.bootstrap.servers": "kafka:9092",
+      "database.history.kafka.topic": "dbhistory.inventory_db",
+      "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
+      "schema.history.internal.kafka.topic": "dbhistory.internal.inventory_db",
+      "snapshot.mode": "initial",
+      "snapshot.locking.mode": "extended"
+    }
+  },
+  "sinkConnectorConfig": {
+    "name": "mssql_for_2_table_1746447007046",
+    "config": {
+      "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+      "tasks.max": "1",
+      "connection.url": "jdbc:sqlserver://192.168.0.169:1433;databaseName=testdb",
+      "connection.user": "sa",
+      "connection.password": "YourStrongPassword123",
+      "connection.driver": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+      "insert.mode": "upsert",
+      "pk.mode": "record_key",
+      "auto.create": "true",
+      "auto.evolve": "true",
+      "topics": "192_168_0_169.inventory_db.suppliers,192_168_0_169.inventory_db.warehouses",
+      "transforms": "RenameTopic,unwrap",
+      "transforms.RenameTopic.type": "org.apache.kafka.connect.transforms.RegexRouter",
+      "transforms.RenameTopic.regex": "([a-zA-Z0-9_]+)\\.([a-zA-Z0-9_]+)\\.(.*)",
+      "transforms.RenameTopic.replacement": "$3",
+      "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
+      "transforms.unwrap.drop.tombstones": "false",
+      "transforms.unwrap.delete.handling.mode": "rewrite",
+      "transforms.unwrap.add.fields": "op,table"
+    }
+  },
+  "tables": [
+    {
+      "name": "audits",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "employee_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "audit_date",
+          "type": "date",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "notes",
+          "type": "text",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "categories",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "customers",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "email",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "employees",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "position",
+          "type": "varchar(50)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "warehouse_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "order_items",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "order_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "product_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "quantity",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "orders",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "customer_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "order_date",
+          "type": "date",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "products",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "price",
+          "type": "decimal(10,2)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "category_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "supplier_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "stock_levels",
+      "selected": false,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "product_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "warehouse_id",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "quantity",
+          "type": "int",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "suppliers",
+      "selected": true,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "contact_email",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    },
+    {
+      "name": "warehouses",
+      "selected": true,
+      "columns": [
+        {
+          "name": "id",
+          "type": "int",
+          "isPrimaryKey": true,
+          "selected": true
+        },
+        {
+          "name": "name",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        },
+        {
+          "name": "location",
+          "type": "varchar(100)",
+          "isPrimaryKey": false,
+          "selected": true
+        }
+      ]
+    }
+  ],
+  "logs": [],
+  "createdBy": "TODO",
+  "createdAt": {
+    "$date": "2025-05-05T12:10:07.047Z"
+  },
+  "updatedAt": {
+    "$date": "2025-05-05T12:10:07.047Z"
+  },
+  "__v": 0
+}]

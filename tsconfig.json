@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "commonjs",
+    "rootDir": "src",
+    "outDir": "dist",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "declaration": true,
+    "sourceMap": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "baseUrl": "src",
+    "paths": {
+      "@api/*": ["api/*"],
+      "@app": ["app"],
+      "@controllers/*": ["api/controllers/*"],
+      "@routes/*": ["api/routes/*"],
+      "@middleware/*": ["api/middleware/*"],
+      "@models/*": ["api/models/*"],
+      "@core/*": ["core/*"],
+      "@coreServices/*": ["core/services/*"],
+      "@kafka/*": ["kafka/*"],
+      "@config/*": ["config/*"],
+      "@utils/*": ["core/utils/*"]
+    }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

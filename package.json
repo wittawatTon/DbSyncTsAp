@@ -1,0 +1,74 @@
+{
+  "name": "replicator-backend",
+  "version": "1.0.0",
+  "main": "dist/server.js",
+  "scripts": {
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
+    "build": "tsc  && tsc-alias",
+    "build:exe": "npm run build && pkg . --targets node18-win --output dist/backend.exe",
+    "test": "jest",
+    "test:debug": "node --inspect-brk ./node_modules/.bin/jest"
+  },
+  "bin": "dist/server.js",
+  "pkg": {
+    "scripts": [
+      "dist/**/*.js"
+    ],
+    "assets": [
+      "dist/config/*.json",
+      ".env",
+      "dist/**/*",
+      "node_modules/**/*"
+    ],
+    "targets": [
+      "node18-win"
+    ],
+    "output": "./build/replicator-backend.exe"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "helmet": "^8.1.0",
+    "ibm_db": "^3.3.0",
+    "jsonwebtoken": "^9.0.2",
+    "module-alias": "^2.2.3",
+    "mongoose": "^6.4.3",
+    "morgan": "^1.10.0",
+    "mssql": "^11.0.1",
+    "mysql2": "^3.14.0",
+    "oracledb": "^6.8.0",
+    "pg": "^8.15.5",
+    "pino": "^9.6.0",
+    "pino-http": "^10.4.0",
+    "pino-multi-stream": "^6.0.0",
+    "pino-pretty": "^13.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/module-alias": "^2.0.4",
+    "@types/mongoose": "^5.11.97",
+    "@types/morgan": "^1.9.9",
+    "@types/mssql": "^9.1.7",
+    "@types/node": "^22.15.3",
+    "@types/oracledb": "^6.6.0",
+    "@types/pg": "^8.11.14",
+    "@types/pino-multi-stream": "^5.1.6",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.10",
+    "pkg": "^5.8.0",
+    "supertest": "^7.1.0",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "tsc-alias": "^1.8.16",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.8.3"
+  }
+}
