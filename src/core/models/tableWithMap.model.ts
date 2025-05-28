@@ -6,7 +6,7 @@ export interface TableDocument extends Table, Document {
   _id: Types.ObjectId;  // เพิ่ม _id เพื่อให้ตรงกับ Document
 }
 
-const tableSchema = new Schema<TableDocument>({
+export const tableSchema = new Schema<TableDocument>({
   id: { type: String, required: true },
   name: { type: String, required: true },
    columnMappings: {

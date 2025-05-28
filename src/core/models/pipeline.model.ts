@@ -1,7 +1,7 @@
 import mongoose, { Schema, Document, Types, Model } from "mongoose";
 import { historyLogSchema } from "./historyLog.model";
 import { ConnectionConfigDocument } from "@core/models/connectionConfig.model";
-import { TableDocument } from "@core/models/tableWithMap.model";
+import { TableDocument, tableSchema } from "@core/models/tableWithMap.model";
 import { PipelineHistory } from "@core/models/type";
 
 // Generic base document type with _id, createdAt, updatedAt
@@ -11,16 +11,19 @@ type MongoDoc<T> = T & Document & {
   updatedAt?: Date;
 };
 
+/**
+ * Defines the structure of a Pipeline document in the database.
+ */
 export type PipelineDocument = MongoDoc<{
   name: string;
   description?: string;
-  status: 'active' | 'paused' | 'stopped';
+  status: 'draft' | 'active' | 'paused' | 'stopped';
 
   sourceDbConnection: Types.ObjectId;   // ref to ConnectionConfig
   targetDbConnection: Types.ObjectId;   // ref to ConnectionConfig
 
-  sourceTables: Types.ObjectId[];       // ref to Table[]
-  targetTables: Types.ObjectId[];       // ref to Table[]
+  sourceTables: TableDocument[];        // embedded TableDocument objects
+  targetTables: TableDocument[];        // embedded TableDocument objects
 
   historyLogs: Types.ObjectId[];        // ref to PipelineHistory[]
 
@@ -34,6 +37,9 @@ export type PipelineDocument = MongoDoc<{
   ownerUserId: string;
 }>;
 
+/**
+ * Mongoose schema for the Pipeline document.
+ */
 const pipelineSchema = new Schema<PipelineDocument>({
   name: { type: String, required: true },
   description: { type: String },
@@ -43,8 +49,8 @@ const pipelineSchema = new Schema<PipelineDocument>({
   sourceDbConnection: { type: Schema.Types.ObjectId, ref: 'ConnectionConfig', required: true },
   targetDbConnection: { type: Schema.Types.ObjectId, ref: 'ConnectionConfig', required: true },
 
-  sourceTables: [{ type: Schema.Types.ObjectId, ref: 'Table', default: [] }],
-  targetTables: [{ type: Schema.Types.ObjectId, ref: 'Table', default: [] }],
+  sourceTables: [tableSchema],
+  targetTables: [tableSchema],
 
   historyLogs: [{ type: Schema.Types.ObjectId, ref: 'PipelineHistory', default: [] }],
 
@@ -60,4 +66,7 @@ const pipelineSchema = new Schema<PipelineDocument>({
   timestamps: true
 });
 
+/**
+ * Mongoose model for the Pipeline document.
+ */
 export const PipelineModel: Model<PipelineDocument> = mongoose.model<PipelineDocument>("Pipeline", pipelineSchema);

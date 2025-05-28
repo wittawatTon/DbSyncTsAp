@@ -7,20 +7,27 @@ interface MongoDocBase {
 }
 
 export class GenericService<T extends Document & MongoDocBase> {
-  constructor(private model: Model<T>) {}
+  protected model: Model<T>;
+
+
+    constructor(model: Model<T>) {
+    this.model = model;
+  }
 
   async create(data: Partial<T>): Promise<T> {
     const doc = new this.model(data);
     return await doc.save();
   }
 
-  async findAll(projection = ""): Promise<T[]> {
-    return await this.model.find().select(projection);
+  async findAll(): Promise<T[]> {
+    // Always call select with an empty string
+    return await this.model.find().select('');
   }
 
-  async findById(id: string, projection = ""): Promise<T | null> {
+  async findById(id: string): Promise<T | null> {
     if (!Types.ObjectId.isValid(id)) return null;
-    return await this.model.findById(id).select(projection);
+    // Always call select with an empty string
+    return await this.model.findById(id).select('');
   }
 
   async updateById(id: string, update: Partial<T>): Promise<T | null> {

@@ -9,6 +9,11 @@ dotenv.config();
 
 import { connectDatabase } from '@core/database';
 import app from './app';
+import { fileURLToPath } from 'url';
+
+// This replaces __dirname in ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 moduleAlias.addAliases({
   '@api': path.join(__dirname, 'api'),
   '@app': path.join(__dirname, 'app'),
