@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { fetchTablesHandler,testConnectHandler } from '@controllers/databaseController';
+import { fetchTablesHandler,testConnectHandler } from '@controllers/databaseController.js';
 
 
 const router: Router = Router();

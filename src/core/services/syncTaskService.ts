@@ -1,5 +1,5 @@
-import SyncTask, { ISyncTask } from '@core/models/syncTask.model';
-import SyncTaskLog, { ISyncTaskLog } from '@core/models/syncTaskLog.model';
+import SyncTask, { ISyncTask } from '@core/models/syncTask.model.js';
+import SyncTaskLog, { ISyncTaskLog } from '@core/models/syncTaskLog.model.js';
 import { Types } from 'mongoose';
 
 /**

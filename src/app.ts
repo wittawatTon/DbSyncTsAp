@@ -1,14 +1,18 @@
-import 'module-alias/register';
+//import 'module-alias/register';
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import pinoHttp from 'pino-http';
+import * as pinoHttpModule from 'pino-http';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import pino from 'pino';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import * as pinoModule from 'pino';
+
+const pino = (pinoModule as any).default ?? pinoModule;
+
+const pinoHttp = (pinoHttpModule as any).default ?? pinoHttpModule;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -74,11 +78,11 @@ const bootstrap = async () => {
   });
 
   // Routes
-  const authRoutes = (await import('@routes/authRoutes')).default;
-  const databaseRoutes = (await import('@routes/databaseRoutes')).default;
-  const syncTaskRoutes = (await import('@api/routes/syncTaskRoutes')).default;
-  const dashboardRoutes = (await import('@api/routes/dashboardRoutes')).default;
-  const pipelineRoutes = (await import('@api/routes/pipelineRoutes')).default;
+  const authRoutes = (await import('@routes/authRoutes.js')).default;
+  const databaseRoutes = (await import('@routes/databaseRoutes.js')).default;
+  const syncTaskRoutes = (await import('@api/routes/syncTaskRoutes.js')).default;
+  const dashboardRoutes = (await import('@api/routes/dashboardRoutes.js')).default;
+  const pipelineRoutes = (await import('@api/routes/pipelineRoutes.js')).default;
 
   app.use('/api/auth', authRoutes);
   app.use('/api/db', databaseRoutes);

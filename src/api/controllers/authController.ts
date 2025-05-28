@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import User from '@core/models/userModel';
-import { IUser } from '@core/models/userModel';
+import User from '@core/models/userModel.js';
+import { IUser } from '@core/models/userModel.js';
 
 /**
  * Register a new user

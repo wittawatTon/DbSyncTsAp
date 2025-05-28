@@ -1,16 +1,16 @@
 
-import 'module-alias/register';
-import 'tsconfig-paths/register';
+//import 'module-alias/register';
+//import 'tsconfig-paths/register';
 import dotenv from 'dotenv';
-import moduleAlias from 'module-alias';
+//import moduleAlias from 'module-alias';
 import path from 'path';
 // Load environment variables before importing other modules
 dotenv.config();
 
-import { connectDatabase } from '@core/database';
-import app from './app';
+import { connectDatabase } from '@core/database.js';
+import app from './app.js';
 import { fileURLToPath } from 'url';
-
+/*
 // This replaces __dirname in ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,7 +27,7 @@ moduleAlias.addAliases({
   '@kafka': path.join(__dirname, 'kafka'),
   '@config': path.join(__dirname, 'config'),
   '@utils': path.join(__dirname, 'core/utils'),
-});
+});*/
 const port: number = parseInt(process.env.PORT || '5000', 10);
 
 async function startServer() {

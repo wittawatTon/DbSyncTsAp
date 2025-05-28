@@ -1,18 +1,18 @@
-import getNextSequence from '@core/services/getNextSequence';
-import retry from '@core/utils/retry';
-import { createSyncTask, getSyncTasks, getSyncTaskById } from '@core/services/syncTaskService';
+import getNextSequence from '@core/services/getNextSequence.js';
+import retry from '@core/utils/retry.js';
+import { createSyncTask, getSyncTasks, getSyncTaskById } from '@core/services/syncTaskService.js';
 import {
   createConnector,
   getConnectorStatus,
   resumeConnector,
   pauseConnector,
-} from '@kafka/debeziumControl/services/debeziumService';
-import { summarizeReplicationStatus, getCombinedConnectionStatus } from './syncTaskUtil';
-import { ISyncTask, IDebeziumConnectorConfig } from '@core/models/syncTask.model';
-import {ITable} from '@core/models/table.model';
-import { IDbConnection } from '@core/models/dbConnection.model';
-import {ReplicationStatus} from '@core/models/syncTask.model';
-import { ISyncTaskApi } from '@api/models/syncTasksApi';
+} from '@kafka/debeziumControl/services/debeziumService.js';
+import { summarizeReplicationStatus, getCombinedConnectionStatus } from './syncTaskUtil.js';
+import { ISyncTask, IDebeziumConnectorConfig } from '@core/models/syncTask.model.js';
+import {ITable} from '@core/models/table.model.js';
+import { IDbConnection } from '@core/models/dbConnection.model.js';
+import {ReplicationStatus} from '@core/models/syncTask.model.js';
+import { ISyncTaskApi } from '@api/models/syncTasksApi.js';
 
 // --- Type Definitions (if not already in model) ---
 type ConnectorType = 'source' | 'sink';

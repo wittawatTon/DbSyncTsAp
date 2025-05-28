@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { PipelineService } from "@core/services/pipeline.service";
+import { PipelineService } from "@core/services/pipeline.service.js";
 
 const pipelineService = new PipelineService();
 

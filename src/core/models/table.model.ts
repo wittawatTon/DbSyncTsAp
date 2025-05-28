@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import ColumnSchema, { IColumn } from './column.model';
+import ColumnSchema, { IColumn } from './column.model.js';
 
 // สร้าง interface สำหรับ Table
 export interface ITable {

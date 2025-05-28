@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import request from 'supertest';
-import app from '@app';  
+import app from '../../src/app.js';  
 // Mock controllers
 vi.mock('@core/controllers/pipelineController', () => {
   return {

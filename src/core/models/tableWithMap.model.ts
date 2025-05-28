@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, Types, Model } from "mongoose";
-import { Table } from "@core/models/type";
+import { Table } from "@core/models/type.js";
 
 
 export interface TableDocument extends Table, Document {

@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema, Model, Types } from "mongoose";
-import { ConnectionConfig } from "@core/models/type";
+import { ConnectionConfig } from "@core/models/type.js";
 export const SUPPORTED_DB_TYPES = ['mysql', 'mssql', 'postgresql', 'oracle', 'db2i', 'db2luw'] as const;
 export type SupportedDbType = typeof SUPPORTED_DB_TYPES[number];
 

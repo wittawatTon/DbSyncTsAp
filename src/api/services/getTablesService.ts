@@ -1,7 +1,7 @@
-import { IDbConnection, DbType } from '@core/models/dbConnection.model';
-import { createConnectionByDbType, closeConnection } from '@api/services/databaseService';
-import { ITable } from '@core/models/table.model';
-import { IColumn } from '@core/models/column.model';
+import { IDbConnection, DbType } from '@core/models/dbConnection.model.js';
+import { createConnectionByDbType, closeConnection } from '@api/services/databaseService.js';
+import { ITable } from '@core/models/table.model.js';
+import { IColumn } from '@core/models/column.model.js';
 
 /**
  * Map of functions to get columns for each supported DB type.

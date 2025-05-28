@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { ConnectionConfigService } from '@core/services/connectionConfig.service';
-import { ConnectionConfigModel } from '@core/models/connectionConfig.model';
+import { ConnectionConfigService } from '@core/services/connectionConfig.service.js';
+import { ConnectionConfigModel } from '@core/models/connectionConfig.model.js';
 
 // Create a singleton instance of the service to reuse in all handlers
 const connectionConfigService = new ConnectionConfigService(ConnectionConfigModel);

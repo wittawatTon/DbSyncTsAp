@@ -1,4 +1,4 @@
-import { ReplicationStatus } from '@core/models/syncTask.model';
+import { ReplicationStatus } from '@core/models/syncTask.model.js';
 
 export interface ConnectorStatus {
   state: string;

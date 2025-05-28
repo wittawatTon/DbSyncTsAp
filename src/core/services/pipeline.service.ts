@@ -1,9 +1,9 @@
-import { PipelineModel, PipelineDocument } from "@core/models/pipeline.model";
-import { ConnectionConfigModel } from "@core/models/connectionConfig.model";
-import { ConnectionConfig } from "@core/models/type";
-import { GenericService } from "@core/services/genericCrud.service";
+import { PipelineModel, PipelineDocument } from "@core/models/pipeline.model.js";
+import { ConnectionConfigModel } from "@core/models/connectionConfig.model.js";
+import { ConnectionConfig } from "@core/models/type.js";
+import { GenericService } from "@core/services/genericCrud.service.js";
 import { Types } from "mongoose";
-import { updatePipelineSchema } from "@core/validators/pipeline.schema";
+import { updatePipelineSchema } from "@core/validators/pipeline.schema.js";
 import { z } from "zod";
 
 type PipelineSchemaKeys = keyof typeof updatePipelineSchema.shape;

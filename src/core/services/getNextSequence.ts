@@ -1,4 +1,4 @@
-import Counter, { ICounter } from '../models/Counter';
+import Counter, { ICounter } from '../models/Counter.js';
 
 /**
  * ดึงค่า sequence ถัดไปสำหรับชื่อที่กำหนด

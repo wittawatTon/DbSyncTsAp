@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
 import { Types } from 'mongoose';
-import { ConnectionConfigService } from '@core/services/connectionConfig.service';
-import { ConnectionConfigModel } from '@core/models/connectionConfig.model';
+import { ConnectionConfigService } from '@core/services/connectionConfig.service.js';
+import { ConnectionConfigModel } from '@core/models/connectionConfig.model.js';
 
 vi.mock('@core/models/connectionConfig.model', () => {
   return {

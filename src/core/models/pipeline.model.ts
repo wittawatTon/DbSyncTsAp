@@ -1,8 +1,8 @@
 import mongoose, { Schema, Document, Types, Model } from "mongoose";
-import { historyLogSchema } from "./historyLog.model";
-import { ConnectionConfigDocument } from "@core/models/connectionConfig.model";
-import { TableDocument, tableSchema } from "@core/models/tableWithMap.model";
-import { PipelineHistory } from "@core/models/type";
+import { historyLogSchema } from "./historyLog.model.js";
+import { ConnectionConfigDocument } from "@core/models/connectionConfig.model.js";
+import { TableDocument, tableSchema } from "@core/models/tableWithMap.model.js";
+import { PipelineHistory } from "@core/models/type.js";
 
 // Generic base document type with _id, createdAt, updatedAt
 type MongoDoc<T> = T & Document & {

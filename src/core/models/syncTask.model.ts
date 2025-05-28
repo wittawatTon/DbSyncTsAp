@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
-import TableSchema, { ITable } from './table.model';
-import DbConnectionSchema, { IDbConnection } from './dbConnection.model';
+import TableSchema, { ITable } from './table.model.js';
+import DbConnectionSchema, { IDbConnection } from './dbConnection.model.js';
 
 // Sub-schema: Debezium connector config
 export interface IDebeziumConnectorConfig {

@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { PipelineService } from "@core/services/pipeline.service";
-import { GenericService } from "@core/services/genericCrud.service";
-import { PipelineModel } from "@core/models/pipeline.model";
+import { PipelineService } from "@core/services/pipeline.service.js";
+import { GenericService } from "@core/services/genericCrud.service.js";
+import { PipelineModel } from "@core/models/pipeline.model.js";
 import { Types } from "mongoose";
 
 // Mock PipelineModel for tests

@@ -6,7 +6,7 @@ import sql, { config as SqlConfig } from 'mssql';
 import type { ConnectionPool as MsSqlConnection } from 'mssql';
 
 import oracledb, { Connection as OracleConnection } from 'oracledb';
-import { IDbConnection,DbType } from '@core/models/dbConnection.model';
+import { IDbConnection,DbType } from '@core/models/dbConnection.model.js';
 
 export type SupportedDbConnection =
   | MySqlConnection

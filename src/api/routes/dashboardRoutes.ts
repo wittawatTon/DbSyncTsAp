@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import { dashboard } from '@api/controllers/syncTaskController';
+import { dashboard } from '@api/controllers/syncTaskController.js';
 
 const router: Router = Router();
 

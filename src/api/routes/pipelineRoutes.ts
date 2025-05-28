@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { PipelineController } from '@core/controllers/pipelineController';
+import { PipelineController } from '@core/controllers/pipelineController.js';
 import {
   getAllConnectionConfigs,
   getConnectionConfigById,
@@ -7,7 +7,7 @@ import {
   createIfNotExist,
   updateConnectionConfigById,
   deleteConnectionConfigById
-} from '@core/controllers/connectionConfigController';
+} from '@core/controllers/connectionConfigController.js';
 
 const router: Router = Router();
 const pipelineController = new PipelineController();

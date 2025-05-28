@@ -1,5 +1,5 @@
 import type { Request, Response, NextFunction } from 'express';
-import * as debeziumService from '../services/debeziumService';
+import * as debeziumService from '../services/debeziumService.js';
 
 /**
  * สร้าง Kafka Connector

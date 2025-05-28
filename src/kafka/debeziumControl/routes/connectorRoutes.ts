@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import type { Request, Response, NextFunction } from 'express';
-import * as connectorController from '../controllers/connectorController';
+import * as connectorController from '../controllers/connectorController.js';
 
 // การตั้งค่า route สำหรับ monitor status
 const router = Router();

@@ -3,16 +3,16 @@ import {
   getSyncTaskById,
   updateSyncTask,
   deleteSyncTask,
-} from '@core/services/syncTaskService';
+} from '@core/services/syncTaskService.js';
 import {
   createSyncTaskApi,
   getSyncTasksApi,
   startTaskById,
   stopTaskById,
   getSyncTasksDashboardApi,
-} from '@api/services/syncTaskServiceApi';
-import { ISyncTask } from '@core/models/syncTask.model';
-import { ISyncTaskApi } from '@api/models/syncTasksApi';
+} from '@api/services/syncTaskServiceApi.js';
+import { ISyncTask } from '@core/models/syncTask.model.js';
+import { ISyncTaskApi } from '@api/models/syncTasksApi.js';
 /**
  * POST /api/sync-tasks
  */
