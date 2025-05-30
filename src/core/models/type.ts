@@ -1,7 +1,7 @@
 export interface Pipeline extends Document {
   name: string;
   description?: string;
-  status: 'active' | 'paused' | 'stopped';
+  status: 'draft' | 'active' | 'paused' | 'stopped';
 
   sourceDbConnection: ConnectionConfig;
   targetDbConnection: ConnectionConfig;

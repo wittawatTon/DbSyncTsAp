@@ -9,6 +9,7 @@ export interface TableDocument extends Table, Document {
 export const tableSchema = new Schema<TableDocument>({
   id: { type: String, required: true },
   name: { type: String, required: true },
+  sourceTableName: { type: String, required: false },
    columnMappings: {
     type: [
       {

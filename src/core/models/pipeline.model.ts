@@ -44,7 +44,7 @@ const pipelineSchema = new Schema<PipelineDocument>({
   name: { type: String, required: true },
   description: { type: String },
 
-  status: { type: String, enum: ['active', 'paused', 'stopped'], default: 'paused' },
+  status: { type: String, enum: ['draft', 'active', 'paused', 'stopped'], default: 'paused' },
 
   sourceDbConnection: { type: Schema.Types.ObjectId, ref: 'ConnectionConfig', required: true },
   targetDbConnection: { type: Schema.Types.ObjectId, ref: 'ConnectionConfig', required: true },

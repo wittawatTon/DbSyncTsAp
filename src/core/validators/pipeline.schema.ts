@@ -4,7 +4,7 @@ import { z } from "zod";
 export const updatePipelineSchema = z.object({
   name: z.string().min(1).optional(),
   description: z.string().optional(),
-  status: z.enum(['active', 'paused', 'stopped']).optional(),
+  status: z.enum(['draft','active', 'paused', 'stopped']).optional(),
 
   sourceDbConnection: z.string().refine(val => val.match(/^[a-f\d]{24}$/i), {
     message: "Invalid ObjectId"
