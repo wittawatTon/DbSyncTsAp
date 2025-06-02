@@ -56,14 +56,33 @@ async findById(req: Request, res: Response) {
 }
 
 
-  async findAllWithPopulate(req: Request, res: Response) {
-    try {
-      const pipelines = await pipelineService.findAllWithPopulate(req.query.projection as string);
-      res.status(200).json(pipelines);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
-    }
+
+async findAllWithPopulate(req: Request, res: Response) {
+  try {
+    const {
+      page = "1",
+      limit = "10",
+      sort = '{"createdAt": -1}',
+      filter = "{}",      // e.g. ?filter={"status":"active"}
+      projection = "",    // e.g. ?projection=name,status
+    } = req.query;
+
+    const parsedQuery = {
+      page: parseInt(page as string, 10),
+      limit: parseInt(limit as string, 10),
+      sort: JSON.parse(sort as string),
+      filter: JSON.parse(filter as string),
+      projection: projection as string,
+    };
+
+    const pipelines = await pipelineService.findAllWithPopulate(parsedQuery);
+    res.status(200).json(pipelines);
+  } catch (error) {
+    console.error("findAllWithPopulate error:", error);
+    res.status(400).json({ error: error.message });
   }
+}
+
 
   async findByIdWithPopulate(req: Request, res: Response) {
     try {
@@ -89,6 +108,15 @@ async findById(req: Request, res: Response) {
   async deleteById(req: Request, res: Response) {
     try {
       await pipelineService.deleteById(req.params.id);
+      res.status(204).send();
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+    async deleteByIdMarked(req: Request, res: Response) {
+    try {
+      await pipelineService.deleteByIdMarked(req.params.id);
       res.status(204).send();
     } catch (error) {
       res.status(400).json({ error: error.message });

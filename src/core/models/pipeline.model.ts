@@ -1,8 +1,8 @@
 import mongoose, { Schema, Document, Types, Model } from "mongoose";
-import { historyLogSchema } from "./historyLog.model.js";
-import { ConnectionConfigDocument } from "@core/models/connectionConfig.model.js";
+import "@core/models/pipelineHistory.model.js"; 
+import "@core/models/connectionConfig.model.js";
 import { TableDocument, tableSchema } from "@core/models/tableWithMap.model.js";
-import { PipelineHistory } from "@core/models/type.js";
+
 
 // Generic base document type with _id, createdAt, updatedAt
 type MongoDoc<T> = T & Document & {
@@ -17,7 +17,7 @@ type MongoDoc<T> = T & Document & {
 export type PipelineDocument = MongoDoc<{
   name: string;
   description?: string;
-  status: 'draft' | 'active' | 'paused' | 'stopped';
+  status: 'draft' | 'active' | 'paused' | 'stopped' | 'error' |'deleted';
 
   sourceDbConnection: Types.ObjectId;   // ref to ConnectionConfig
   targetDbConnection: Types.ObjectId;   // ref to ConnectionConfig
@@ -44,7 +44,7 @@ const pipelineSchema = new Schema<PipelineDocument>({
   name: { type: String, required: true },
   description: { type: String },
 
-  status: { type: String, enum: ['draft', 'active', 'paused', 'stopped'], default: 'paused' },
+  status: { type: String, enum: ['draft', 'active', 'paused', 'stopped', 'error', 'deleted'], default: 'draft' },
 
   sourceDbConnection: { type: Schema.Types.ObjectId, ref: 'ConnectionConfig', required: true },
   targetDbConnection: { type: Schema.Types.ObjectId, ref: 'ConnectionConfig', required: true },

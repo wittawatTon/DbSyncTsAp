@@ -44,6 +44,7 @@ export class PipelineService {
     const existingPipeline = await PipelineModel.findOne({
       sourceDbConnection: sourceId,
       targetDbConnection: targetId,
+      status: { $ne: 'deleted' },
     });
 
     return !!existingPipeline;
@@ -87,9 +88,42 @@ async create(data: Partial<PipelineDocument>) {
 
 
   // Fetch all pipelines without populating references
-    async findAll(projection: Record<string, 0 | 1> = {}) {
-      return await this.baseService.findAll();
-    }
+async findAll(query: {
+  page?: number;
+  limit?: number;
+  filter?: Record<string, any>;
+  sort?: Record<string, 1 | -1>;
+  projection?: Record<string, 0 | 1>;
+}) {
+  const {
+    page = 1,
+    limit = 10,
+    filter = {},
+    sort = { createdAt: -1 },
+    projection = {},
+  } = query;
+
+  const skip = (page - 1) * limit;
+
+  const [data, total] = await Promise.all([
+    PipelineModel.find(filter)
+      .select(projection)
+      .sort(sort)
+      .skip(skip)
+      .limit(limit),
+    PipelineModel.countDocuments(filter),
+  ]);
+
+  return {
+    data,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
+}
 
     // Fetch a single pipeline by ID without populating references
     async findById(id: string, projection: Record<string, 0 | 1> = {}) {
@@ -99,16 +133,55 @@ async create(data: Partial<PipelineDocument>) {
 
 
   // Fetch all pipelines with populated references
-  async findAllWithPopulate(projection = "") {
-    return await PipelineModel.find()
+async findAllWithPopulate(query: {
+  page?: number;
+  limit?: number;
+  filter?: Record<string, any>;
+  sort?: Record<string, 1 | -1>;
+  projection?: string;
+}) {
+  const {
+    page = 1,
+    limit = 10,
+    filter = {},
+    sort = { createdAt: -1 },
+    projection = "",
+  } = query;
+
+  const skip = (page - 1) * limit;
+
+  // เพิ่มเงื่อนไขให้ status ไม่เท่ากับ 'deleted'
+  const finalFilter = {
+    ...filter,
+    status: { $ne: "deleted" },
+  };
+
+
+  const [data, total] = await Promise.all([
+    PipelineModel.find(finalFilter)
       .select(projection)
       .populate([
         { path: "sourceDbConnection" },
         { path: "targetDbConnection" },
         { path: "historyLogs" },
       ])
-      .exec();
-  }
+      .sort(sort)
+      .skip(skip)
+      .limit(limit),
+    PipelineModel.countDocuments(filter),
+  ]);
+
+  return {
+    data,
+    pagination: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
+}
+
 
   // Fetch a single pipeline by ID with populated references
   async findByIdWithPopulate(id: string, projection = "") {
@@ -142,6 +215,14 @@ async updateById(id: string, update: Partial<PipelineDocument>) {
   // Delete pipeline
   async deleteById(id: string) {
     return await this.baseService.deleteById(id);
+  }
+
+  async deleteByIdMarked(id: string) {
+    return await PipelineModel.findByIdAndUpdate(
+      id,
+      { status: "deleted" },
+      { new: true } // คืนค่าหลังอัปเดต
+    );
   }
 
   // Update a specific field of a pipeline

@@ -3,7 +3,6 @@ import { PipelineController } from '@core/controllers/pipelineController.js';
 import {
   getAllConnectionConfigs,
   getConnectionConfigById,
-  createConnectionConfig,
   createIfNotExist,
   updateConnectionConfigById,
   deleteConnectionConfigById
@@ -26,10 +25,10 @@ router.delete('/connection-configs/:id', deleteConnectionConfigById);
 router.post('/', (req: Request, res: Response) => {
   pipelineController.create(req, res);
 });
-
+ 
 // Get all pipelines
 router.get('/', (req: Request, res: Response) => {
-  pipelineController.findAll(req, res);
+  pipelineController.findAllWithPopulate(req, res);
 });
 
 // Get all pipelines with populated references
@@ -59,7 +58,7 @@ router.patch('/:id/field', (req: Request, res: Response) => {
 
 // Delete a pipeline
 router.delete('/:id', (req: Request, res: Response) => {
-  pipelineController.deleteById(req, res);
+  pipelineController.deleteByIdMarked(req, res);
 });
 
 
