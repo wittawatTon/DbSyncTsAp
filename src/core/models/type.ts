@@ -41,10 +41,20 @@ export interface ColumnMapping {
   targetColumn: string;
 }
 
+export interface Column {
+  id: string;
+  name: string;
+  dataType: string;
+  isPrimaryKey: boolean;
+  isSelected: boolean;
+  isNullable: boolean;
+}
+
 export interface Table {
   name: string;
   sourceTableName?: string;
   columnMappings: ColumnMapping[];
+  columns: Column[];
 }
 
 export interface PipelineHistory {

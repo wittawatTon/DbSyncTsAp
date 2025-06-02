@@ -10,6 +10,19 @@ export const tableSchema = new Schema<TableDocument>({
   id: { type: String, required: true },
   name: { type: String, required: true },
   sourceTableName: { type: String, required: false },
+   columns: {
+    type: [
+      {
+        id: { type: String, required: true },
+        name: { type: String, required: true },
+        dataType: { type: String, required: true },
+        isPrimaryKey: { type: Boolean, required: true },
+        isSelected: { type: Boolean, required: true },
+        isNullable: { type: Boolean, required: false },
+      }
+    ],
+    default: []     
+   },
    columnMappings: {
     type: [
       {
