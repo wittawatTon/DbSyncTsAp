@@ -10,6 +10,7 @@ export const tableSchema = new Schema<TableDocument>({
   id: { type: String, required: true },
   name: { type: String, required: true },
   sourceTableName: { type: String, required: false },
+  isDropped: { type: Boolean, required: false },
    columns: {
     type: [
       {

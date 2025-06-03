@@ -78,9 +78,9 @@ async create(data: Partial<PipelineDocument>) {
       data.targetDbConnection
     );
 
-    if (exists) {
+    /*if (exists) {
       throw new Error("Pipeline with the same source and target connection already exists.");
-    }
+    }*/
   }
 
   return await this.baseService.create(data);
@@ -128,7 +128,7 @@ async findAll(query: {
     // Fetch a single pipeline by ID without populating references
     async findById(id: string, projection: Record<string, 0 | 1> = {}) {
       console.log('PipelineService.findById called', id);
-      return await this.baseService.findById(id);
+      return await this.findByIdWithPopulate(id);
     }
 
 

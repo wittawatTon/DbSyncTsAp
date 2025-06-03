@@ -53,6 +53,7 @@ export interface Column {
 export interface Table {
   name: string;
   sourceTableName?: string;
+  isDropped: boolean;
   columnMappings: ColumnMapping[];
   columns: Column[];
 }
