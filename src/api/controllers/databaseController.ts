@@ -2,12 +2,19 @@ import { Request, Response } from 'express';
 import { IDbConnection } from '@core/models/dbConnection.model.js';
 import { getTables } from '@api/services/getTablesService.js';
 import { testConnection } from '@api/services/databaseService.js';
+import { createTableOnTarget } from '@api/services/createTableOnTarget.js'
 
 // Define the expected shape of the request body
 interface FetchTablesRequestBody {
   dbType: string;
   config: IDbConnection;
   withColumn?: boolean;
+}
+
+interface CreateTableRequestBody {
+  config: IDbConnection;
+  tableName: string;
+  sqlCmd: string;
 }
 
 //TODO: FORCE TO USE SSL
@@ -67,6 +74,32 @@ export const testConnectHandler = async (
     res.status(500).json({
       status: 'error',
       message: `❌ Database " (${config.dbType}) connection failed: ${err.message}`,
+    });
+  }
+};
+
+
+
+/**
+ * Express handler to create a table on the target DB.
+ */
+export const createTableHandler = async (
+  req: Request<any, any, CreateTableRequestBody>,
+  res: Response
+): Promise<void> => {
+  const { config, tableName, sqlCmd } = req.body;
+
+  try {
+    const result = await createTableOnTarget(config, tableName, sqlCmd);
+    res.json({
+      status: 'success',
+      message: `✅ Table "${tableName}" created successfully.`,
+      created: result,
+    });
+  } catch (err: any) {
+    res.status(400).json({
+      status: 'error',
+      message: `❌ Failed to create table "${tableName}": ${err.message}`,
     });
   }
 };

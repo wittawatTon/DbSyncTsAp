@@ -25,22 +25,6 @@ export async function createMysqlConnection(config: IDbConnection): Promise<MySq
   return connection;
 }
 
-// ฟังก์ชันทดสอบการเชื่อมต่อฐานข้อมูล
-export async function testMysqlConnection(config: IDbConnection): Promise<boolean> {
-  try {
-    const connection = await createMysqlConnection(config);
-    await connection.ping(); // ทดสอบการเชื่อมต่อ
-    await connection.end(); // ปิดการเชื่อมต่อ
-    console.log('Database connection successful.');
-    return true;
-  } catch (error) {
-    console.error('Database connection failed:', error.message);
-    return false;
-  }
-}
-
-
-
 
 
 export async function createMssqlConnection(config: IDbConnection): Promise<MsSqlConnection> {
@@ -61,18 +45,13 @@ export async function createMssqlConnection(config: IDbConnection): Promise<MsSq
   return pool;
 }
 
-// ฟังก์ชันทดสอบการเชื่อมต่อ
-export async function testMssqlConnection(config: IDbConnection): Promise<boolean> {
-  try {
-    const pool = await createMssqlConnection(config);
-    await pool.query('SELECT 1 AS TestConnection');
-    console.log(`✅ Database "${config.database}" connected successfully.`);
-    await pool.close();
-    return true;
-  } catch (error) {
-    console.error(`❌ Database "${config.database}" connection failed:`, error.message);
-    return false;
-  }
+
+export async function createOracleConnection(config: IDbConnection): Promise<oracledb.Connection> {
+  return await oracledb.getConnection({
+    user: config.username,
+    password: config.password,
+    connectString: `${config.host}:${config.port}/${config.database}`,
+  });
 }
 
 
@@ -92,6 +71,14 @@ export async function testConnection(config: IDbConnection): Promise<boolean> {
         await connection.ping();
         console.log(`✅ Database "${config.database}" (MySQL) connected successfully.`);
         await connection.end();
+        break;
+      }
+
+        case 'oracle': {
+        const conn = await createOracleConnection(config);
+        await conn.execute('SELECT 1 FROM dual');
+        console.log(`✅ Database "${config.database}" (Oracle) connected successfully.`);
+        await conn.close();
         break;
       }
 

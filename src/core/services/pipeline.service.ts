@@ -8,6 +8,8 @@ import { z } from "zod";
 
 type PipelineSchemaKeys = keyof typeof updatePipelineSchema.shape;
 
+//TODO: when create or update pipeline, check if a pipeline with the same source Table and
+// target table already exists in same source and target connection return error
 export class PipelineService {
   constructor(
     private baseService: GenericService<PipelineDocument> = new GenericService(PipelineModel)
