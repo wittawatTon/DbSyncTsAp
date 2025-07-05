@@ -8,6 +8,8 @@ import type { ConnectionPool as MsSqlConnection } from 'mssql';
 import oracledb, { Connection as OracleConnection } from 'oracledb';
 import { IDbConnection,DbType } from '@core/models/dbConnection.model.js';
 
+//TODO: must re-structure code sperate database and use database pool for performance improvement
+
 export type SupportedDbConnection =
   | MySqlConnection
   | PgClient
@@ -91,6 +93,7 @@ export async function testConnection(config: IDbConnection): Promise<boolean> {
   } catch (error) {
     console.error(`❌ Database "${config.database}" (${config.dbType}) connection failed:`, error.message);
     return false;
+    
   }
 }
 

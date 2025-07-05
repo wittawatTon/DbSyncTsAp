@@ -64,3 +64,45 @@ export interface PipelineHistory {
   action: 'create' | 'update' | 'delete';
   diff: any;
 }
+
+export interface IDebeziumConnectorConfig {
+  name: string; // Connector name
+  config: Record<string, any>; // Full JSON config
+}
+
+
+// models/PipelineConfig.ts
+
+export type PipelineMode = "snapshot" | "schedule" | "cdc";
+export type InsertMode = "insert" | "upsert";
+export type ConflictHandling = "skip" | "stop" | "log";
+export type InitialLoadStrategy = "snapshot_then_cdc" | "log_only";
+
+export interface TransformationRule {
+  id: string;
+  sourceField: string;
+  transformation: string;
+}
+
+export interface NotificationSettings {
+  email: boolean;
+  lineNotify: boolean;
+  webhook: boolean;
+}
+
+export interface PipelineSettingModel {
+  name: string;
+  mode: PipelineMode;
+  schedulePreset?: string;      // optional, used only in schedule mode
+  customCron?: string;          // optional, used only in schedule mode
+  insertMode: InsertMode;
+  primaryKeys?: string[];       // optional, used in upsert mode
+  conflictHandling: ConflictHandling;
+  transformationRules: TransformationRule[];
+  initialLoadStrategy?: InitialLoadStrategy; // optional, used in CDC
+  notifications: NotificationSettings;
+  enableValidation: boolean;
+  batchSize: number;
+  commitInterval: number;
+  parallelism: number;
+}

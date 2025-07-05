@@ -4,7 +4,7 @@ interface DebeziumConfig {
 }
 
 const config: DebeziumConfig = {
-  DEBEZIUM_URL: process.env.DEBEZIUM_URL || 'http://localhost:8083',
+  DEBEZIUM_URL: process.env.KAFKA_CONNECT_URL || 'http://localhost:8083',
   PORT: process.env.PORT ? parseInt(process.env.PORT, 10) : 5000,
 };
 

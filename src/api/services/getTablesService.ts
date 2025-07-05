@@ -3,6 +3,9 @@ import { createConnectionByDbType, closeConnection } from '@api/services/databas
 import { ITable } from '@core/models/table.model.js';
 import { IColumn } from '@core/models/column.model.js';
 
+
+import oracledb from "oracledb";
+
 /**
  * Map of functions to get columns for each supported DB type.
  */
@@ -59,28 +62,64 @@ const getColumnsByTable: Record<
     }));
   },
 
-  oracle: async (connection, tableName, username) => {
-    const result = await connection.execute(`
-      SELECT
-        cols.column_name AS name,
-        cols.data_type AS type,
-        CASE WHEN cons.constraint_type = 'P' THEN 1 ELSE 0 END AS isPrimaryKey
-      FROM all_tab_columns cols
-      LEFT JOIN all_cons_columns ccons
-        ON cols.table_name = ccons.table_name AND cols.column_name = ccons.column_name
-      LEFT JOIN all_constraints cons
-        ON cons.constraint_name = ccons.constraint_name AND cons.constraint_type = 'P'
-      WHERE cols.table_name = '${tableName}' AND cols.owner = UPPER('${username}')
-    `);
-    return result.rows.map(([name, type, isPrimaryKey]: [string, string, number]): IColumn => ({
-      name,
-      dataType: type,
-      isPrimaryKey: isPrimaryKey === 1,
-      selected: false,
-    }));
+
+oracle: async (connection, tableName, username) => {
+  const upperUser = username.toUpperCase();
+  const upperTable = tableName;
+   const sql = `
+    SELECT
+      col.column_name AS name,
+      col.data_type AS dataType,
+      CASE 
+        WHEN pk.column_name IS NOT NULL THEN 1 ELSE 0
+      END AS isPrimaryKey
+    FROM (
+      SELECT atc.table_name, atc.column_name, atc.data_type
+      FROM all_tab_columns atc
+      WHERE atc.table_name = :tableName
+        AND atc.owner = :owner
+    ) col
+    LEFT JOIN (
+      SELECT acc.table_name, acc.column_name
+      FROM all_constraints ac
+      JOIN all_cons_columns acc
+        ON ac.constraint_name = acc.constraint_name
+        AND ac.owner = acc.owner
+      WHERE ac.constraint_type = 'P'
+        AND ac.owner = :owner
+        AND ac.table_name = :tableName
+    ) pk
+      ON col.table_name = pk.table_name AND col.column_name = pk.column_name
+  `;
+
+  const binds = { tableName: upperTable, owner: upperUser };
+
+  // ✅ Debug actual SQL and binds
+  console.log("🧪 Executing SQL:\n", sql);
+  console.log("📌 With binds:\n", binds);
+
+  const result = await connection.execute(
+    sql,
+    binds,
+    { outFormat: oracledb.OUT_FORMAT_OBJECT }
+  );
+
+  console.table(result.rows); // Optional: ดูค่าที่คืนมาจริง
+
+  return (result.rows || []).map((row: any): IColumn => ({
+    name: row.NAME,
+    dataType: row.DATATYPE,
+    isPrimaryKey: row.ISPRIMARYKEY === 1,
+    selected: true,
+  }));
+},
+
+
+  db2luw: async () => {
+    throw new Error("❌ DB2 LUW is not supported yet. Please use DB2 for i (db2i) instead.");
   },
 
-  db2: async (connection, tableName, schema) => {
+  db2i: async (connection, tableName, schema) => {
     // schema: DB2 uses schema (usually uppercase username) to qualify tables
     // Get columns and primary key info from DB2 system catalog
     // If schema not provided, fallback to current user
@@ -167,7 +206,7 @@ export const getTables = async (
         tableNames = result.rows.map((row: any[]) => row[0]);
         break;
       }
-      case 'db2': {
+      case 'db2i': {
         // DB2: get all user tables in schema
         const schema = config.username ? config.username.toUpperCase() : undefined;
         const tablesResult = await connection.query(`
@@ -189,7 +228,13 @@ export const getTables = async (
       if (withColumn) {
         try {
           const getColumns = getColumnsByTable[dbType];
-          columns = await getColumns(connection, tableName, config.database || config.username);
+          if (dbType === 'oracle'){
+           columns = await getColumns(connection, tableName,  config.username);
+          }else{
+            columns = await getColumns(connection, tableName, config.database || config.username);
+          }
+
+          
         } catch (err: any) {
           console.warn(`Warning: Skipped columns for ${tableName}: ${err.message}`);
         }

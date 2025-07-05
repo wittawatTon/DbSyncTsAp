@@ -80,15 +80,15 @@ const bootstrap = async () => {
   // Routes
   const authRoutes = (await import('@routes/authRoutes.js')).default;
   const databaseRoutes = (await import('@routes/databaseRoutes.js')).default;
-  const syncTaskRoutes = (await import('@api/routes/syncTaskRoutes.js')).default;
   const dashboardRoutes = (await import('@api/routes/dashboardRoutes.js')).default;
   const pipelineRoutes = (await import('@api/routes/pipelineRoutes.js')).default;
+  const connectionConfigsRoutes = (await import('@api/routes/connectionConfigsRoutes.js')).default;
 
   app.use('/api/auth', authRoutes);
   app.use('/api/db', databaseRoutes);
-  app.use('/api/sync-tasks', syncTaskRoutes);
   app.use('/api/dashboard', dashboardRoutes);
   app.use('/api/pipelines', pipelineRoutes);
+  app.use('/api/connection-configs', connectionConfigsRoutes);
 
   // Error handler
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

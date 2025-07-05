@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import { PipelineService } from "@core/services/pipeline.service.js";
+import { build, toggleConnectorByPipelineId } from "@kafka/debeziumControl/services/pipelineService.js"
+import { enableCDC, CDCNotEnabledError} from "kafka/debeziumControl/services/cdcEnable.js"
 
 const pipelineService = new PipelineService();
 
@@ -132,4 +134,109 @@ async findAllWithPopulate(req: Request, res: Response) {
       res.status(400).json({ error: error.message });
     }
   }
+
+    async updateSettingsById(req: Request, res: Response) {
+    try {
+      const pipeline = await pipelineService.updateSettingsById(req.params.id, req.body);
+      res.status(200).json(pipeline);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  async toggleStatus(req: Request, res: Response) {
+    const { id } = req.params; // pipelineId
+    const { type, action } = req.body; // type: "source" | "sink", action: "start" | "stop"
+    const createdBy = req.user as string || "system"; // ดึงจาก session หรือ token ถ้ามี
+
+    if (!["source", "sink"].includes(type) || !["start", "stop"].includes(action)) {
+      return res.status(400).json({ error: "Invalid type or action" });
+    }
+
+    try {
+      const result = await toggleConnectorByPipelineId(id, type, action, createdBy);
+
+      return res.json({
+        success: true,
+        data: {
+          pipelineId: id,
+          connectorType: type,
+          action,
+          result, // "started" | "stopped" | "skipped" | "error"
+        },
+      });
+    } catch (err) {
+      console.error("Error toggling connector status:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
+
+
+   /**
+   * Build and start a pipeline (validate + enable CDC + start connectors).
+   * @route POST /pipeline/:id/build
+   */
+  async build(req: Request, res: Response) {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ success: false, error: "Pipeline ID is required" });
+    }
+
+    try {
+      const resultMessage = await build(id);
+
+      return res.json({
+        success: true,
+        message: resultMessage,
+        data: { pipelineId: id },
+      });
+
+    } catch (err: any) {
+      console.error("Build pipeline failed:", err);
+
+      if (err instanceof CDCNotEnabledError) {
+        return res.status(400).json({
+          success: false,
+          error: "CDC not enabled",
+          message: err.message,
+          suggestion: err.sqlToEnable, // ส่ง SQL ที่ควร run ไปให้ frontend
+        });
+      }
+
+      return res.status(500).json({
+        success: false,
+        error: "Failed to build pipeline",
+        message: err.message,
+      });
+    }
+  }
+
+  async enableCDC(req: Request, res: Response) {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ success: false, error: "Pipeline ID is required" });
+    }
+
+    try {
+      const result = await enableCDC(id);
+
+      return res.json({
+        success: true,
+        message: result ? "✅ CDC enabled successfully" : "⚠️ CDC was already enabled",
+        data: { pipelineId: id },
+      });
+    } catch (err: any) {
+      console.error("Enable CDC failed:", err);
+      return res.status(500).json({
+        success: false,
+        error: "Failed to enable CDC",
+        message: err.message,
+      });
+    }
+  }
+
 }
+
+

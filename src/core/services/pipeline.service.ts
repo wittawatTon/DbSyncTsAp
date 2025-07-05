@@ -1,4 +1,4 @@
-import { PipelineModel, PipelineDocument } from "@core/models/pipeline.model.js";
+import { PipelineModel, PipelineDocument, PipelineWithConnections } from "@core/models/pipeline.model.js";
 import { ConnectionConfigModel } from "@core/models/connectionConfig.model.js";
 import { ConnectionConfig } from "@core/models/type.js";
 import { GenericService } from "@core/services/genericCrud.service.js";
@@ -195,7 +195,7 @@ async findAllWithPopulate(query: {
         { path: "targetDbConnection" },
         { path: "historyLogs" },
       ])
-      .exec();
+      .exec() as PipelineWithConnections;
   }
 
   // Update pipeline
@@ -250,4 +250,27 @@ async updateById(id: string, update: Partial<PipelineDocument>) {
     const updatePayload = { [field]: value } as Partial<PipelineDocument>;
     return await this.baseService.updateById(id, updatePayload);
   }
+
+    async updateSettingsById(id: string, settings: Partial<PipelineDocument["settings"]>) {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new Error("Invalid pipeline ID");
+    }
+
+    // Optional: คุณอาจเพิ่มการ validate settings ตรงนี้ด้วย zod schema หรือ manual validation
+    // เช่นตรวจว่า mode มีค่าถูกต้อง หรือ batchSize เป็น number
+
+    const updated = await PipelineModel.findByIdAndUpdate(
+      id,
+      { $set: { settings } },
+      { new: true }
+    );
+
+    if (!updated) {
+      throw new Error("Pipeline not found or update failed");
+    }
+
+    return updated;
+  }
+
+
 }

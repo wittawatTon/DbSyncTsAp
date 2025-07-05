@@ -51,7 +51,7 @@ export const createTableOnTarget = async (
         tableExists = oraResult.rows?.[0]?.[0] > 0;
         break;
 
-      case 'db2':
+      case 'db2i':
         const schema = config.username?.toUpperCase() || '';
         checkQuery = `SELECT COUNT(*) AS count FROM SYSCAT.TABLES WHERE TABNAME = '${tableName.toUpperCase()}' AND TABSCHEMA = '${schema}'`;
         const db2Result = await connection.query(checkQuery);
@@ -71,7 +71,7 @@ export const createTableOnTarget = async (
     switch (dbType) {
       case 'mysql':
       case 'postgresql':
-      case 'db2':
+      case 'db2i':
         await connection.query(sqlCmd);
         break;
       case 'mssql':

@@ -1,6 +1,9 @@
 import axios, { AxiosResponse } from 'axios';
+import dotenv from 'dotenv';
+dotenv.config();  // ถ้าเรียกซ้ำก็ไม่เป็นไร มันจะโหลดแค่ครั้งเดียว
 
-const CONNECT_URL: string = process.env.KAFKA_CONNECT_URL || 'http://localhost:8083';
+
+const CONNECT_URL: string = process.env.DEBEZIUM_CONNECT_URL || 'http://localhost:8083';
 
 /**
  * สร้าง Kafka Connector
