@@ -1,0 +1,92 @@
+# HELP debezium_sql_server_connector_metrics_NumberOfEventsFiltered debezium.sql_server:name=null,type=connector-metrics,attribute=NumberOfEventsFiltered
+# TYPE debezium_sql_server_connector_metrics_NumberOfEventsFiltered untyped
+debezium_sql_server_connector_metrics_NumberOfEventsFiltered{server="192-168-1-51",task="0",context="snapshot",database="inventory",} 0.0
+debezium_sql_server_connector_metrics_NumberOfEventsFiltered{server="192-168-1-51",task="0",context="streaming",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_ChangesRecovered debezium.sql_server:name=null,type=connector-metrics,attribute=ChangesRecovered
+# TYPE debezium_sql_server_connector_metrics_ChangesRecovered untyped
+debezium_sql_server_connector_metrics_ChangesRecovered{server="192-168-1-51",task="0",context="schema-history",} 10.0
+# HELP debezium_sql_server_connector_metrics_MilliSecondsSinceLastRecoveredChange debezium.sql_server:name=null,type=connector-metrics,attribute=MilliSecondsSinceLastRecoveredChange
+# TYPE debezium_sql_server_connector_metrics_MilliSecondsSinceLastRecoveredChange untyped
+debezium_sql_server_connector_metrics_MilliSecondsSinceLastRecoveredChange{server="192-168-1-51",task="0",context="schema-history",} 35056.0
+# HELP debezium_sql_server_connector_metrics_TotalNumberOfDeleteEventsSeen debezium.sql_server:name=null,type=connector-metrics,attribute=TotalNumberOfDeleteEventsSeen
+# TYPE debezium_sql_server_connector_metrics_TotalNumberOfDeleteEventsSeen untyped
+debezium_sql_server_connector_metrics_TotalNumberOfDeleteEventsSeen{server="192-168-1-51",task="0",context="snapshot",database="inventory",} 0.0
+debezium_sql_server_connector_metrics_TotalNumberOfDeleteEventsSeen{server="192-168-1-51",task="0",context="streaming",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_NumberOfErroneousEvents debezium.sql_server:name=null,type=connector-metrics,attribute=NumberOfErroneousEvents
+# TYPE debezium_sql_server_connector_metrics_NumberOfErroneousEvents untyped
+debezium_sql_server_connector_metrics_NumberOfErroneousEvents{server="192-168-1-51",task="0",context="snapshot",database="inventory",} 0.0
+debezium_sql_server_connector_metrics_NumberOfErroneousEvents{server="192-168-1-51",task="0",context="streaming",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_SnapshotCompleted debezium.sql_server:name=null,type=connector-metrics,attribute=SnapshotCompleted
+# TYPE debezium_sql_server_connector_metrics_SnapshotCompleted untyped
+debezium_sql_server_connector_metrics_SnapshotCompleted{server="192-168-1-51",task="0",context="snapshot",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_SnapshotRunning debezium.sql_server:name=null,type=connector-metrics,attribute=SnapshotRunning
+# TYPE debezium_sql_server_connector_metrics_SnapshotRunning untyped
+debezium_sql_server_connector_metrics_SnapshotRunning{server="192-168-1-51",task="0",context="snapshot",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_QueueRemainingCapacity debezium.sql_server:name=null,type=connector-metrics,attribute=QueueRemainingCapacity
+# TYPE debezium_sql_server_connector_metrics_QueueRemainingCapacity untyped
+debezium_sql_server_connector_metrics_QueueRemainingCapacity{server="192-168-1-51",task="0",context="snapshot",} 8192.0
+debezium_sql_server_connector_metrics_QueueRemainingCapacity{server="192-168-1-51",task="0",context="streaming",} 8192.0
+# HELP debezium_sql_server_connector_metrics_TotalNumberOfUpdateEventsSeen debezium.sql_server:name=null,type=connector-metrics,attribute=TotalNumberOfUpdateEventsSeen
+# TYPE debezium_sql_server_connector_metrics_TotalNumberOfUpdateEventsSeen untyped
+debezium_sql_server_connector_metrics_TotalNumberOfUpdateEventsSeen{server="192-168-1-51",task="0",context="snapshot",database="inventory",} 0.0
+debezium_sql_server_connector_metrics_TotalNumberOfUpdateEventsSeen{server="192-168-1-51",task="0",context="streaming",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_MaxQueueSizeInBytes debezium.sql_server:name=null,type=connector-metrics,attribute=MaxQueueSizeInBytes
+# TYPE debezium_sql_server_connector_metrics_MaxQueueSizeInBytes untyped
+debezium_sql_server_connector_metrics_MaxQueueSizeInBytes{server="192-168-1-51",task="0",context="snapshot",} 0.0
+debezium_sql_server_connector_metrics_MaxQueueSizeInBytes{server="192-168-1-51",task="0",context="streaming",} 0.0
+# HELP debezium_sql_server_connector_metrics_SnapshotPaused debezium.sql_server:name=null,type=connector-metrics,attribute=SnapshotPaused
+# TYPE debezium_sql_server_connector_metrics_SnapshotPaused untyped
+debezium_sql_server_connector_metrics_SnapshotPaused{server="192-168-1-51",task="0",context="snapshot",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_RemainingTableCount debezium.sql_server:name=null,type=connector-metrics,attribute=RemainingTableCount
+# TYPE debezium_sql_server_connector_metrics_RemainingTableCount untyped
+debezium_sql_server_connector_metrics_RemainingTableCount{server="192-168-1-51",task="0",context="snapshot",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_NumberOfCommittedTransactions debezium.sql_server:name=null,type=connector-metrics,attribute=NumberOfCommittedTransactions
+# TYPE debezium_sql_server_connector_metrics_NumberOfCommittedTransactions untyped
+debezium_sql_server_connector_metrics_NumberOfCommittedTransactions{server="192-168-1-51",task="0",context="streaming",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_MilliSecondsSinceLastAppliedChange debezium.sql_server:name=null,type=connector-metrics,attribute=MilliSecondsSinceLastAppliedChange
+# TYPE debezium_sql_server_connector_metrics_MilliSecondsSinceLastAppliedChange untyped
+debezium_sql_server_connector_metrics_MilliSecondsSinceLastAppliedChange{server="192-168-1-51",task="0",context="schema-history",} 35056.0
+# HELP debezium_sql_server_connector_metrics_TotalTableCount debezium.sql_server:name=null,type=connector-metrics,attribute=TotalTableCount
+# TYPE debezium_sql_server_connector_metrics_TotalTableCount untyped
+debezium_sql_server_connector_metrics_TotalTableCount{server="192-168-1-51",task="0",context="snapshot",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_CurrentQueueSizeInBytes debezium.sql_server:name=null,type=connector-metrics,attribute=CurrentQueueSizeInBytes
+# TYPE debezium_sql_server_connector_metrics_CurrentQueueSizeInBytes untyped
+debezium_sql_server_connector_metrics_CurrentQueueSizeInBytes{server="192-168-1-51",task="0",context="snapshot",} 0.0
+debezium_sql_server_connector_metrics_CurrentQueueSizeInBytes{server="192-168-1-51",task="0",context="streaming",} 0.0
+# HELP debezium_sql_server_connector_metrics_SnapshotPausedDurationInSeconds debezium.sql_server:name=null,type=connector-metrics,attribute=SnapshotPausedDurationInSeconds
+# TYPE debezium_sql_server_connector_metrics_SnapshotPausedDurationInSeconds untyped
+debezium_sql_server_connector_metrics_SnapshotPausedDurationInSeconds{server="192-168-1-51",task="0",context="snapshot",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_TotalNumberOfEventsSeen debezium.sql_server:name=null,type=connector-metrics,attribute=TotalNumberOfEventsSeen
+# TYPE debezium_sql_server_connector_metrics_TotalNumberOfEventsSeen untyped
+debezium_sql_server_connector_metrics_TotalNumberOfEventsSeen{server="192-168-1-51",task="0",context="snapshot",database="inventory",} 0.0
+debezium_sql_server_connector_metrics_TotalNumberOfEventsSeen{server="192-168-1-51",task="0",context="streaming",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_ChangesApplied debezium.sql_server:name=null,type=connector-metrics,attribute=ChangesApplied
+# TYPE debezium_sql_server_connector_metrics_ChangesApplied untyped
+debezium_sql_server_connector_metrics_ChangesApplied{server="192-168-1-51",task="0",context="schema-history",} 10.0
+# HELP debezium_sql_server_connector_metrics_Connected debezium.sql_server:name=null,type=connector-metrics,attribute=Connected
+# TYPE debezium_sql_server_connector_metrics_Connected untyped
+debezium_sql_server_connector_metrics_Connected{server="192-168-1-51",task="0",context="streaming",} 1.0
+# HELP debezium_sql_server_connector_metrics_QueueTotalCapacity debezium.sql_server:name=null,type=connector-metrics,attribute=QueueTotalCapacity
+# TYPE debezium_sql_server_connector_metrics_QueueTotalCapacity untyped
+debezium_sql_server_connector_metrics_QueueTotalCapacity{server="192-168-1-51",task="0",context="snapshot",} 8192.0
+debezium_sql_server_connector_metrics_QueueTotalCapacity{server="192-168-1-51",task="0",context="streaming",} 8192.0
+# HELP debezium_sql_server_connector_metrics_SnapshotAborted debezium.sql_server:name=null,type=connector-metrics,attribute=SnapshotAborted
+# TYPE debezium_sql_server_connector_metrics_SnapshotAborted untyped
+debezium_sql_server_connector_metrics_SnapshotAborted{server="192-168-1-51",task="0",context="snapshot",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_TotalNumberOfCreateEventsSeen debezium.sql_server:name=null,type=connector-metrics,attribute=TotalNumberOfCreateEventsSeen
+# TYPE debezium_sql_server_connector_metrics_TotalNumberOfCreateEventsSeen untyped
+debezium_sql_server_connector_metrics_TotalNumberOfCreateEventsSeen{server="192-168-1-51",task="0",context="snapshot",database="inventory",} 0.0
+debezium_sql_server_connector_metrics_TotalNumberOfCreateEventsSeen{server="192-168-1-51",task="0",context="streaming",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_SnapshotDurationInSeconds debezium.sql_server:name=null,type=connector-metrics,attribute=SnapshotDurationInSeconds
+# TYPE debezium_sql_server_connector_metrics_SnapshotDurationInSeconds untyped
+debezium_sql_server_connector_metrics_SnapshotDurationInSeconds{server="192-168-1-51",task="0",context="snapshot",database="inventory",} 0.0
+# HELP debezium_sql_server_connector_metrics_MilliSecondsSinceLastEvent debezium.sql_server:name=null,type=connector-metrics,attribute=MilliSecondsSinceLastEvent
+# TYPE debezium_sql_server_connector_metrics_MilliSecondsSinceLastEvent untyped
+debezium_sql_server_connector_metrics_MilliSecondsSinceLastEvent{server="192-168-1-51",task="0",context="snapshot",database="inventory",} -1.0
+debezium_sql_server_connector_metrics_MilliSecondsSinceLastEvent{server="192-168-1-51",task="0",context="streaming",database="inventory",} -1.0
+# HELP debezium_sql_server_connector_metrics_RecoveryStartTime debezium.sql_server:name=null,type=connector-metrics,attribute=RecoveryStartTime
+# TYPE debezium_sql_server_connector_metrics_RecoveryStartTime untyped
+debezium_sql_server_connector_metrics_RecoveryStartTime{server="192-168-1-51",task="0",context="schema-history",} 1.751893658E9
+# HELP debezium_sql_server_connector_metrics_MilliSecondsBehindSource debezium.sql_server:name=null,type=connector-metrics,attribute=MilliSecondsBehindSource
+# TYPE debezium_sql_server_connector_metrics_MilliSecondsBehindSource untyped
+debezium_sql_server_connector_metrics_MilliSecondsBehindSource{server="192-168-1-51",task="0",context="streaming",database="inventory",} -1.0

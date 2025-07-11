@@ -47,3 +47,52 @@ export function buildMysqlConnectorConfig(
     },
   };
 }
+
+/*-- สร้าง Login บนระดับเซิร์ฟเวอร์
+USE master;
+GO
+CREATE LOGIN [cdc] WITH PASSWORD = 'P@ss1234';
+GO
+
+ALTER SERVER ROLE sysadmin ADD MEMBER [cdc];
+GO
+
+
+
+-- สลับไปยังฐานข้อมูลที่ต้องการเปิด CDC
+USE inventory;
+GO
+
+
+-- สร้าง User ในฐานข้อมูลนี้จาก Login
+CREATE USER [cdc] FOR LOGIN [cdc];
+GO
+
+-- เพิ่ม user นี้เข้าสู่ role db_owner
+ALTER ROLE db_owner ADD MEMBER [cdc];
+GO
+
+
+IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'inventory' AND is_cdc_enabled = 0)
+EXEC sys.sp_cdc_enable_db;
+
+-- Drop inventory
+USE master;
+ALTER DATABASE inventory SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+DROP DATABASE inventory;
+
+
+-- ถ้า schema มีอยู่ (อาจต้องลบ object ภายในก่อน)
+DROP SCHEMA cdc;
+
+-- ถ้า user มีอยู่
+DROP USER cdc;
+
+ALTER AUTHORIZATION ON SCHEMA::cdc  TO dbo;
+DROP USER IF EXISTS [cdc];
+
+SELECT name FROM sys.schemas
+WHERE principal_id = USER_ID('cdc');
+
+DROP LOGIN [cdc];
+*/

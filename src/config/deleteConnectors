@@ -1,0 +1,6 @@
+#bash
+for connector in $(curl -s http://localhost:8083/connectors | jq -r '.[]'); do
+  echo "Deleting connector: $connector"
+  curl -X DELETE http://localhost:8083/connectors/$connector
+  echo ""
+done

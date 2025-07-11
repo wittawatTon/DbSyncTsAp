@@ -1,0 +1,45 @@
+rules:
+  - pattern: 'kafka.server<type=(.+), name=(.+)PerSec\\w*><>Count'
+    name: kafka_server_$1_$2_total
+    type: COUNTER
+
+  - pattern: 'kafka.server<type=(.+), name=(.+)><>Value'
+    name: kafka_server_$1_$2
+    type: GAUGE
+
+  - pattern: 'debezium.connector\.(.+)<type=connector-metrics, context=(.+), server=(.+), key=(.+)><>(snapshot-status)'
+    name: debezium_connector_$1_snapshot_status
+    labels:
+      plugin: "$1"
+      context: "$2"
+      server: "$3"
+      key_name: "$4"
+    type: GAUGE
+
+  - pattern: 'debezium.connector\.(.+)<type=connector-metrics, context=(.+), server=(.+), key=(.+)><>(snapshot-total-records|source-record-send-total|error-total)'
+    name: debezium_connector_$1_$5
+    labels:
+      plugin: "$1"
+      context: "$2"
+      server: "$3"
+      key_name: "$4"
+    type: COUNTER
+
+  - pattern: 'debezium.connector\.(.+)<type=connector-metrics, context=(.+), server=(.+), key=(.+)><>(snapshot-duration-ms)'
+    name: debezium_connector_$1_snapshot_duration_milliseconds
+    labels:
+      plugin: "$1"
+      context: "$2"
+      server: "$3"
+      key_name: "$4"
+    type: GAUGE
+
+
+  - pattern: 'debezium.connector\.(.+)<type=connector-metrics, context=(.+), server=(.+), key=(.+)><>(source-record-poll-rate)'
+    name: debezium_connector_$1_replication_record_poll_rate
+    labels:
+      plugin: "$1"
+      context: "$2"
+      server: "$3"
+      key_name: "$4"
+    type: GAUGE

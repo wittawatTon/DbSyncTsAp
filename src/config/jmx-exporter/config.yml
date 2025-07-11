@@ -1,0 +1,9 @@
+startDelaySeconds: 0
+jmxUrl: service:jmx:rmi:///jndi/rmi://localhost:9999/jmxrmi
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+rules:
+  # Kafka server metrics (unchanged)
+  - pattern: 'kafka.server<type=(.+), name=(.+)PerSec\\w*><>Count'
+    name: kafka_server_$1_$2_total
+    type: COUNTER

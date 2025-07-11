@@ -1,0 +1,7 @@
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+whitelistObjectNames:
+  - "kafka*:*"
+rules:
+  - pattern: ".*"
+    drop: true

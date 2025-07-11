@@ -27,9 +27,10 @@ export const createSourceConnectJson = async (
 
   switch (sourceConnection.dbType) {
     case "mysql":
-      return buildMysqlConnectorConfig(sourceConnection, tables, serverId);
+      throw new Error(`❌ Unsupported dbType: ${sourceConnection.dbType}`);
+      //return buildMysqlConnectorConfig(sourceConnection, tables, serverId);
     case "mssql":
-      return buildMssqlConnectorConfig(sourceConnection, tables, serverId);
+      return buildMssqlConnectorConfig(pipeline.id, sourceConnection, tables, serverId);
     default:
       throw new Error(`❌ Unsupported dbType: ${sourceConnection.dbType}`);
   }

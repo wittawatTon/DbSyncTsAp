@@ -1,0 +1,6 @@
+#bash
+for connector in $(curl -s http://localhost:8083/connectors | jq -r '.[]'); do
+  echo "==== Config for $connector ===="
+  curl -s http://localhost:8083/connectors/$connector/config | jq
+  echo ""
+done

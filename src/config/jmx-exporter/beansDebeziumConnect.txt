@@ -1,0 +1,204 @@
+$>beans
+#domain = JMImplementation:
+JMImplementation:type=MBeanServerDelegate
+#domain = com.oracle.jdbc:
+com.oracle.jdbc:name=org.apache.kafka.connect.runtime.isolation.PluginClassLoader@56dc1551,type=diagnosability
+#domain = com.sun.management:
+com.sun.management:type=DiagnosticCommand
+com.sun.management:type=HotSpotDiagnostic
+#domain = debezium.sql_server:
+debezium.sql_server:context=schema-history,server=192_168_1_51,task=0,type=connector-metrics
+debezium.sql_server:context=snapshot,database=ReplicationLoadTest,server=192_168_1_51,task=0,type=connector-metrics
+debezium.sql_server:context=snapshot,server=192_168_1_51,task=0,type=connector-metrics
+debezium.sql_server:context=streaming,database=ReplicationLoadTest,server=192_168_1_51,task=0,type=connector-metrics
+debezium.sql_server:context=streaming,server=192_168_1_51,task=0,type=connector-metrics
+#domain = java.lang:
+java.lang:name=CodeCacheManager,type=MemoryManager
+java.lang:name=CodeHeap 'non-nmethods',type=MemoryPool
+java.lang:name=CodeHeap 'non-profiled nmethods',type=MemoryPool
+java.lang:name=CodeHeap 'profiled nmethods',type=MemoryPool
+java.lang:name=Compressed Class Space,type=MemoryPool
+java.lang:name=G1 Concurrent GC,type=GarbageCollector
+java.lang:name=G1 Eden Space,type=MemoryPool
+java.lang:name=G1 Old Gen,type=MemoryPool
+java.lang:name=G1 Old Generation,type=GarbageCollector
+java.lang:name=G1 Survivor Space,type=MemoryPool
+java.lang:name=G1 Young Generation,type=GarbageCollector
+java.lang:name=Metaspace Manager,type=MemoryManager
+java.lang:name=Metaspace,type=MemoryPool
+java.lang:type=ClassLoading
+java.lang:type=Compilation
+java.lang:type=Memory
+java.lang:type=OperatingSystem
+java.lang:type=Runtime
+java.lang:type=Threading
+#domain = java.nio:
+java.nio:name=direct,type=BufferPool
+java.nio:name=mapped - 'non-volatile memory',type=BufferPool
+java.nio:name=mapped,type=BufferPool
+#domain = java.util.logging:
+java.util.logging:type=Logging
+#domain = jdk.management.jfr:
+jdk.management.jfr:type=FlightRecorder
+#domain = kafka.admin.client:
+kafka.admin.client:client-id=1-shared-admin,node-id=node--1,type=admin-client-node-metrics
+kafka.admin.client:client-id=1-shared-admin,node-id=node-1,type=admin-client-node-metrics
+kafka.admin.client:client-id=1-shared-admin,type=admin-client-metrics
+kafka.admin.client:client-id=1-shared-admin,type=app-info
+kafka.admin.client:client-id=1-shared-admin,type=kafka-metrics-count
+kafka.admin.client:id=1-shared-admin,type=app-info
+#domain = kafka.connect:
+kafka.connect:client-id="connect-172.19.0.13:8083",node-id=node--1,type=connect-node-metrics
+kafka.connect:client-id="connect-172.19.0.13:8083",node-id=node-1,type=connect-node-metrics
+kafka.connect:client-id="connect-172.19.0.13:8083",node-id=node-2147483646,type=connect-node-metrics
+kafka.connect:client-id="connect-172.19.0.13:8083",type=app-info
+kafka.connect:client-id="connect-172.19.0.13:8083",type=connect-coordinator-metrics
+kafka.connect:client-id="connect-172.19.0.13:8083",type=connect-metrics
+kafka.connect:client-id="connect-172.19.0.13:8083",type=kafka-metrics-count
+kafka.connect:connector=sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2,task=0,type=connector-task-metrics
+kafka.connect:connector=sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2,task=0,type=sink-task-metrics
+kafka.connect:connector=sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2,task=0,type=task-error-metrics
+kafka.connect:connector=sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2,task=1,type=connector-task-metrics
+kafka.connect:connector=sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2,task=1,type=sink-task-metrics
+kafka.connect:connector=sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2,task=1,type=task-error-metrics
+kafka.connect:connector=sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2,task=2,type=connector-task-metrics
+kafka.connect:connector=sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2,task=2,type=sink-task-metrics
+kafka.connect:connector=sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2,task=2,type=task-error-metrics
+kafka.connect:connector=sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2,type=connect-worker-metrics
+kafka.connect:connector=sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2,type=connector-metrics
+kafka.connect:connector=source.192_168_1_51.replicationloadtest.dbo.686f61b61fdb853059b5d4c2,task=0,type=connector-task-metrics
+kafka.connect:connector=source.192_168_1_51.replicationloadtest.dbo.686f61b61fdb853059b5d4c2,task=0,type=source-task-metrics
+kafka.connect:connector=source.192_168_1_51.replicationloadtest.dbo.686f61b61fdb853059b5d4c2,task=0,type=task-error-metrics
+kafka.connect:connector=source.192_168_1_51.replicationloadtest.dbo.686f61b61fdb853059b5d4c2,type=connect-worker-metrics
+kafka.connect:connector=source.192_168_1_51.replicationloadtest.dbo.686f61b61fdb853059b5d4c2,type=connector-metrics
+kafka.connect:id="172.19.0.13:8083",type=app-info
+kafka.connect:id="connect-172.19.0.13:8083",type=app-info
+kafka.connect:type=app-info
+kafka.connect:type=connect-worker-metrics
+kafka.connect:type=connect-worker-rebalance-metrics
+kafka.connect:type=kafka-metrics-count
+#domain = kafka.consumer:
+kafka.consumer:client-id=1-configs,node-id=node--1,type=consumer-node-metrics
+kafka.consumer:client-id=1-configs,node-id=node-1,type=consumer-node-metrics
+kafka.consumer:client-id=1-configs,partition=0,topic=connect-configs,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-configs,topic=connect-configs,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-configs,type=app-info
+kafka.consumer:client-id=1-configs,type=consumer-coordinator-metrics
+kafka.consumer:client-id=1-configs,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-configs,type=consumer-metrics
+kafka.consumer:client-id=1-configs,type=kafka-metrics-count
+kafka.consumer:client-id=1-offsets,node-id=node--1,type=consumer-node-metrics
+kafka.consumer:client-id=1-offsets,node-id=node-1,type=consumer-node-metrics
+kafka.consumer:client-id=1-offsets,partition=0,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=1,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=10,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=11,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=12,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=13,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=14,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=15,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=16,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=17,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=18,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=19,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=2,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=20,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=21,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=22,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=23,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=24,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=3,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=4,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=5,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=6,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=7,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=8,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,partition=9,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,topic=connect-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,type=app-info
+kafka.consumer:client-id=1-offsets,type=consumer-coordinator-metrics
+kafka.consumer:client-id=1-offsets,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-offsets,type=consumer-metrics
+kafka.consumer:client-id=1-offsets,type=kafka-metrics-count
+kafka.consumer:client-id=1-statuses,node-id=node--1,type=consumer-node-metrics
+kafka.consumer:client-id=1-statuses,node-id=node-1,type=consumer-node-metrics
+kafka.consumer:client-id=1-statuses,partition=0,topic=connect-status,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-statuses,partition=1,topic=connect-status,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-statuses,partition=2,topic=connect-status,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-statuses,partition=3,topic=connect-status,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-statuses,partition=4,topic=connect-status,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-statuses,topic=connect-status,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-statuses,type=app-info
+kafka.consumer:client-id=1-statuses,type=consumer-coordinator-metrics
+kafka.consumer:client-id=1-statuses,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=1-statuses,type=consumer-metrics
+kafka.consumer:client-id=1-statuses,type=kafka-metrics-count
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-0,node-id=node--1,type=consumer-node-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-0,node-id=node-1,type=consumer-node-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-0,node-id=node-2147483646,type=consumer-node-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-0,partition=0,topic=192_168_1_51_ReplicationLoadTest_dbo_SalesDetails,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-0,topic=192_168_1_51_ReplicationLoadTest_dbo_SalesDetails,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-0,type=app-info
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-0,type=consumer-coordinator-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-0,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-0,type=consumer-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-0,type=kafka-metrics-count
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-1,node-id=node--1,type=consumer-node-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-1,node-id=node-1,type=consumer-node-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-1,node-id=node-2147483646,type=consumer-node-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-1,type=app-info
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-1,type=consumer-coordinator-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-1,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-1,type=consumer-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-1,type=kafka-metrics-count
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-2,node-id=node--1,type=consumer-node-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-2,node-id=node-1,type=consumer-node-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-2,node-id=node-2147483646,type=consumer-node-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-2,type=app-info
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-2,type=consumer-coordinator-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-2,type=consumer-fetch-manager-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-2,type=consumer-metrics
+kafka.consumer:client-id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-2,type=kafka-metrics-count
+kafka.consumer:id=1-configs,type=app-info
+kafka.consumer:id=1-offsets,type=app-info
+kafka.consumer:id=1-statuses,type=app-info
+kafka.consumer:id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-0,type=app-info
+kafka.consumer:id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-1,type=app-info
+kafka.consumer:id=connector-consumer-sink.192_168_1_51.ReplicationLoadTest.dbo.SalesDetails.686f61b61fdb853059b5d4c2-2,type=app-info
+#domain = kafka.producer:
+kafka.producer:client-id=1-configs,node-id=node--1,type=producer-node-metrics
+kafka.producer:client-id=1-configs,node-id=node-1,type=producer-node-metrics
+kafka.producer:client-id=1-configs,topic=connect-configs,type=producer-topic-metrics
+kafka.producer:client-id=1-configs,type=app-info
+kafka.producer:client-id=1-configs,type=kafka-metrics-count
+kafka.producer:client-id=1-configs,type=producer-metrics
+kafka.producer:client-id=1-offsets,node-id=node--1,type=producer-node-metrics
+kafka.producer:client-id=1-offsets,node-id=node-1,type=producer-node-metrics
+kafka.producer:client-id=1-offsets,topic=connect-offsets,type=producer-topic-metrics
+kafka.producer:client-id=1-offsets,type=app-info
+kafka.producer:client-id=1-offsets,type=kafka-metrics-count
+kafka.producer:client-id=1-offsets,type=producer-metrics
+kafka.producer:client-id=1-statuses,node-id=node--1,type=producer-node-metrics
+kafka.producer:client-id=1-statuses,node-id=node-1,type=producer-node-metrics
+kafka.producer:client-id=1-statuses,topic=connect-status,type=producer-topic-metrics
+kafka.producer:client-id=1-statuses,type=app-info
+kafka.producer:client-id=1-statuses,type=kafka-metrics-count
+kafka.producer:client-id=1-statuses,type=producer-metrics
+kafka.producer:client-id=192_168_1_51-schemahistory,node-id=node--1,type=producer-node-metrics
+kafka.producer:client-id=192_168_1_51-schemahistory,node-id=node-1,type=producer-node-metrics
+kafka.producer:client-id=192_168_1_51-schemahistory,topic=schema_history.replicationloadtest,type=producer-topic-metrics
+kafka.producer:client-id=192_168_1_51-schemahistory,type=app-info
+kafka.producer:client-id=192_168_1_51-schemahistory,type=kafka-metrics-count
+kafka.producer:client-id=192_168_1_51-schemahistory,type=producer-metrics
+kafka.producer:client-id=connector-producer-source.192_168_1_51.replicationloadtest.dbo.686f61b61fdb853059b5d4c2-0,node-id=node--1,type=producer-node-metrics
+kafka.producer:client-id=connector-producer-source.192_168_1_51.replicationloadtest.dbo.686f61b61fdb853059b5d4c2-0,node-id=node-1,type=producer-node-metrics
+kafka.producer:client-id=connector-producer-source.192_168_1_51.replicationloadtest.dbo.686f61b61fdb853059b5d4c2-0,topic=192_168_1_51,type=producer-topic-metrics
+kafka.producer:client-id=connector-producer-source.192_168_1_51.replicationloadtest.dbo.686f61b61fdb853059b5d4c2-0,topic=192_168_1_51.ReplicationLoadTest.dbo.SalesDetails,type=producer-topic-metrics
+kafka.producer:client-id=connector-producer-source.192_168_1_51.replicationloadtest.dbo.686f61b61fdb853059b5d4c2-0,type=app-info
+kafka.producer:client-id=connector-producer-source.192_168_1_51.replicationloadtest.dbo.686f61b61fdb853059b5d4c2-0,type=kafka-metrics-count
+kafka.producer:client-id=connector-producer-source.192_168_1_51.replicationloadtest.dbo.686f61b61fdb853059b5d4c2-0,type=producer-metrics
+kafka.producer:id=1-configs,type=app-info
+kafka.producer:id=1-offsets,type=app-info
+kafka.producer:id=1-statuses,type=app-info
+kafka.producer:id=192_168_1_51-schemahistory,type=app-info
+kafka.producer:id=connector-producer-source.192_168_1_51.replicationloadtest.dbo.686f61b61fdb853059b5d4c2-0,type=app-info

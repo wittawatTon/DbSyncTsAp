@@ -31,9 +31,10 @@ export const createSinkConnectJson = async (
 
   switch (targetConnection.dbType) {
     case "oracle":
-      return buildOracleSinkConnectorConfig(sourceConnection, targetConnection, tables);
+      return buildOracleSinkConnectorConfig(pipeline.id, sourceConnection, targetConnection, tables);
     case "mssql":
-      return buildMssqlSinkConnectorConfig(sourceConnection, targetConnection, tables);
+      throw new Error(`❌ Unsupported dbType: ${sourceConnection.dbType}`);
+      //return buildMssqlSinkConnectorConfig(pipeline,sourceConnection, targetConnection, tables);
     default:
       throw new Error(`❌ Unsupported dbType: ${sourceConnection.dbType}`);
   }

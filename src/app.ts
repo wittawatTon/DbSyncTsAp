@@ -3,7 +3,7 @@ import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import * as pinoHttpModule from 'pino-http';
 import helmet from 'helmet';
-import morgan from 'morgan';
+//import morgan from 'morgan';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -47,14 +47,74 @@ const app = express();
 
 const bootstrap = async () => {
   const logger = await setupLogger();
-  const loggerHttp = pinoHttp({ logger });
+  //const loggerHttp = pinoHttp({ logger });
+  const loggerHttp = pinoHttp({
+    logger,
+    customLogLevel: (res, err) => {
+      if (res.statusCode >= 500 || err) return 'error';
+      if (res.statusCode >= 400) return 'warn';
+      return 'info'; // หยุด log อื่น เช่น 200 OK
+    },
+    serializers: {
+      req(req) {
+        return {
+          method: req.method,
+          url: req.url,
+          body: req.body,
+          params: req.params,
+          query: req.query,
+        };
+      },
+      res(res) {
+        return {
+          statusCode: res.statusCode,
+        };
+      },
+    },
+  });
 
   // Middleware
   app.use(cors());
   app.use(helmet());
-  app.use(morgan('combined'));
+  //app.use(morgan('combined'));
   app.use(loggerHttp);
   app.use(express.json());
+
+  // API Input/Output Logger
+  app.use((req: Request, res: Response, next: NextFunction) => {
+    // Log only for non-GET or if body exists
+    if (req.method !== "GET" || Object.keys(req.body || {}).length > 0) {
+      req.log?.info({ body: req.body }, `➡️  API Input: ${req.method} ${req.originalUrl}`);
+    }
+
+    const chunks: Buffer[] = [];
+    const oldWrite = res.write;
+    const oldEnd = res.end;
+
+    res.write = function (chunk: any) {
+      if (chunk) chunks.push(Buffer.from(chunk));
+      return oldWrite.apply(res, arguments as any);
+    };
+
+    res.end = function (chunk: any) {
+      if (chunk) chunks.push(Buffer.from(chunk));
+      const body = Buffer.concat(chunks).toString('utf8');
+
+      // Log only JSON responses
+      if (res.getHeader('content-type')?.toString().includes('application/json')) {
+        try {
+          req.log?.info({ body: JSON.parse(body) }, `⬅️  API Output: ${req.method} ${req.originalUrl}`);
+        } catch (err) {
+          req.log?.info({ body }, `⬅️  API Output (non-JSON): ${req.method} ${req.originalUrl}`);
+        }
+      }
+
+      return oldEnd.apply(res, arguments as any);
+    };
+
+    next();
+  });
+
 
   app.use((req: Request, res: Response, next: NextFunction) => {
     res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
@@ -64,18 +124,6 @@ const bootstrap = async () => {
     next();
   });
 
-  // API Input/Output Logger
-  app.use((req: Request, res: Response, next: NextFunction) => {
-    req.log?.info({ body: req.body }, `API Input: ${req.method} ${req.originalUrl}`);
-
-    const oldSend = res.send.bind(res);
-    res.send = function (body?: any): Response {
-      req.log?.info({ body }, `API Output: ${req.method} ${req.originalUrl}`);
-      return oldSend(body);
-    };
-
-    next();
-  });
 
   // Routes
   const authRoutes = (await import('@routes/authRoutes.js')).default;
@@ -99,6 +147,8 @@ const bootstrap = async () => {
       stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
     });
   });
+
+
 
   // Serve frontend
   app.use(express.static(

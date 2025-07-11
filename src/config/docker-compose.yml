@@ -1,0 +1,234 @@
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    mem_limit: 2g
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      KAFKA_HEAP_OPTS: "-Xmx256M -Xms128M"
+    ports:
+      - "2181:2181"
+    networks:
+      - kafka-net
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    mem_limit: 3g
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+      - "9093:9093"
+      #- "9999:9999"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_HOST://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.1.51:9092,PLAINTEXT_HOST://localhost:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_HEAP_OPTS: "-Xmx2G -Xms1G"
+      #KAFKA_OPTS: "-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.3.0.jar=7071:/opt/jmx-exporter/kafka.yml"
+      #KAFKA_JMX_PORT: 9999
+      #KAFKA_JMX_HOSTNAME: 192.168.1.51
+      #KAFKA_JMX_OPTS: >-
+      #  -Dcom.sun.management.jmxremote
+      #  -Dcom.sun.management.jmxremote.authenticate=false
+      #  -Dcom.sun.management.jmxremote.ssl=false
+      #  -Dcom.sun.management.jmxremote.rmi.port=9010
+      #  -Dcom.sun.management.jmxremote.rmi.port=9999
+      #  -Djava.rmi.server.hostname=kafka
+    #volumes:
+      #- ./jmx-exporter:/opt/jmx-exporter
+    networks:
+      - kafka-net
+
+  connect:
+    image: quay.io/debezium/connect:3.1.3.Final
+    restart: always
+    mem_limit: 1g
+    container_name: connect
+    depends_on:
+      - kafka
+    ports:
+      - "8083:8083"
+      - "9010:9010"
+      - "7073:7073"	  
+    environment:
+      BOOTSTRAP_SERVERS: kafka:9092
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: connect-configs
+      OFFSET_STORAGE_TOPIC: connect-offsets
+      STATUS_STORAGE_TOPIC: connect-status
+      KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      INTERNAL_KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      INTERNAL_VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      METRICS_REPORTER_CLASSES: io.debezium.metrics.JmxReporter
+      CONNECT_PLUGIN_PATH: /kafka/connect
+      CONNECT_LOG4J_CONFIG: file:/etc/kafka/connect-log4j.properties
+      KAFKA_OPTS: "-javaagent:/opt/jmx-exporter/jmx_prometheus_javaagent-1.3.0.jar=7073:/opt/jmx-exporter/debezium.yaml"
+      KAFKA_JMX_PORT: 7073
+      KAFKA_JMX_HOSTNAME: 192.168.1.51
+      KAFKA_JMX_OPTS: >-
+        -Dcom.sun.management.jmxremote
+        -Dcom.sun.management.jmxremote.authenticate=false
+        -Dcom.sun.management.jmxremote.ssl=false
+        -Dcom.sun.management.jmxremote.rmi.port=9010
+        -Dcom.sun.management.jmxremote.port=9010
+        -Djava.rmi.server.hostname=192.168.1.51
+    volumes:
+      - ./plugins:/kafka/connect
+      - ./jmx-exporter:/opt/jmx-exporter
+    networks:
+      - kafka-net
+
+
+
+  jmx-proxy1:
+    image: alpine/socat
+    depends_on:
+      - kafka
+    command:
+      - TCP-LISTEN:7072,fork,reuseaddr
+      - TCP:kafka:7071
+    ports:
+      - "7072:7072"
+    networks:
+      - kafka-net
+
+
+  jmx-proxy2:
+    image: alpine/socat
+    depends_on:
+      - kafka
+    command:
+      - TCP-LISTEN:7074,fork,reuseaddr
+      - TCP:connect:7073
+    ports:
+      - "7074:7074"
+    networks:
+      - kafka-net
+
+  oracle:
+    image: oracle/database:21.3.0-xe
+    container_name: oracle
+    environment:
+      ORACLE_PASSWORD: Oracle123
+    ports:
+      - "1521:1521"
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+      - ./oracle-arch:/opt/oracle/homes/OraDBHome21cXE/dbs/arch
+    networks:
+      - kafka-net
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    mem_limit: 2g
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: debezium
+      MYSQL_PASSWORD: dbz
+      MYSQL_DATABASE: testdb
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - kafka-net
+
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql
+    mem_limit: 3g
+    ports:
+      - "1433:1433"
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: YourStrongPassword123
+    volumes:
+      - mssql_data:/var/opt/mssql
+    networks:
+      - kafka-net
+
+  mongodb:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./mongodb_data:/data/db
+    networks:
+      - kafka-net
+
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: debezium
+      POSTGRES_PASSWORD: dbz
+      POSTGRES_DB: testdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - kafka-net
+
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    mem_limit: 512m
+    ports:
+      - "8084:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+      KAFKA_CLUSTERS_0_ZOOKEEPER: zookeeper:2181
+    depends_on:
+      - kafka
+      - zookeeper
+    networks:
+      - kafka-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=3d'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - kafka-net
+
+  grafana:
+    image: grafana/grafana-oss:10.2.3
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - kafka-net
+
+networks:
+  kafka-net:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  mssql_data:
+  mongodb_data:
+  grafana_data:
+  oracle_data:
+  postgres_data:

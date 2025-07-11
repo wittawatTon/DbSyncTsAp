@@ -1,0 +1,8 @@
+#bash
+connectors=$(curl -s http://localhost:8083/connectors)
+
+# loop restart ทีละตัว
+for connector in $(echo $connectors | jq -r '.[]'); do
+  echo "Restarting connector: $connector"
+  curl -X POST http://localhost:8083/connectors/$connector/restart
+done

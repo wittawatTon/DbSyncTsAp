@@ -1,0 +1,93 @@
+Load Test1 ---------------------------------------------------
+2M recorded source only ประมาณ  2 นาที 44.497 วินาที (err first 147170 records no start time) แต่ jvm 39 วินาที
+
+2025-07-08 10:34:26,658 INFO   SQL_Server|192-168-1-51|snapshot          Exported 147170 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:00:10.213   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:34:36,794 INFO   SQL_Server|192-168-1-51|snapshot          Exported 302818 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:00:20.349   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:34:40,628 INFO   ||  WorkerSourceTask{id=replicationloadtest_1751970814932-0} Committing offsets for 841732 acknowledged messages   [org.apache.kafka.connect.runtime.WorkerSourceTask]
+2025-07-08 10:34:46,842 INFO   SQL_Server|192-168-1-51|snapshot          Exported 448226 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:00:30.397   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:34:55,666 INFO   ||  552960 records sent during previous 00:00:40.021, last recorded offset of {server=192-168-1-51, database=ReplicationLoadTest} partition is {commit_lsn=NULL, snapshot=INITIAL, snapshot_completed=false}   [io.debezium.connector.common.BaseSourceTask]
+2025-07-08 10:34:59,028 INFO   SQL_Server|192-168-1-51|snapshot          Exported 556770 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:00:42.583   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:35:09,132 INFO   SQL_Server|192-168-1-51|snapshot          Exported 634594 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:00:52.687   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:35:19,241 INFO   SQL_Server|192-168-1-51|snapshot          Exported 718562 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:01:02.796   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:35:29,340 INFO   SQL_Server|192-168-1-51|snapshot          Exported 800482 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:01:12.895   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:35:39,391 INFO   SQL_Server|192-168-1-51|snapshot          Exported 888546 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:01:22.946   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:35:40,633 INFO   ||  WorkerSourceTask{id=replicationloadtest_1751970814932-0} Committing offsets for 536575 acknowledged messages   [org.apache.kafka.connect.runtime.WorkerSourceTask]
+2025-07-08 10:35:49,516 INFO   SQL_Server|192-168-1-51|snapshot          Exported 966370 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:01:33.071   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:35:59,577 INFO   SQL_Server|192-168-1-51|snapshot          Exported 1064674 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:01:43.132   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:36:09,658 INFO   SQL_Server|192-168-1-51|snapshot          Exported 1150690 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:01:53.213   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:36:15,717 INFO   ||  643072 records sent during previous 00:01:20.051, last recorded offset of {server=192-168-1-51, database=ReplicationLoadTest} partition is {commit_lsn=NULL, snapshot=INITIAL, snapshot_completed=false}   [io.debezium.connector.common.BaseSourceTask]
+2025-07-08 10:36:19,670 INFO   SQL_Server|192-168-1-51|snapshot          Exported 1244898 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:02:03.225   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:36:29,671 INFO   SQL_Server|192-168-1-51|snapshot          Exported 1377452 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:02:13.226   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:36:39,765 INFO   SQL_Server|192-168-1-51|snapshot          Exported 1527522 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:02:23.32   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:36:41,176 INFO   ||  WorkerSourceTask{id=replicationloadtest_1751970814932-0} Committing offsets for 649220 acknowledged messages   [org.apache.kafka.connect.runtime.WorkerSourceTask]
+2025-07-08 10:36:49,874 INFO   SQL_Server|192-168-1-51|snapshot          Exported 1679074 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:02:33.429   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:36:59,936 INFO   SQL_Server|192-168-1-51|snapshot          Exported 1828578 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:02:43.491   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:37:10,030 INFO   SQL_Server|192-168-1-51|snapshot          Exported 1982178 records for table 'ReplicationLoadTest.dbo.SalesDetails' after 00:02:53.585   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+2025-07-08 10:37:11,155 INFO   SQL_Server|192-168-1-51|snapshot          Finished exporting 2000000 records for table 'ReplicationLoadTest.dbo.SalesDetails' (2 of 2 tables); total duration '00:02:54.71'   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+
+
+Load Test2 ---------------------------------------------------
+จำนวนข้อมูล: 4 ล้านเรคคอร์ด ข้อมูล 147 M
+เวลารวมจากเริ่ม snapshot ถึง sink เขียนเรคคอร์ดสุดท้าย:
+➡️ ประมาณ 13 นาที 30 วินาที
+
+⏳ ใช้เวลา snapshot ทั้งหมด: 5 นาที 51.138 วินาที
+
+
+2025-07-08 12:10:35,746 INFO   SQL_Server|192-168-1-51|snapshot  Exporting data from table 'ReplicationLoadTest.dbo.SalesDetails' (1 of 1 tables)   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+
+2025-07-08 12:16:26,884 INFO   SQL_Server|192-168-1-51|snapshot          Finished exporting 4000000 records for table 'ReplicationLoadTest.dbo.SalesDetails' (1 of 1 tables); total duration '00:05:51.138'   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+
+last sink  4000000
+2025-07-08 12:24:05,776 INFO   ||  Successfully wrote 175 records.   [io.confluent.connect.jdbc.sink.JdbcSinkTask]
+
+Load Test3 ---------------------------------------------------
+MSSQL-> Oracle
+จำนวนข้อมูลทั้งหมด: 1,000,000 records
+
+📤 เวลารวมตั้งแต่เริ่ม snapshot จนถึง sink เขียน record สุดท้าย:
+ประมาณ 13 นาที 30 วินาที
+
+⏳ ระยะเวลา Snapshot (เฉพาะขั้นตอน export จาก source):
+1 นาที 8.514 วินาที
+
+2025-07-08 14:25:58,301 INFO   SQL_Server|192-168-1-51|snapshot  According to the connector configuration both schema and data will be snapshot.   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+
+2025-07-08 14:44:32,301 INFO   SQL_Server|192-168-1-51|snapshot          Finished exporting 1000000 records for table 'ReplicationLoadTest.dbo.SalesDetails' (1 of 1 tables); total duration '00:01:08.514'   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+
+
+last sink  1000000
+2025-07-08 14:45:13,713 INFO   ||  Successfully wrote 265 records.   [io.confluent.connect.jdbc.sink.JdbcSinkTask]
+
+
+
+Load Test4 ---------------------------------------------------
+MSSQL-> Oracle
+จำนวนข้อมูลทั้งหมด: 100,000 records
+
+
+📤 เวลารวมตั้งแต่เริ่ม snapshot จนถึง sink เขียน record สุดท้าย:
+ประมาณ 17 วินาที
+
+⏳ ระยะเวลา Snapshot (เฉพาะขั้นตอน export จาก source):
+10 วินาที
+
+2025-07-09 09:51:57,233 INFO   SQL_Server|192-168-1-51|snapshot  Creating snapshot worker pool with 1 worker thread(s)   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+
+2025-07-09 09:52:06,939 INFO   SQL_Server|192-168-1-51|snapshot          Finished exporting 100000 records for table 'ReplicationLoadTest.dbo.SalesDetails' (1 of 1 tables); total duration '00:00:09.703'   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+
+last sink  100000
+2025-07-09 09:52:13,920 INFO   ||  Successfully wrote 10 records.   [io.confluent.connect.jdbc.sink.JdbcSinkTask]
+
+
+Load Test5 ---------------------------------------------------
+MSSQL-> Oracle
+จำนวนข้อมูลทั้งหมด: 1,000,000 records ข้อมูล 37 M
+⏱️ รวม = 1 นาที 54.320 วินาที
+
+⏱️ ระยะเวลา Snapshot = 1 นาที 13.667 วินาที (ตาม log ก็ระบุไว้ว่า 00:01:13.664)
+2025-07-09 10:11:14,740 INFO   SQL_Server|192-168-1-51|snapshot  Creating snapshot worker pool with 1 worker thread(s)   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+
+2025-07-09 10:12:28,407 INFO   SQL_Server|192-168-1-51|snapshot          Finished exporting 1000000 records for table 'ReplicationLoadTest.dbo.SalesDetails' (1 of 1 tables); total duration '00:01:13.664'   [io.debezium.relational.RelationalSnapshotChangeEventSource]
+
+2025-07-09 10:13:09,060 INFO   ||  Successfully wrote 304 records.   [io.confluent.connect.jdbc.sink.JdbcSinkTask]

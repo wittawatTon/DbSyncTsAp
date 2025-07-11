@@ -2,16 +2,19 @@ import { IDebeziumConnectorConfig } from "@core/models/type.js";
 import { ConnectionConfigDocument } from "@core/models/dbConnection.model.js";
 import { TableDocument } from "@core/models/tableWithMap.model.js";
 
+
 /* Sink to Oracle */
 export function buildOracleSinkConnectorConfig(
+  pipelineId: string,
   source: ConnectionConfigDocument,
   target: ConnectionConfigDocument,
   tables: TableDocument[],
 ): IDebeziumConnectorConfig {
-  const topicPrefix = source.host.replace(/\./g, "-");
+  const topicPrefix = source.host.replace(/\./g, "_");
   const database = source.database;
   const schema = source.dbSchema || "dbo";
 
+  
   const selectedTables = tables.filter(t => t.isSelected);
 
   const tableTopics = selectedTables.map(
@@ -19,11 +22,20 @@ export function buildOracleSinkConnectorConfig(
   );
 
   return {
-    name: `${target.database.replace(/\s+/g, '_').toLowerCase()}_${Date.now()}`,
+    name: `sink.${tableTopics.join(",")}.${pipelineId}`,
     config: {
       "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
       "dialect.name": "OracleDatabaseDialect",
-      "tasks.max": "1",
+      "tasks.max": "3",           
+      "max.retries": "10",             
+      "retry.backoff.ms": "1000",      
+
+      "max.poll.records": "750",
+      "consumer.fetch.max.bytes": "104857600",
+      "batch.size": "500", 
+      "linger.ms": "80",
+      "flush.size": "1500",
+
 
       "connection.url": `jdbc:oracle:thin:@//${target.host}:${target.port}/${target.database}`,
       "connection.user": target.username,
@@ -31,7 +43,7 @@ export function buildOracleSinkConnectorConfig(
 
       "insert.mode": "upsert",
       "pk.mode": "record_key",
-      "pk.fields": "id",
+      "pk.fields": "DetailID",
 
       // ปิด auto create/evolve ถ้าเราสร้าง table เอง (เช่น ปรับชนิด date/decimal)
       "auto.create": "false",

@@ -1,0 +1,688 @@
+# HELP kafka_server_socket_server_metrics_successful_reauthentication_rate The number of successful re-authentication of connections per second kafka.server:name=null,type=socket-server-metrics,attribute=successful-reauthentication-rate
+# TYPE kafka_server_socket_server_metrics_successful_reauthentication_rate untyped
+# HELP kafka_server_txn_marker_channel_metrics_connection_close_rate The number of connections closed per second kafka.server:name=null,type=txn-marker-channel-metrics,attribute=connection-close-rate
+# TYPE kafka_server_txn_marker_channel_metrics_connection_close_rate untyped
+# HELP kafka_server_sessionexpirelistener_fiveminuterate Attribute exposed for management kafka.server:name=ZooKeeperDisconnectsPerSec,type=SessionExpireListener,attribute=FiveMinuteRate
+# TYPE kafka_server_sessionexpirelistener_fiveminuterate untyped
+# HELP kafka_server_zookeeperclientmetrics_mean Attribute exposed for management kafka.server:name=ZooKeeperRequestLatencyMs,type=ZooKeeperClientMetrics,attribute=Mean
+# TYPE kafka_server_zookeeperclientmetrics_mean untyped
+# HELP kafka_server_forwarding_metrics_failed_reauthentication_rate The number of failed re-authentication of connections per second kafka.server:name=null,type=forwarding-metrics,attribute=failed-reauthentication-rate
+# TYPE kafka_server_forwarding_metrics_failed_reauthentication_rate untyped
+# HELP kafka_server_kafka_metrics_count_count total number of registered metrics kafka.server:name=null,type=kafka-metrics-count,attribute=count
+# TYPE kafka_server_kafka_metrics_count_count untyped
+# HELP kafka_server_socket_server_metrics_io_ratio *Deprecated* The fraction of time the I/O thread spent doing I/O kafka.server:name=null,type=socket-server-metrics,attribute=io-ratio
+# TYPE kafka_server_socket_server_metrics_io_ratio untyped
+# HELP kafka_server_controller_channel_metrics_request_size_avg The average size of requests sent. kafka.server:name=null,type=controller-channel-metrics,attribute=request-size-avg
+# TYPE kafka_server_controller_channel_metrics_request_size_avg untyped
+# HELP kafka_controller_controllerchannelmanager_stddev Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=StdDev
+# TYPE kafka_controller_controllerchannelmanager_stddev untyped
+# HELP kafka_server_forwarding_metrics_response_total The total number of responses received kafka.server:name=null,type=forwarding-metrics,attribute=response-total
+# TYPE kafka_server_forwarding_metrics_response_total untyped
+# HELP kafka_server_replicafetchermanager_value Attribute exposed for management kafka.server:name=FailedPartitionsCount,type=ReplicaFetcherManager,attribute=Value
+# TYPE kafka_server_replicafetchermanager_value untyped
+# HELP kafka_server_txn_marker_channel_metrics_io_wait_time_ns_avg The average length of time the I/O thread spent waiting for a socket ready for reads or writes in nanoseconds. kafka.server:name=null,type=txn-marker-channel-metrics,attribute=io-wait-time-ns-avg
+# TYPE kafka_server_txn_marker_channel_metrics_io_wait_time_ns_avg untyped
+# HELP kafka_log_log_value Attribute exposed for management kafka.log:name=LogStartOffset,type=Log,attribute=Value
+# TYPE kafka_log_log_value untyped
+# HELP kafka_controller_controllerchannelmanager_value Attribute exposed for management kafka.controller:name=TotalQueueSize,type=ControllerChannelManager,attribute=Value
+# TYPE kafka_controller_controllerchannelmanager_value untyped
+# HELP kafka_server_delayedfetchmetrics_fiveminuterate Attribute exposed for management kafka.server:name=ExpiresPerSec,type=DelayedFetchMetrics,attribute=FiveMinuteRate
+# TYPE kafka_server_delayedfetchmetrics_fiveminuterate untyped
+# HELP kafka_log_logmanager_value Attribute exposed for management kafka.log:name=OfflineLogDirectoryCount,type=LogManager,attribute=Value
+# TYPE kafka_log_logmanager_value untyped
+# HELP kafka_server_socket_server_metrics_reauthentication_latency_max The max latency observed due to re-authentication kafka.server:name=null,type=socket-server-metrics,attribute=reauthentication-latency-max
+# TYPE kafka_server_socket_server_metrics_reauthentication_latency_max untyped
+# HELP kafka_server_forwarding_metrics_request_size_max The maximum size of any request sent. kafka.server:name=null,type=forwarding-metrics,attribute=request-size-max
+# TYPE kafka_server_forwarding_metrics_request_size_max untyped
+# HELP kafka_server_group_coordinator_metrics_offset_deletion_count The total number of administrative deleted offsets kafka.server:name=null,type=group-coordinator-metrics,attribute=offset-deletion-count
+# TYPE kafka_server_group_coordinator_metrics_offset_deletion_count untyped
+# HELP kafka_server_socket_server_metrics_select_rate The number of times the I/O layer checked for new I/O to perform per second kafka.server:name=null,type=socket-server-metrics,attribute=select-rate
+# TYPE kafka_server_socket_server_metrics_select_rate untyped
+# HELP kafka_server_socket_server_metrics_connection_accept_rate Tracking rate of accepting new connections (per second) kafka.server:name=null,type=socket-server-metrics,attribute=connection-accept-rate
+# TYPE kafka_server_socket_server_metrics_connection_accept_rate untyped
+# HELP kafka_server_socket_server_metrics_request_size_avg The average size of requests sent. kafka.server:name=null,type=socket-server-metrics,attribute=request-size-avg
+# TYPE kafka_server_socket_server_metrics_request_size_avg untyped
+# HELP kafka_server_brokertopicmetrics_meanrate Attribute exposed for management kafka.server:name=TotalFetchRequestsPerSec,type=BrokerTopicMetrics,attribute=MeanRate
+# TYPE kafka_server_brokertopicmetrics_meanrate untyped
+# HELP kafka_server_socket_server_metrics_memorypoolavgdepletedpercent  kafka.server:name=null,type=socket-server-metrics,attribute=MemoryPoolAvgDepletedPercent
+# TYPE kafka_server_socket_server_metrics_memorypoolavgdepletedpercent untyped
+# HELP kafka_server_controller_channel_metrics_request_rate The number of requests sent per second kafka.server:name=null,type=controller-channel-metrics,attribute=request-rate
+# TYPE kafka_server_controller_channel_metrics_request_rate untyped
+# HELP kafka_server_forwarding_metrics_successful_authentication_no_reauth_total The total number of connections with successful authentication where the client does not support re-authentication kafka.server:name=null,type=forwarding-metrics,attribute=successful-authentication-no-reauth-total
+# TYPE kafka_server_forwarding_metrics_successful_authentication_no_reauth_total untyped
+# HELP kafka_server_alter_partition_metrics_failed_reauthentication_total The total number of failed re-authentication of connections kafka.server:name=null,type=alter-partition-metrics,attribute=failed-reauthentication-total
+# TYPE kafka_server_alter_partition_metrics_failed_reauthentication_total untyped
+# HELP kafka_server_controller_channel_metrics_connection_creation_total The total number of new connections established kafka.server:name=null,type=controller-channel-metrics,attribute=connection-creation-total
+# TYPE kafka_server_controller_channel_metrics_connection_creation_total untyped
+# HELP kafka_server_txn_marker_channel_metrics_select_rate The number of times the I/O layer checked for new I/O to perform per second kafka.server:name=null,type=txn-marker-channel-metrics,attribute=select-rate
+# TYPE kafka_server_txn_marker_channel_metrics_select_rate untyped
+# HELP kafka_server_socket_server_metrics_connection_count The current number of active connections. kafka.server:name=null,type=socket-server-metrics,attribute=connection-count
+# TYPE kafka_server_socket_server_metrics_connection_count untyped
+# HELP kafka_server_controller_channel_metrics_io_waittime_total *Deprecated* The total time the I/O thread spent waiting kafka.server:name=null,type=controller-channel-metrics,attribute=io-waittime-total
+# TYPE kafka_server_controller_channel_metrics_io_waittime_total untyped
+# HELP kafka_server_forwarding_metrics_failed_authentication_rate The number of connections with failed authentication per second kafka.server:name=null,type=forwarding-metrics,attribute=failed-authentication-rate
+# TYPE kafka_server_forwarding_metrics_failed_authentication_rate untyped
+# HELP kafka_controller_controllerstats_mean Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=Mean
+# TYPE kafka_controller_controllerstats_mean untyped
+# HELP kafka_controller_controllerchannelmanager_min Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=Min
+# TYPE kafka_controller_controllerchannelmanager_min untyped
+# HELP kafka_server_forwarding_metrics_io_time_ns_total The total time the I/O thread spent doing I/O kafka.server:name=null,type=forwarding-metrics,attribute=io-time-ns-total
+# TYPE kafka_server_forwarding_metrics_io_time_ns_total untyped
+# HELP kafka_server_alter_partition_metrics_incoming_byte_total The total number of bytes read off all sockets kafka.server:name=null,type=alter-partition-metrics,attribute=incoming-byte-total
+# TYPE kafka_server_alter_partition_metrics_incoming_byte_total untyped
+# HELP kafka_server_forwarding_metrics_successful_reauthentication_total The total number of successful re-authentication of connections kafka.server:name=null,type=forwarding-metrics,attribute=successful-reauthentication-total
+# TYPE kafka_server_forwarding_metrics_successful_reauthentication_total untyped
+# HELP kafka_server_forwarding_metrics_iotime_total *Deprecated* The total time the I/O thread spent doing I/O kafka.server:name=null,type=forwarding-metrics,attribute=iotime-total
+# TYPE kafka_server_forwarding_metrics_iotime_total untyped
+# HELP kafka_server_controller_channel_metrics_reauthentication_latency_avg The average latency observed due to re-authentication kafka.server:name=null,type=controller-channel-metrics,attribute=reauthentication-latency-avg
+# TYPE kafka_server_controller_channel_metrics_reauthentication_latency_avg untyped
+# HELP kafka_server_txn_marker_channel_metrics_iotime_total *Deprecated* The total time the I/O thread spent doing I/O kafka.server:name=null,type=txn-marker-channel-metrics,attribute=iotime-total
+# TYPE kafka_server_txn_marker_channel_metrics_iotime_total untyped
+# HELP kafka_server_socket_server_metrics_failed_reauthentication_total The total number of failed re-authentication of connections kafka.server:name=null,type=socket-server-metrics,attribute=failed-reauthentication-total
+# TYPE kafka_server_socket_server_metrics_failed_reauthentication_total untyped
+# HELP kafka_controller_controllerchannelmanager_count Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=Count
+# TYPE kafka_controller_controllerchannelmanager_count untyped
+# HELP kafka_server_txn_marker_channel_metrics_io_wait_ratio *Deprecated* The fraction of time the I/O thread spent waiting kafka.server:name=null,type=txn-marker-channel-metrics,attribute=io-wait-ratio
+# TYPE kafka_server_txn_marker_channel_metrics_io_wait_ratio untyped
+# HELP kafka_controller_controllerchannelmanager_50thpercentile Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=50thPercentile
+# TYPE kafka_controller_controllerchannelmanager_50thpercentile untyped
+# HELP kafka_server_forwarding_metrics_reauthentication_latency_avg The average latency observed due to re-authentication kafka.server:name=null,type=forwarding-metrics,attribute=reauthentication-latency-avg
+# TYPE kafka_server_forwarding_metrics_reauthentication_latency_avg untyped
+# HELP kafka_network_requestmetrics_fifteenminuterate Attribute exposed for management kafka.network:name=ErrorsPerSec,type=RequestMetrics,attribute=FifteenMinuteRate
+# TYPE kafka_network_requestmetrics_fifteenminuterate untyped
+# HELP kafka_server_alter_partition_metrics_failed_authentication_rate The number of connections with failed authentication per second kafka.server:name=null,type=alter-partition-metrics,attribute=failed-authentication-rate
+# TYPE kafka_server_alter_partition_metrics_failed_authentication_rate untyped
+# HELP kafka_server_app_info_starttimems Attribute exposed for management kafka.server:name=null,type=app-info,attribute=StartTimeMs
+# TYPE kafka_server_app_info_starttimems untyped
+# HELP kafka_server_txn_marker_channel_metrics_request_size_max The maximum size of any request sent. kafka.server:name=null,type=txn-marker-channel-metrics,attribute=request-size-max
+# TYPE kafka_server_txn_marker_channel_metrics_request_size_max untyped
+# HELP kafka_network_requestmetrics_50thpercentile Attribute exposed for management kafka.network:name=ResponseQueueTimeMs,type=RequestMetrics,attribute=50thPercentile
+# TYPE kafka_network_requestmetrics_50thpercentile untyped
+# HELP kafka_server_txn_marker_channel_metrics_successful_authentication_total The total number of connections with successful authentication kafka.server:name=null,type=txn-marker-channel-metrics,attribute=successful-authentication-total
+# TYPE kafka_server_txn_marker_channel_metrics_successful_authentication_total untyped
+# HELP kafka_server_socket_server_metrics_failed_authentication_total The total number of connections with failed authentication kafka.server:name=null,type=socket-server-metrics,attribute=failed-authentication-total
+# TYPE kafka_server_socket_server_metrics_failed_authentication_total untyped
+# HELP kafka_server_sessionexpirelistener_count Attribute exposed for management kafka.server:name=ZooKeeperDisconnectsPerSec,type=SessionExpireListener,attribute=Count
+# TYPE kafka_server_sessionexpirelistener_count untyped
+# HELP kafka_server_alter_partition_metrics_select_total The total number of times the I/O layer checked for new I/O to perform kafka.server:name=null,type=alter-partition-metrics,attribute=select-total
+# TYPE kafka_server_alter_partition_metrics_select_total untyped
+# HELP kafka_controller_controllerstats_50thpercentile Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=50thPercentile
+# TYPE kafka_controller_controllerstats_50thpercentile untyped
+# HELP kafka_server_socket_server_metrics_successful_reauthentication_total The total number of successful re-authentication of connections kafka.server:name=null,type=socket-server-metrics,attribute=successful-reauthentication-total
+# TYPE kafka_server_socket_server_metrics_successful_reauthentication_total untyped
+# HELP kafka_server_forwarding_metrics_connection_creation_total The total number of new connections established kafka.server:name=null,type=forwarding-metrics,attribute=connection-creation-total
+# TYPE kafka_server_forwarding_metrics_connection_creation_total untyped
+# HELP kafka_server_txn_marker_channel_metrics_outgoing_byte_rate The number of outgoing bytes sent to all servers per second kafka.server:name=null,type=txn-marker-channel-metrics,attribute=outgoing-byte-rate
+# TYPE kafka_server_txn_marker_channel_metrics_outgoing_byte_rate untyped
+# HELP kafka_server_socket_server_metrics_expired_connections_killed_count  kafka.server:name=null,type=socket-server-metrics,attribute=expired-connections-killed-count
+# TYPE kafka_server_socket_server_metrics_expired_connections_killed_count untyped
+# HELP kafka_server_forwarding_metrics_io_waittime_total *Deprecated* The total time the I/O thread spent waiting kafka.server:name=null,type=forwarding-metrics,attribute=io-waittime-total
+# TYPE kafka_server_forwarding_metrics_io_waittime_total untyped
+# HELP kafka_server_alter_partition_metrics_io_time_ns_avg The average length of time for I/O per select call in nanoseconds. kafka.server:name=null,type=alter-partition-metrics,attribute=io-time-ns-avg
+# TYPE kafka_server_alter_partition_metrics_io_time_ns_avg untyped
+# HELP kafka_server_alter_partition_metrics_failed_authentication_total The total number of connections with failed authentication kafka.server:name=null,type=alter-partition-metrics,attribute=failed-authentication-total
+# TYPE kafka_server_alter_partition_metrics_failed_authentication_total untyped
+# HELP kafka_server_group_coordinator_metrics_offset_commit_rate The rate of committed offsets kafka.server:name=null,type=group-coordinator-metrics,attribute=offset-commit-rate
+# TYPE kafka_server_group_coordinator_metrics_offset_commit_rate untyped
+# HELP kafka_server_socket_server_metrics_failed_authentication_rate The number of connections with failed authentication per second kafka.server:name=null,type=socket-server-metrics,attribute=failed-authentication-rate
+# TYPE kafka_server_socket_server_metrics_failed_authentication_rate untyped
+# HELP kafka_server_sessionexpirelistener_meanrate Attribute exposed for management kafka.server:name=ZooKeeperDisconnectsPerSec,type=SessionExpireListener,attribute=MeanRate
+# TYPE kafka_server_sessionexpirelistener_meanrate untyped
+# HELP kafka_server_socket_server_metrics_broker_connection_accept_rate Tracking rate of accepting new connections (per second) kafka.server:name=null,type=socket-server-metrics,attribute=broker-connection-accept-rate
+# TYPE kafka_server_socket_server_metrics_broker_connection_accept_rate untyped
+# HELP kafka_server_transaction_coordinator_metrics_partition_load_time_avg The avg time it took to load the partitions in the last 30sec kafka.server:name=null,type=transaction-coordinator-metrics,attribute=partition-load-time-avg
+# TYPE kafka_server_transaction_coordinator_metrics_partition_load_time_avg untyped
+# HELP kafka_server_txn_marker_channel_metrics_response_total The total number of responses received kafka.server:name=null,type=txn-marker-channel-metrics,attribute=response-total
+# TYPE kafka_server_txn_marker_channel_metrics_response_total untyped
+# HELP kafka_server_alter_partition_metrics_reauthentication_latency_max The max latency observed due to re-authentication kafka.server:name=null,type=alter-partition-metrics,attribute=reauthentication-latency-max
+# TYPE kafka_server_alter_partition_metrics_reauthentication_latency_max untyped
+# HELP kafka_server_fetchsessioncache_oneminuterate Attribute exposed for management kafka.server:name=IncrementalFetchSessionEvictionsPerSec,type=FetchSessionCache,attribute=OneMinuteRate
+# TYPE kafka_server_fetchsessioncache_oneminuterate untyped
+# HELP kafka_server_controller_channel_metrics_successful_authentication_total The total number of connections with successful authentication kafka.server:name=null,type=controller-channel-metrics,attribute=successful-authentication-total
+# TYPE kafka_server_controller_channel_metrics_successful_authentication_total untyped
+# HELP kafka_server_txn_marker_channel_metrics_connection_creation_rate The number of new connections established per second kafka.server:name=null,type=txn-marker-channel-metrics,attribute=connection-creation-rate
+# TYPE kafka_server_txn_marker_channel_metrics_connection_creation_rate untyped
+# HELP kafka_server_alter_partition_metrics_connection_creation_total The total number of new connections established kafka.server:name=null,type=alter-partition-metrics,attribute=connection-creation-total
+# TYPE kafka_server_alter_partition_metrics_connection_creation_total untyped
+# HELP kafka_server_controller_channel_metrics_network_io_rate The number of network operations (reads or writes) on all connections per second kafka.server:name=null,type=controller-channel-metrics,attribute=network-io-rate
+# TYPE kafka_server_controller_channel_metrics_network_io_rate untyped
+# HELP kafka_server_group_coordinator_metrics_group_completed_rebalance_count The total number of completed rebalance kafka.server:name=null,type=group-coordinator-metrics,attribute=group-completed-rebalance-count
+# TYPE kafka_server_group_coordinator_metrics_group_completed_rebalance_count untyped
+# HELP kafka_server_forwarding_metrics_network_io_rate The number of network operations (reads or writes) on all connections per second kafka.server:name=null,type=forwarding-metrics,attribute=network-io-rate
+# TYPE kafka_server_forwarding_metrics_network_io_rate untyped
+# HELP kafka_server_socket_server_metrics_ip_connection_accept_throttle_time Tracking average throttle-time, out of non-zero throttle times, per listener kafka.server:name=null,type=socket-server-metrics,attribute=ip-connection-accept-throttle-time
+# TYPE kafka_server_socket_server_metrics_ip_connection_accept_throttle_time untyped
+# HELP kafka_server_forwarding_metrics_request_rate The number of requests sent per second kafka.server:name=null,type=forwarding-metrics,attribute=request-rate
+# TYPE kafka_server_forwarding_metrics_request_rate untyped
+# HELP kafka_controller_controllereventmanager_98thpercentile Attribute exposed for management kafka.controller:name=EventQueueTimeMs,type=ControllerEventManager,attribute=98thPercentile
+# TYPE kafka_controller_controllereventmanager_98thpercentile untyped
+# HELP kafka_server_replicamanager_count Attribute exposed for management kafka.server:name=IsrExpandsPerSec,type=ReplicaManager,attribute=Count
+# TYPE kafka_server_replicamanager_count untyped
+# HELP kafka_server_alter_partition_metrics_network_io_total The total number of network operations (reads or writes) on all connections kafka.server:name=null,type=alter-partition-metrics,attribute=network-io-total
+# TYPE kafka_server_alter_partition_metrics_network_io_total untyped
+# HELP kafka_server_socket_server_metrics_io_wait_time_ns_total The total time the I/O thread spent waiting kafka.server:name=null,type=socket-server-metrics,attribute=io-wait-time-ns-total
+# TYPE kafka_server_socket_server_metrics_io_wait_time_ns_total untyped
+# HELP kafka_server_controller_channel_metrics_io_ratio *Deprecated* The fraction of time the I/O thread spent doing I/O kafka.server:name=null,type=controller-channel-metrics,attribute=io-ratio
+# TYPE kafka_server_controller_channel_metrics_io_ratio untyped
+# HELP kafka_controller_controllereventmanager_75thpercentile Attribute exposed for management kafka.controller:name=EventQueueTimeMs,type=ControllerEventManager,attribute=75thPercentile
+# TYPE kafka_controller_controllereventmanager_75thpercentile untyped
+# HELP kafka_server_controller_channel_metrics_successful_reauthentication_rate The number of successful re-authentication of connections per second kafka.server:name=null,type=controller-channel-metrics,attribute=successful-reauthentication-rate
+# TYPE kafka_server_controller_channel_metrics_successful_reauthentication_rate untyped
+# HELP kafka_server_alter_partition_metrics_network_io_rate The number of network operations (reads or writes) on all connections per second kafka.server:name=null,type=alter-partition-metrics,attribute=network-io-rate
+# TYPE kafka_server_alter_partition_metrics_network_io_rate untyped
+# HELP kafka_server_txn_marker_channel_metrics_io_time_ns_avg The average length of time for I/O per select call in nanoseconds. kafka.server:name=null,type=txn-marker-channel-metrics,attribute=io-time-ns-avg
+# TYPE kafka_server_txn_marker_channel_metrics_io_time_ns_avg untyped
+# HELP kafka_server_txn_marker_channel_metrics_successful_reauthentication_rate The number of successful re-authentication of connections per second kafka.server:name=null,type=txn-marker-channel-metrics,attribute=successful-reauthentication-rate
+# TYPE kafka_server_txn_marker_channel_metrics_successful_reauthentication_rate untyped
+# HELP kafka_server_controller_channel_metrics_outgoing_byte_total The total number of outgoing bytes sent to all servers kafka.server:name=null,type=controller-channel-metrics,attribute=outgoing-byte-total
+# TYPE kafka_server_controller_channel_metrics_outgoing_byte_total untyped
+# HELP kafka_controller_controllerchannelmanager_75thpercentile Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=75thPercentile
+# TYPE kafka_controller_controllerchannelmanager_75thpercentile untyped
+# HELP kafka_server_alter_partition_metrics_io_ratio *Deprecated* The fraction of time the I/O thread spent doing I/O kafka.server:name=null,type=alter-partition-metrics,attribute=io-ratio
+# TYPE kafka_server_alter_partition_metrics_io_ratio untyped
+# HELP kafka_server_group_coordinator_metrics_offset_expiration_count The total number of expired offsets kafka.server:name=null,type=group-coordinator-metrics,attribute=offset-expiration-count
+# TYPE kafka_server_group_coordinator_metrics_offset_expiration_count untyped
+# HELP kafka_network_requestchannel_value Attribute exposed for management kafka.network:name=RequestQueueSize,type=RequestChannel,attribute=Value
+# TYPE kafka_network_requestchannel_value untyped
+# HELP kafka_server_request_queue_size Tracks the size of the delay queue kafka.server:name=null,type=Request,attribute=queue-size
+# TYPE kafka_server_request_queue_size untyped
+# HELP kafka_network_requestmetrics_75thpercentile Attribute exposed for management kafka.network:name=ResponseQueueTimeMs,type=RequestMetrics,attribute=75thPercentile
+# TYPE kafka_network_requestmetrics_75thpercentile untyped
+# HELP kafka_server_txn_marker_channel_metrics_network_io_rate The number of network operations (reads or writes) on all connections per second kafka.server:name=null,type=txn-marker-channel-metrics,attribute=network-io-rate
+# TYPE kafka_server_txn_marker_channel_metrics_network_io_rate untyped
+# HELP kafka_server_forwarding_metrics_request_size_avg The average size of requests sent. kafka.server:name=null,type=forwarding-metrics,attribute=request-size-avg
+# TYPE kafka_server_forwarding_metrics_request_size_avg untyped
+# HELP kafka_server_controller_channel_metrics_io_wait_ratio *Deprecated* The fraction of time the I/O thread spent waiting kafka.server:name=null,type=controller-channel-metrics,attribute=io-wait-ratio
+# TYPE kafka_server_controller_channel_metrics_io_wait_ratio untyped
+# HELP kafka_server_controller_channel_metrics_failed_reauthentication_total The total number of failed re-authentication of connections kafka.server:name=null,type=controller-channel-metrics,attribute=failed-reauthentication-total
+# TYPE kafka_server_controller_channel_metrics_failed_reauthentication_total untyped
+# HELP kafka_server_alter_partition_metrics_response_rate The number of responses received per second kafka.server:name=null,type=alter-partition-metrics,attribute=response-rate
+# TYPE kafka_server_alter_partition_metrics_response_rate untyped
+# HELP kafka_server_alter_partition_metrics_request_size_avg The average size of requests sent. kafka.server:name=null,type=alter-partition-metrics,attribute=request-size-avg
+# TYPE kafka_server_alter_partition_metrics_request_size_avg untyped
+# HELP kafka_server_fetchsessioncache_value Attribute exposed for management kafka.server:name=NumIncrementalFetchSessions,type=FetchSessionCache,attribute=Value
+# TYPE kafka_server_fetchsessioncache_value untyped
+# HELP kafka_server_alter_partition_metrics_connection_close_total The total number of connections closed kafka.server:name=null,type=alter-partition-metrics,attribute=connection-close-total
+# TYPE kafka_server_alter_partition_metrics_connection_close_total untyped
+# HELP kafka_server_produce_queue_size Tracks the size of the delay queue kafka.server:name=null,type=Produce,attribute=queue-size
+# TYPE kafka_server_produce_queue_size untyped
+# HELP kafka_controller_controllerstats_75thpercentile Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=75thPercentile
+# TYPE kafka_controller_controllerstats_75thpercentile untyped
+# HELP kafka_server_forwarding_metrics_connection_close_rate The number of connections closed per second kafka.server:name=null,type=forwarding-metrics,attribute=connection-close-rate
+# TYPE kafka_server_forwarding_metrics_connection_close_rate untyped
+# HELP kafka_server_txn_marker_channel_metrics_network_io_total The total number of network operations (reads or writes) on all connections kafka.server:name=null,type=txn-marker-channel-metrics,attribute=network-io-total
+# TYPE kafka_server_txn_marker_channel_metrics_network_io_total untyped
+# HELP kafka_server_txn_marker_channel_metrics_connection_creation_total The total number of new connections established kafka.server:name=null,type=txn-marker-channel-metrics,attribute=connection-creation-total
+# TYPE kafka_server_txn_marker_channel_metrics_connection_creation_total untyped
+# HELP kafka_server_kafkarequesthandlerpool_count Attribute exposed for management kafka.server:name=RequestHandlerAvgIdlePercent,type=KafkaRequestHandlerPool,attribute=Count
+# TYPE kafka_server_kafkarequesthandlerpool_count untyped
+# HELP kafka_server_replicamanager_value Attribute exposed for management kafka.server:name=LeaderCount,type=ReplicaManager,attribute=Value
+# TYPE kafka_server_replicamanager_value untyped
+# HELP kafka_server_controller_channel_metrics_request_size_max The maximum size of any request sent. kafka.server:name=null,type=controller-channel-metrics,attribute=request-size-max
+# TYPE kafka_server_controller_channel_metrics_request_size_max untyped
+# HELP kafka_controller_kafkacontroller_value Attribute exposed for management kafka.controller:name=GlobalPartitionCount,type=KafkaController,attribute=Value
+# TYPE kafka_controller_kafkacontroller_value untyped
+# HELP kafka_controller_controllereventmanager_mean Attribute exposed for management kafka.controller:name=EventQueueTimeMs,type=ControllerEventManager,attribute=Mean
+# TYPE kafka_controller_controllereventmanager_mean untyped
+# HELP kafka_server_forwarding_metrics_successful_authentication_total The total number of connections with successful authentication kafka.server:name=null,type=forwarding-metrics,attribute=successful-authentication-total
+# TYPE kafka_server_forwarding_metrics_successful_authentication_total untyped
+# HELP kafka_server_app_info_start_time_ms Metric indicating start-time-ms kafka.server:name=null,type=app-info,attribute=start-time-ms
+# TYPE kafka_server_app_info_start_time_ms untyped
+# HELP kafka_network_requestmetrics_mean Attribute exposed for management kafka.network:name=ResponseQueueTimeMs,type=RequestMetrics,attribute=Mean
+# TYPE kafka_network_requestmetrics_mean untyped
+# HELP kafka_server_zookeeperclientmetrics_98thpercentile Attribute exposed for management kafka.server:name=ZooKeeperRequestLatencyMs,type=ZooKeeperClientMetrics,attribute=98thPercentile
+# TYPE kafka_server_zookeeperclientmetrics_98thpercentile untyped
+# HELP kafka_server_forwarding_metrics_failed_authentication_total The total number of connections with failed authentication kafka.server:name=null,type=forwarding-metrics,attribute=failed-authentication-total
+# TYPE kafka_server_forwarding_metrics_failed_authentication_total untyped
+# HELP kafka_server_transaction_coordinator_metrics_partition_load_time_max The max time it took to load the partitions in the last 30sec kafka.server:name=null,type=transaction-coordinator-metrics,attribute=partition-load-time-max
+# TYPE kafka_server_transaction_coordinator_metrics_partition_load_time_max untyped
+# HELP kafka_server_controller_channel_metrics_failed_authentication_total The total number of connections with failed authentication kafka.server:name=null,type=controller-channel-metrics,attribute=failed-authentication-total
+# TYPE kafka_server_controller_channel_metrics_failed_authentication_total untyped
+# HELP kafka_server_txn_marker_channel_metrics_io_time_ns_total The total time the I/O thread spent doing I/O kafka.server:name=null,type=txn-marker-channel-metrics,attribute=io-time-ns-total
+# TYPE kafka_server_txn_marker_channel_metrics_io_time_ns_total untyped
+# HELP kafka_utils_throttler_meanrate Attribute exposed for management kafka.utils:name=cleaner-io,type=Throttler,attribute=MeanRate
+# TYPE kafka_utils_throttler_meanrate untyped
+# HELP kafka_server_controller_channel_metrics_io_time_ns_total The total time the I/O thread spent doing I/O kafka.server:name=null,type=controller-channel-metrics,attribute=io-time-ns-total
+# TYPE kafka_server_controller_channel_metrics_io_time_ns_total untyped
+# HELP kafka_server_socket_server_metrics_outgoing_byte_rate The number of outgoing bytes sent to all servers per second kafka.server:name=null,type=socket-server-metrics,attribute=outgoing-byte-rate
+# TYPE kafka_server_socket_server_metrics_outgoing_byte_rate untyped
+# HELP kafka_server_txn_marker_channel_metrics_io_wait_time_ns_total The total time the I/O thread spent waiting kafka.server:name=null,type=txn-marker-channel-metrics,attribute=io-wait-time-ns-total
+# TYPE kafka_server_txn_marker_channel_metrics_io_wait_time_ns_total untyped
+# HELP kafka_server_txn_marker_channel_metrics_select_total The total number of times the I/O layer checked for new I/O to perform kafka.server:name=null,type=txn-marker-channel-metrics,attribute=select-total
+# TYPE kafka_server_txn_marker_channel_metrics_select_total untyped
+# HELP kafka_server_txn_marker_channel_metrics_request_total The total number of requests sent kafka.server:name=null,type=txn-marker-channel-metrics,attribute=request-total
+# TYPE kafka_server_txn_marker_channel_metrics_request_total untyped
+# HELP kafka_server_alter_partition_metrics_iotime_total *Deprecated* The total time the I/O thread spent doing I/O kafka.server:name=null,type=alter-partition-metrics,attribute=iotime-total
+# TYPE kafka_server_alter_partition_metrics_iotime_total untyped
+# HELP kafka_server_socket_server_metrics_connection_close_total The total number of connections closed kafka.server:name=null,type=socket-server-metrics,attribute=connection-close-total
+# TYPE kafka_server_socket_server_metrics_connection_close_total untyped
+# HELP kafka_server_socket_server_metrics_outgoing_byte_total The total number of outgoing bytes sent to all servers kafka.server:name=null,type=socket-server-metrics,attribute=outgoing-byte-total
+# TYPE kafka_server_socket_server_metrics_outgoing_byte_total untyped
+# HELP kafka_server_forwarding_metrics_io_wait_ratio *Deprecated* The fraction of time the I/O thread spent waiting kafka.server:name=null,type=forwarding-metrics,attribute=io-wait-ratio
+# TYPE kafka_server_forwarding_metrics_io_wait_ratio untyped
+# HELP kafka_controller_controllerchannelmanager_fifteenminuterate Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=FifteenMinuteRate
+# TYPE kafka_controller_controllerchannelmanager_fifteenminuterate untyped
+# HELP kafka_server_txn_marker_channel_metrics_incoming_byte_rate The number of bytes read off all sockets per second kafka.server:name=null,type=txn-marker-channel-metrics,attribute=incoming-byte-rate
+# TYPE kafka_server_txn_marker_channel_metrics_incoming_byte_rate untyped
+# HELP kafka_server_fetchsessioncache_fiveminuterate Attribute exposed for management kafka.server:name=IncrementalFetchSessionEvictionsPerSec,type=FetchSessionCache,attribute=FiveMinuteRate
+# TYPE kafka_server_fetchsessioncache_fiveminuterate untyped
+# HELP kafka_server_zookeeperclientmetrics_stddev Attribute exposed for management kafka.server:name=ZooKeeperRequestLatencyMs,type=ZooKeeperClientMetrics,attribute=StdDev
+# TYPE kafka_server_zookeeperclientmetrics_stddev untyped
+# HELP kafka_server_kafkarequesthandlerpool_fifteenminuterate Attribute exposed for management kafka.server:name=RequestHandlerAvgIdlePercent,type=KafkaRequestHandlerPool,attribute=FifteenMinuteRate
+# TYPE kafka_server_kafkarequesthandlerpool_fifteenminuterate untyped
+# HELP kafka_server_alter_partition_metrics_io_wait_time_ns_avg The average length of time the I/O thread spent waiting for a socket ready for reads or writes in nanoseconds. kafka.server:name=null,type=alter-partition-metrics,attribute=io-wait-time-ns-avg
+# TYPE kafka_server_alter_partition_metrics_io_wait_time_ns_avg untyped
+# HELP kafka_network_requestmetrics_oneminuterate Attribute exposed for management kafka.network:name=ErrorsPerSec,type=RequestMetrics,attribute=OneMinuteRate
+# TYPE kafka_network_requestmetrics_oneminuterate untyped
+# HELP kafka_controller_controllerstats_99thpercentile Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=99thPercentile
+# TYPE kafka_controller_controllerstats_99thpercentile untyped
+# HELP kafka_server_txn_marker_channel_metrics_outgoing_byte_total The total number of outgoing bytes sent to all servers kafka.server:name=null,type=txn-marker-channel-metrics,attribute=outgoing-byte-total
+# TYPE kafka_server_txn_marker_channel_metrics_outgoing_byte_total untyped
+# HELP kafka_server_socket_server_metrics_response_total The total number of responses received kafka.server:name=null,type=socket-server-metrics,attribute=response-total
+# TYPE kafka_server_socket_server_metrics_response_total untyped
+# HELP kafka_controller_controllerstats_95thpercentile Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=95thPercentile
+# TYPE kafka_controller_controllerstats_95thpercentile untyped
+# HELP kafka_server_txn_marker_channel_metrics_successful_authentication_rate The number of connections with successful authentication per second kafka.server:name=null,type=txn-marker-channel-metrics,attribute=successful-authentication-rate
+# TYPE kafka_server_txn_marker_channel_metrics_successful_authentication_rate untyped
+# HELP kafka_server_controller_channel_metrics_response_total The total number of responses received kafka.server:name=null,type=controller-channel-metrics,attribute=response-total
+# TYPE kafka_server_controller_channel_metrics_response_total untyped
+# HELP kafka_server_controller_channel_metrics_connection_count The current number of active connections. kafka.server:name=null,type=controller-channel-metrics,attribute=connection-count
+# TYPE kafka_server_controller_channel_metrics_connection_count untyped
+# HELP kafka_server_zookeeperclientmetrics_max Attribute exposed for management kafka.server:name=ZooKeeperRequestLatencyMs,type=ZooKeeperClientMetrics,attribute=Max
+# TYPE kafka_server_zookeeperclientmetrics_max untyped
+# HELP kafka_server_txn_marker_channel_metrics_response_rate The number of responses received per second kafka.server:name=null,type=txn-marker-channel-metrics,attribute=response-rate
+# TYPE kafka_server_txn_marker_channel_metrics_response_rate untyped
+# HELP kafka_cluster_partition_value Attribute exposed for management kafka.cluster:name=InSyncReplicasCount,type=Partition,attribute=Value
+# TYPE kafka_cluster_partition_value untyped
+# HELP kafka_controller_controllerchannelmanager_999thpercentile Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=999thPercentile
+# TYPE kafka_controller_controllerchannelmanager_999thpercentile untyped
+# HELP kafka_server_txn_marker_channel_metrics_failed_authentication_total The total number of connections with failed authentication kafka.server:name=null,type=txn-marker-channel-metrics,attribute=failed-authentication-total
+# TYPE kafka_server_txn_marker_channel_metrics_failed_authentication_total untyped
+# HELP kafka_server_socket_server_metrics_request_rate The number of requests sent per second kafka.server:name=null,type=socket-server-metrics,attribute=request-rate
+# TYPE kafka_server_socket_server_metrics_request_rate untyped
+# HELP kafka_server_socket_server_metrics_network_io_total The total number of network operations (reads or writes) on all connections kafka.server:name=null,type=socket-server-metrics,attribute=network-io-total
+# TYPE kafka_server_socket_server_metrics_network_io_total untyped
+# HELP kafka_network_acceptor_fiveminuterate Attribute exposed for management kafka.network:name=AcceptorBlockedPercent,type=Acceptor,attribute=FiveMinuteRate
+# TYPE kafka_network_acceptor_fiveminuterate untyped
+# HELP kafka_network_requestmetrics_meanrate Attribute exposed for management kafka.network:name=ErrorsPerSec,type=RequestMetrics,attribute=MeanRate
+# TYPE kafka_network_requestmetrics_meanrate untyped
+# HELP kafka_server_socket_server_metrics_network_io_rate The number of network operations (reads or writes) on all connections per second kafka.server:name=null,type=socket-server-metrics,attribute=network-io-rate
+# TYPE kafka_server_socket_server_metrics_network_io_rate untyped
+# HELP kafka_server_fetchsessioncache_meanrate Attribute exposed for management kafka.server:name=IncrementalFetchSessionEvictionsPerSec,type=FetchSessionCache,attribute=MeanRate
+# TYPE kafka_server_fetchsessioncache_meanrate untyped
+# HELP kafka_server_txn_marker_channel_metrics_failed_reauthentication_rate The number of failed re-authentication of connections per second kafka.server:name=null,type=txn-marker-channel-metrics,attribute=failed-reauthentication-rate
+# TYPE kafka_server_txn_marker_channel_metrics_failed_reauthentication_rate untyped
+# HELP kafka_network_acceptor_fifteenminuterate Attribute exposed for management kafka.network:name=AcceptorBlockedPercent,type=Acceptor,attribute=FifteenMinuteRate
+# TYPE kafka_network_acceptor_fifteenminuterate untyped
+# HELP kafka_server_txn_marker_channel_metrics_reauthentication_latency_max The max latency observed due to re-authentication kafka.server:name=null,type=txn-marker-channel-metrics,attribute=reauthentication-latency-max
+# TYPE kafka_server_txn_marker_channel_metrics_reauthentication_latency_max untyped
+# HELP kafka_server_forwarding_metrics_reauthentication_latency_max The max latency observed due to re-authentication kafka.server:name=null,type=forwarding-metrics,attribute=reauthentication-latency-max
+# TYPE kafka_server_forwarding_metrics_reauthentication_latency_max untyped
+# HELP kafka_server_alter_partition_metrics_io_wait_time_ns_total The total time the I/O thread spent waiting kafka.server:name=null,type=alter-partition-metrics,attribute=io-wait-time-ns-total
+# TYPE kafka_server_alter_partition_metrics_io_wait_time_ns_total untyped
+# HELP kafka_server_controller_channel_metrics_failed_reauthentication_rate The number of failed re-authentication of connections per second kafka.server:name=null,type=controller-channel-metrics,attribute=failed-reauthentication-rate
+# TYPE kafka_server_controller_channel_metrics_failed_reauthentication_rate untyped
+# HELP kafka_server_controller_channel_metrics_reauthentication_latency_max The max latency observed due to re-authentication kafka.server:name=null,type=controller-channel-metrics,attribute=reauthentication-latency-max
+# TYPE kafka_server_controller_channel_metrics_reauthentication_latency_max untyped
+# HELP kafka_server_socket_server_metrics_connection_creation_total The total number of new connections established kafka.server:name=null,type=socket-server-metrics,attribute=connection-creation-total
+# TYPE kafka_server_socket_server_metrics_connection_creation_total untyped
+# HELP kafka_utils_throttler_oneminuterate Attribute exposed for management kafka.utils:name=cleaner-io,type=Throttler,attribute=OneMinuteRate
+# TYPE kafka_utils_throttler_oneminuterate untyped
+# HELP kafka_server_socket_server_metrics_io_wait_time_ns_avg The average length of time the I/O thread spent waiting for a socket ready for reads or writes in nanoseconds. kafka.server:name=null,type=socket-server-metrics,attribute=io-wait-time-ns-avg
+# TYPE kafka_server_socket_server_metrics_io_wait_time_ns_avg untyped
+# HELP kafka_server_controller_channel_metrics_incoming_byte_rate The number of bytes read off all sockets per second kafka.server:name=null,type=controller-channel-metrics,attribute=incoming-byte-rate
+# TYPE kafka_server_controller_channel_metrics_incoming_byte_rate untyped
+# HELP kafka_server_forwarding_metrics_incoming_byte_rate The number of bytes read off all sockets per second kafka.server:name=null,type=forwarding-metrics,attribute=incoming-byte-rate
+# TYPE kafka_server_forwarding_metrics_incoming_byte_rate untyped
+# HELP kafka_server_alter_partition_metrics_io_waittime_total *Deprecated* The total time the I/O thread spent waiting kafka.server:name=null,type=alter-partition-metrics,attribute=io-waittime-total
+# TYPE kafka_server_alter_partition_metrics_io_waittime_total untyped
+# HELP kafka_server_controller_channel_metrics_connection_close_total The total number of connections closed kafka.server:name=null,type=controller-channel-metrics,attribute=connection-close-total
+# TYPE kafka_server_controller_channel_metrics_connection_close_total untyped
+# HELP kafka_network_processor_value Attribute exposed for management kafka.network:name=IdlePercent,type=Processor,attribute=Value
+# TYPE kafka_network_processor_value untyped
+# HELP kafka_server_txn_marker_channel_metrics_connection_count The current number of active connections. kafka.server:name=null,type=txn-marker-channel-metrics,attribute=connection-count
+# TYPE kafka_server_txn_marker_channel_metrics_connection_count untyped
+# HELP kafka_server_controller_channel_metrics_successful_authentication_rate The number of connections with successful authentication per second kafka.server:name=null,type=controller-channel-metrics,attribute=successful-authentication-rate
+# TYPE kafka_server_controller_channel_metrics_successful_authentication_rate untyped
+# HELP kafka_server_forwarding_metrics_successful_authentication_rate The number of connections with successful authentication per second kafka.server:name=null,type=forwarding-metrics,attribute=successful-authentication-rate
+# TYPE kafka_server_forwarding_metrics_successful_authentication_rate untyped
+# HELP kafka_server_kafkaserver_value Attribute exposed for management kafka.server:name=linux-disk-write-bytes,type=KafkaServer,attribute=Value
+# TYPE kafka_server_kafkaserver_value untyped
+# HELP kafka_server_brokertopicmetrics_count Attribute exposed for management kafka.server:name=TotalFetchRequestsPerSec,type=BrokerTopicMetrics,attribute=Count
+# TYPE kafka_server_brokertopicmetrics_count untyped
+# HELP kafka_server_group_coordinator_metrics_partition_load_time_max The max time it took to load the partitions in the last 30sec kafka.server:name=null,type=group-coordinator-metrics,attribute=partition-load-time-max
+# TYPE kafka_server_group_coordinator_metrics_partition_load_time_max untyped
+# HELP kafka_server_zookeeperclientmetrics_50thpercentile Attribute exposed for management kafka.server:name=ZooKeeperRequestLatencyMs,type=ZooKeeperClientMetrics,attribute=50thPercentile
+# TYPE kafka_server_zookeeperclientmetrics_50thpercentile untyped
+# HELP kafka_server_forwarding_metrics_io_wait_time_ns_total The total time the I/O thread spent waiting kafka.server:name=null,type=forwarding-metrics,attribute=io-wait-time-ns-total
+# TYPE kafka_server_forwarding_metrics_io_wait_time_ns_total untyped
+# HELP kafka_server_forwarding_metrics_outgoing_byte_total The total number of outgoing bytes sent to all servers kafka.server:name=null,type=forwarding-metrics,attribute=outgoing-byte-total
+# TYPE kafka_server_forwarding_metrics_outgoing_byte_total untyped
+# HELP kafka_server_kafkarequesthandlerpool_oneminuterate Attribute exposed for management kafka.server:name=RequestHandlerAvgIdlePercent,type=KafkaRequestHandlerPool,attribute=OneMinuteRate
+# TYPE kafka_server_kafkarequesthandlerpool_oneminuterate untyped
+# HELP kafka_server_forwarding_metrics_failed_reauthentication_total The total number of failed re-authentication of connections kafka.server:name=null,type=forwarding-metrics,attribute=failed-reauthentication-total
+# TYPE kafka_server_forwarding_metrics_failed_reauthentication_total untyped
+# HELP kafka_server_alter_partition_metrics_connection_close_rate The number of connections closed per second kafka.server:name=null,type=alter-partition-metrics,attribute=connection-close-rate
+# TYPE kafka_server_alter_partition_metrics_connection_close_rate untyped
+# HELP kafka_server_txn_marker_channel_metrics_request_size_avg The average size of requests sent. kafka.server:name=null,type=txn-marker-channel-metrics,attribute=request-size-avg
+# TYPE kafka_server_txn_marker_channel_metrics_request_size_avg untyped
+# HELP kafka_server_socket_server_metrics_io_waittime_total *Deprecated* The total time the I/O thread spent waiting kafka.server:name=null,type=socket-server-metrics,attribute=io-waittime-total
+# TYPE kafka_server_socket_server_metrics_io_waittime_total untyped
+# HELP kafka_server_zookeeperclientmetrics_999thpercentile Attribute exposed for management kafka.server:name=ZooKeeperRequestLatencyMs,type=ZooKeeperClientMetrics,attribute=999thPercentile
+# TYPE kafka_server_zookeeperclientmetrics_999thpercentile untyped
+# HELP kafka_server_txn_marker_channel_metrics_failed_authentication_rate The number of connections with failed authentication per second kafka.server:name=null,type=txn-marker-channel-metrics,attribute=failed-authentication-rate
+# TYPE kafka_server_txn_marker_channel_metrics_failed_authentication_rate untyped
+# HELP kafka_controller_controllerchannelmanager_meanrate Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=MeanRate
+# TYPE kafka_controller_controllerchannelmanager_meanrate untyped
+# HELP kafka_controller_controllerstats_max Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=Max
+# TYPE kafka_controller_controllerstats_max untyped
+# HELP kafka_network_socketserver_value Attribute exposed for management kafka.network:name=MemoryPoolUsed,type=SocketServer,attribute=Value
+# TYPE kafka_network_socketserver_value untyped
+# HELP kafka_server_alter_partition_metrics_request_total The total number of requests sent kafka.server:name=null,type=alter-partition-metrics,attribute=request-total
+# TYPE kafka_server_alter_partition_metrics_request_total untyped
+# HELP kafka_controller_controllereventmanager_value Attribute exposed for management kafka.controller:name=EventQueueSize,type=ControllerEventManager,attribute=Value
+# TYPE kafka_controller_controllereventmanager_value untyped
+# HELP kafka_network_requestmetrics_min Attribute exposed for management kafka.network:name=ResponseQueueTimeMs,type=RequestMetrics,attribute=Min
+# TYPE kafka_network_requestmetrics_min untyped
+# HELP kafka_controller_controllerchannelmanager_mean Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=Mean
+# TYPE kafka_controller_controllerchannelmanager_mean untyped
+# HELP kafka_server_group_coordinator_metrics_group_completed_rebalance_rate The rate of completed rebalance kafka.server:name=null,type=group-coordinator-metrics,attribute=group-completed-rebalance-rate
+# TYPE kafka_server_group_coordinator_metrics_group_completed_rebalance_rate untyped
+# HELP kafka_server_controller_channel_metrics_outgoing_byte_rate The number of outgoing bytes sent to all servers per second kafka.server:name=null,type=controller-channel-metrics,attribute=outgoing-byte-rate
+# TYPE kafka_server_controller_channel_metrics_outgoing_byte_rate untyped
+# HELP kafka_server_forwarding_metrics_successful_reauthentication_rate The number of successful re-authentication of connections per second kafka.server:name=null,type=forwarding-metrics,attribute=successful-reauthentication-rate
+# TYPE kafka_server_forwarding_metrics_successful_reauthentication_rate untyped
+# HELP kafka_network_requestmetrics_count Attribute exposed for management kafka.network:name=ResponseQueueTimeMs,type=RequestMetrics,attribute=Count
+# TYPE kafka_network_requestmetrics_count untyped
+# HELP kafka_server_socket_server_metrics_failed_reauthentication_rate The number of failed re-authentication of connections per second kafka.server:name=null,type=socket-server-metrics,attribute=failed-reauthentication-rate
+# TYPE kafka_server_socket_server_metrics_failed_reauthentication_rate untyped
+# HELP kafka_server_controllermutation_queue_size Tracks the size of the delay queue kafka.server:name=null,type=ControllerMutation,attribute=queue-size
+# TYPE kafka_server_controllermutation_queue_size untyped
+# HELP kafka_server_txn_marker_channel_metrics_reauthentication_latency_avg The average latency observed due to re-authentication kafka.server:name=null,type=txn-marker-channel-metrics,attribute=reauthentication-latency-avg
+# TYPE kafka_server_txn_marker_channel_metrics_reauthentication_latency_avg untyped
+# HELP kafka_server_forwarding_metrics_request_total The total number of requests sent kafka.server:name=null,type=forwarding-metrics,attribute=request-total
+# TYPE kafka_server_forwarding_metrics_request_total untyped
+# HELP kafka_server_forwarding_metrics_incoming_byte_total The total number of bytes read off all sockets kafka.server:name=null,type=forwarding-metrics,attribute=incoming-byte-total
+# TYPE kafka_server_forwarding_metrics_incoming_byte_total untyped
+# HELP kafka_server_forwarding_metrics_io_wait_time_ns_avg The average length of time the I/O thread spent waiting for a socket ready for reads or writes in nanoseconds. kafka.server:name=null,type=forwarding-metrics,attribute=io-wait-time-ns-avg
+# TYPE kafka_server_forwarding_metrics_io_wait_time_ns_avg untyped
+# HELP kafka_server_controller_channel_metrics_select_rate The number of times the I/O layer checked for new I/O to perform per second kafka.server:name=null,type=controller-channel-metrics,attribute=select-rate
+# TYPE kafka_server_controller_channel_metrics_select_rate untyped
+# HELP kafka_server_forwarding_metrics_connection_creation_rate The number of new connections established per second kafka.server:name=null,type=forwarding-metrics,attribute=connection-creation-rate
+# TYPE kafka_server_forwarding_metrics_connection_creation_rate untyped
+# HELP kafka_server_alter_partition_metrics_incoming_byte_rate The number of bytes read off all sockets per second kafka.server:name=null,type=alter-partition-metrics,attribute=incoming-byte-rate
+# TYPE kafka_server_alter_partition_metrics_incoming_byte_rate untyped
+# HELP kafka_controller_controllerchannelmanager_98thpercentile Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=98thPercentile
+# TYPE kafka_controller_controllerchannelmanager_98thpercentile untyped
+# HELP kafka_controller_controllerstats_999thpercentile Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=999thPercentile
+# TYPE kafka_controller_controllerstats_999thpercentile untyped
+# HELP kafka_server_forwarding_metrics_network_io_total The total number of network operations (reads or writes) on all connections kafka.server:name=null,type=forwarding-metrics,attribute=network-io-total
+# TYPE kafka_server_forwarding_metrics_network_io_total untyped
+# HELP kafka_server_txn_marker_channel_metrics_successful_authentication_no_reauth_total The total number of connections with successful authentication where the client does not support re-authentication kafka.server:name=null,type=txn-marker-channel-metrics,attribute=successful-authentication-no-reauth-total
+# TYPE kafka_server_txn_marker_channel_metrics_successful_authentication_no_reauth_total untyped
+# HELP kafka_server_alter_partition_metrics_response_total The total number of responses received kafka.server:name=null,type=alter-partition-metrics,attribute=response-total
+# TYPE kafka_server_alter_partition_metrics_response_total untyped
+# HELP kafka_server_controller_channel_metrics_connection_creation_rate The number of new connections established per second kafka.server:name=null,type=controller-channel-metrics,attribute=connection-creation-rate
+# TYPE kafka_server_controller_channel_metrics_connection_creation_rate untyped
+# HELP kafka_server_delayedfetchmetrics_fifteenminuterate Attribute exposed for management kafka.server:name=ExpiresPerSec,type=DelayedFetchMetrics,attribute=FifteenMinuteRate
+# TYPE kafka_server_delayedfetchmetrics_fifteenminuterate untyped
+# HELP kafka_server_zookeeperclientmetrics_count Attribute exposed for management kafka.server:name=ZooKeeperRequestLatencyMs,type=ZooKeeperClientMetrics,attribute=Count
+# TYPE kafka_server_zookeeperclientmetrics_count untyped
+# HELP kafka_server_brokertopicmetrics_oneminuterate Attribute exposed for management kafka.server:name=TotalFetchRequestsPerSec,type=BrokerTopicMetrics,attribute=OneMinuteRate
+# TYPE kafka_server_brokertopicmetrics_oneminuterate untyped
+# HELP kafka_network_requestmetrics_98thpercentile Attribute exposed for management kafka.network:name=ResponseQueueTimeMs,type=RequestMetrics,attribute=98thPercentile
+# TYPE kafka_network_requestmetrics_98thpercentile untyped
+# HELP kafka_controller_controllerchannelmanager_fiveminuterate Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=FiveMinuteRate
+# TYPE kafka_controller_controllerchannelmanager_fiveminuterate untyped
+# HELP kafka_server_fetchsessioncache_count Attribute exposed for management kafka.server:name=IncrementalFetchSessionEvictionsPerSec,type=FetchSessionCache,attribute=Count
+# TYPE kafka_server_fetchsessioncache_count untyped
+# HELP kafka_controller_controllerstats_meanrate Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=MeanRate
+# TYPE kafka_controller_controllerstats_meanrate untyped
+# HELP kafka_server_socket_server_metrics_connection_close_rate The number of connections closed per second kafka.server:name=null,type=socket-server-metrics,attribute=connection-close-rate
+# TYPE kafka_server_socket_server_metrics_connection_close_rate untyped
+# HELP kafka_server_forwarding_metrics_select_rate The number of times the I/O layer checked for new I/O to perform per second kafka.server:name=null,type=forwarding-metrics,attribute=select-rate
+# TYPE kafka_server_forwarding_metrics_select_rate untyped
+# HELP kafka_server_socket_server_metrics_io_wait_ratio *Deprecated* The fraction of time the I/O thread spent waiting kafka.server:name=null,type=socket-server-metrics,attribute=io-wait-ratio
+# TYPE kafka_server_socket_server_metrics_io_wait_ratio untyped
+# HELP kafka_server_socket_server_metrics_memorypooldepletedtimetotal  kafka.server:name=null,type=socket-server-metrics,attribute=MemoryPoolDepletedTimeTotal
+# TYPE kafka_server_socket_server_metrics_memorypooldepletedtimetotal untyped
+# HELP kafka_controller_controllerstats_stddev Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=StdDev
+# TYPE kafka_controller_controllerstats_stddev untyped
+# HELP kafka_controller_controllerstats_98thpercentile Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=98thPercentile
+# TYPE kafka_controller_controllerstats_98thpercentile untyped
+# HELP kafka_server_delayedfetchmetrics_meanrate Attribute exposed for management kafka.server:name=ExpiresPerSec,type=DelayedFetchMetrics,attribute=MeanRate
+# TYPE kafka_server_delayedfetchmetrics_meanrate untyped
+# HELP kafka_server_socket_server_metrics_incoming_byte_rate The number of bytes read off all sockets per second kafka.server:name=null,type=socket-server-metrics,attribute=incoming-byte-rate
+# TYPE kafka_server_socket_server_metrics_incoming_byte_rate untyped
+# HELP kafka_server_delayedoperationpurgatory_value Attribute exposed for management kafka.server:name=PurgatorySize,type=DelayedOperationPurgatory,attribute=Value
+# TYPE kafka_server_delayedoperationpurgatory_value untyped
+# HELP kafka_server_request_exempt_request_time Tracking exempt-request-time utilization percentage kafka.server:name=null,type=Request,attribute=exempt-request-time
+# TYPE kafka_server_request_exempt_request_time untyped
+# HELP kafka_server_forwarding_metrics_connection_count The current number of active connections. kafka.server:name=null,type=forwarding-metrics,attribute=connection-count
+# TYPE kafka_server_forwarding_metrics_connection_count untyped
+# HELP kafka_server_brokertopicmetrics_fiveminuterate Attribute exposed for management kafka.server:name=TotalFetchRequestsPerSec,type=BrokerTopicMetrics,attribute=FiveMinuteRate
+# TYPE kafka_server_brokertopicmetrics_fiveminuterate untyped
+# HELP kafka_network_requestmetrics_fiveminuterate Attribute exposed for management kafka.network:name=ErrorsPerSec,type=RequestMetrics,attribute=FiveMinuteRate
+# TYPE kafka_network_requestmetrics_fiveminuterate untyped
+# HELP kafka_controller_controllerstats_count Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=Count
+# TYPE kafka_controller_controllerstats_count untyped
+# HELP kafka_server_alter_partition_metrics_outgoing_byte_rate The number of outgoing bytes sent to all servers per second kafka.server:name=null,type=alter-partition-metrics,attribute=outgoing-byte-rate
+# TYPE kafka_server_alter_partition_metrics_outgoing_byte_rate untyped
+# HELP kafka_server_zookeeperclientmetrics_min Attribute exposed for management kafka.server:name=ZooKeeperRequestLatencyMs,type=ZooKeeperClientMetrics,attribute=Min
+# TYPE kafka_server_zookeeperclientmetrics_min untyped
+# HELP kafka_server_kafkarequesthandlerpool_meanrate Attribute exposed for management kafka.server:name=RequestHandlerAvgIdlePercent,type=KafkaRequestHandlerPool,attribute=MeanRate
+# TYPE kafka_server_kafkarequesthandlerpool_meanrate untyped
+# HELP kafka_server_sessionexpirelistener_fifteenminuterate Attribute exposed for management kafka.server:name=ZooKeeperDisconnectsPerSec,type=SessionExpireListener,attribute=FifteenMinuteRate
+# TYPE kafka_server_sessionexpirelistener_fifteenminuterate untyped
+# HELP kafka_server_forwarding_metrics_select_total The total number of times the I/O layer checked for new I/O to perform kafka.server:name=null,type=forwarding-metrics,attribute=select-total
+# TYPE kafka_server_forwarding_metrics_select_total untyped
+# HELP kafka_server_alter_partition_metrics_successful_reauthentication_rate The number of successful re-authentication of connections per second kafka.server:name=null,type=alter-partition-metrics,attribute=successful-reauthentication-rate
+# TYPE kafka_server_alter_partition_metrics_successful_reauthentication_rate untyped
+# HELP kafka_utils_throttler_fiveminuterate Attribute exposed for management kafka.utils:name=cleaner-io,type=Throttler,attribute=FiveMinuteRate
+# TYPE kafka_utils_throttler_fiveminuterate untyped
+# HELP kafka_server_socket_server_metrics_connection_creation_rate The number of new connections established per second kafka.server:name=null,type=socket-server-metrics,attribute=connection-creation-rate
+# TYPE kafka_server_socket_server_metrics_connection_creation_rate untyped
+# HELP kafka_server_forwarding_metrics_outgoing_byte_rate The number of outgoing bytes sent to all servers per second kafka.server:name=null,type=forwarding-metrics,attribute=outgoing-byte-rate
+# TYPE kafka_server_forwarding_metrics_outgoing_byte_rate untyped
+# HELP kafka_server_socket_server_metrics_request_size_max The maximum size of any request sent. kafka.server:name=null,type=socket-server-metrics,attribute=request-size-max
+# TYPE kafka_server_socket_server_metrics_request_size_max untyped
+# HELP kafka_server_socket_server_metrics_io_time_ns_total The total time the I/O thread spent doing I/O kafka.server:name=null,type=socket-server-metrics,attribute=io-time-ns-total
+# TYPE kafka_server_socket_server_metrics_io_time_ns_total untyped
+# HELP kafka_utils_throttler_fifteenminuterate Attribute exposed for management kafka.utils:name=cleaner-io,type=Throttler,attribute=FifteenMinuteRate
+# TYPE kafka_utils_throttler_fifteenminuterate untyped
+# HELP kafka_controller_controllereventmanager_stddev Attribute exposed for management kafka.controller:name=EventQueueTimeMs,type=ControllerEventManager,attribute=StdDev
+# TYPE kafka_controller_controllereventmanager_stddev untyped
+# HELP kafka_server_txn_marker_channel_metrics_incoming_byte_total The total number of bytes read off all sockets kafka.server:name=null,type=txn-marker-channel-metrics,attribute=incoming-byte-total
+# TYPE kafka_server_txn_marker_channel_metrics_incoming_byte_total untyped
+# HELP kafka_server_alter_partition_metrics_failed_reauthentication_rate The number of failed re-authentication of connections per second kafka.server:name=null,type=alter-partition-metrics,attribute=failed-reauthentication-rate
+# TYPE kafka_server_alter_partition_metrics_failed_reauthentication_rate untyped
+# HELP kafka_server_alter_partition_metrics_successful_authentication_no_reauth_total The total number of connections with successful authentication where the client does not support re-authentication kafka.server:name=null,type=alter-partition-metrics,attribute=successful-authentication-no-reauth-total
+# TYPE kafka_server_alter_partition_metrics_successful_authentication_no_reauth_total untyped
+# HELP kafka_server_alter_partition_metrics_select_rate The number of times the I/O layer checked for new I/O to perform per second kafka.server:name=null,type=alter-partition-metrics,attribute=select-rate
+# TYPE kafka_server_alter_partition_metrics_select_rate untyped
+# HELP kafka_controller_controllereventmanager_count Attribute exposed for management kafka.controller:name=EventQueueTimeMs,type=ControllerEventManager,attribute=Count
+# TYPE kafka_controller_controllereventmanager_count untyped
+# HELP kafka_controller_controllereventmanager_50thpercentile Attribute exposed for management kafka.controller:name=EventQueueTimeMs,type=ControllerEventManager,attribute=50thPercentile
+# TYPE kafka_controller_controllereventmanager_50thpercentile untyped
+# HELP kafka_server_alter_partition_metrics_successful_reauthentication_total The total number of successful re-authentication of connections kafka.server:name=null,type=alter-partition-metrics,attribute=successful-reauthentication-total
+# TYPE kafka_server_alter_partition_metrics_successful_reauthentication_total untyped
+# HELP kafka_controller_controllerstats_fifteenminuterate Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=FifteenMinuteRate
+# TYPE kafka_controller_controllerstats_fifteenminuterate untyped
+# HELP kafka_server_replicamanager_meanrate Attribute exposed for management kafka.server:name=IsrExpandsPerSec,type=ReplicaManager,attribute=MeanRate
+# TYPE kafka_server_replicamanager_meanrate untyped
+# HELP kafka_controller_controllereventmanager_min Attribute exposed for management kafka.controller:name=EventQueueTimeMs,type=ControllerEventManager,attribute=Min
+# TYPE kafka_controller_controllereventmanager_min untyped
+# HELP kafka_server_controller_channel_metrics_failed_authentication_rate The number of connections with failed authentication per second kafka.server:name=null,type=controller-channel-metrics,attribute=failed-authentication-rate
+# TYPE kafka_server_controller_channel_metrics_failed_authentication_rate untyped
+# HELP kafka_server_group_coordinator_metrics_offset_expiration_rate The rate of expired offsets kafka.server:name=null,type=group-coordinator-metrics,attribute=offset-expiration-rate
+# TYPE kafka_server_group_coordinator_metrics_offset_expiration_rate untyped
+# HELP kafka_log_logcleaner_value Attribute exposed for management kafka.log:name=DeadThreadCount,type=LogCleaner,attribute=Value
+# TYPE kafka_log_logcleaner_value untyped
+# HELP kafka_server_socket_server_metrics_response_rate The number of responses received per second kafka.server:name=null,type=socket-server-metrics,attribute=response-rate
+# TYPE kafka_server_socket_server_metrics_response_rate untyped
+# HELP kafka_server_delayedfetchmetrics_count Attribute exposed for management kafka.server:name=ExpiresPerSec,type=DelayedFetchMetrics,attribute=Count
+# TYPE kafka_server_delayedfetchmetrics_count untyped
+# HELP kafka_server_socket_server_metrics_incoming_byte_total The total number of bytes read off all sockets kafka.server:name=null,type=socket-server-metrics,attribute=incoming-byte-total
+# TYPE kafka_server_socket_server_metrics_incoming_byte_total untyped
+# HELP kafka_server_kafkarequesthandlerpool_fiveminuterate Attribute exposed for management kafka.server:name=RequestHandlerAvgIdlePercent,type=KafkaRequestHandlerPool,attribute=FiveMinuteRate
+# TYPE kafka_server_kafkarequesthandlerpool_fiveminuterate untyped
+# HELP kafka_network_acceptor_count Attribute exposed for management kafka.network:name=AcceptorBlockedPercent,type=Acceptor,attribute=Count
+# TYPE kafka_network_acceptor_count untyped
+# HELP kafka_network_requestmetrics_999thpercentile Attribute exposed for management kafka.network:name=ResponseQueueTimeMs,type=RequestMetrics,attribute=999thPercentile
+# TYPE kafka_network_requestmetrics_999thpercentile untyped
+# HELP kafka_server_controller_channel_metrics_successful_authentication_no_reauth_total The total number of connections with successful authentication where the client does not support re-authentication kafka.server:name=null,type=controller-channel-metrics,attribute=successful-authentication-no-reauth-total
+# TYPE kafka_server_controller_channel_metrics_successful_authentication_no_reauth_total untyped
+# HELP kafka_server_socket_server_metrics_successful_authentication_total The total number of connections with successful authentication kafka.server:name=null,type=socket-server-metrics,attribute=successful-authentication-total
+# TYPE kafka_server_socket_server_metrics_successful_authentication_total untyped
+# HELP kafka_server_alter_partition_metrics_request_rate The number of requests sent per second kafka.server:name=null,type=alter-partition-metrics,attribute=request-rate
+# TYPE kafka_server_alter_partition_metrics_request_rate untyped
+# HELP kafka_server_group_coordinator_metrics_offset_deletion_rate The rate of administrative deleted offsets kafka.server:name=null,type=group-coordinator-metrics,attribute=offset-deletion-rate
+# TYPE kafka_server_group_coordinator_metrics_offset_deletion_rate untyped
+# HELP kafka_server_replicamanager_fifteenminuterate Attribute exposed for management kafka.server:name=IsrExpandsPerSec,type=ReplicaManager,attribute=FifteenMinuteRate
+# TYPE kafka_server_replicamanager_fifteenminuterate untyped
+# HELP kafka_server_txn_marker_channel_metrics_connection_close_total The total number of connections closed kafka.server:name=null,type=txn-marker-channel-metrics,attribute=connection-close-total
+# TYPE kafka_server_txn_marker_channel_metrics_connection_close_total untyped
+# HELP kafka_controller_controllerstats_fiveminuterate Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=FiveMinuteRate
+# TYPE kafka_controller_controllerstats_fiveminuterate untyped
+# HELP kafka_server_alter_partition_metrics_successful_authentication_rate The number of connections with successful authentication per second kafka.server:name=null,type=alter-partition-metrics,attribute=successful-authentication-rate
+# TYPE kafka_server_alter_partition_metrics_successful_authentication_rate untyped
+# HELP kafka_server_socket_server_metrics_successful_authentication_no_reauth_total The total number of connections with successful authentication where the client does not support re-authentication kafka.server:name=null,type=socket-server-metrics,attribute=successful-authentication-no-reauth-total
+# TYPE kafka_server_socket_server_metrics_successful_authentication_no_reauth_total untyped
+# HELP kafka_server_forwarding_metrics_response_rate The number of responses received per second kafka.server:name=null,type=forwarding-metrics,attribute=response-rate
+# TYPE kafka_server_forwarding_metrics_response_rate untyped
+# HELP kafka_controller_controllereventmanager_999thpercentile Attribute exposed for management kafka.controller:name=EventQueueTimeMs,type=ControllerEventManager,attribute=999thPercentile
+# TYPE kafka_controller_controllereventmanager_999thpercentile untyped
+# HELP kafka_controller_controllerstats_min Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=Min
+# TYPE kafka_controller_controllerstats_min untyped
+# HELP kafka_server_zookeeperclientmetrics_75thpercentile Attribute exposed for management kafka.server:name=ZooKeeperRequestLatencyMs,type=ZooKeeperClientMetrics,attribute=75thPercentile
+# TYPE kafka_server_zookeeperclientmetrics_75thpercentile untyped
+# HELP kafka_server_zookeeperclientmetrics_95thpercentile Attribute exposed for management kafka.server:name=ZooKeeperRequestLatencyMs,type=ZooKeeperClientMetrics,attribute=95thPercentile
+# TYPE kafka_server_zookeeperclientmetrics_95thpercentile untyped
+# HELP kafka_server_alter_partition_metrics_reauthentication_latency_avg The average latency observed due to re-authentication kafka.server:name=null,type=alter-partition-metrics,attribute=reauthentication-latency-avg
+# TYPE kafka_server_alter_partition_metrics_reauthentication_latency_avg untyped
+# HELP kafka_server_controller_channel_metrics_select_total The total number of times the I/O layer checked for new I/O to perform kafka.server:name=null,type=controller-channel-metrics,attribute=select-total
+# TYPE kafka_server_controller_channel_metrics_select_total untyped
+# HELP kafka_server_delayedfetchmetrics_oneminuterate Attribute exposed for management kafka.server:name=ExpiresPerSec,type=DelayedFetchMetrics,attribute=OneMinuteRate
+# TYPE kafka_server_delayedfetchmetrics_oneminuterate untyped
+# HELP kafka_controller_controllerchannelmanager_max Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=Max
+# TYPE kafka_controller_controllerchannelmanager_max untyped
+# HELP kafka_network_requestmetrics_stddev Attribute exposed for management kafka.network:name=ResponseQueueTimeMs,type=RequestMetrics,attribute=StdDev
+# TYPE kafka_network_requestmetrics_stddev untyped
+# HELP kafka_network_requestmetrics_max Attribute exposed for management kafka.network:name=ResponseQueueTimeMs,type=RequestMetrics,attribute=Max
+# TYPE kafka_network_requestmetrics_max untyped
+# HELP kafka_server_forwarding_metrics_connection_close_total The total number of connections closed kafka.server:name=null,type=forwarding-metrics,attribute=connection-close-total
+# TYPE kafka_server_forwarding_metrics_connection_close_total untyped
+# HELP kafka_server_alter_partition_metrics_connection_count The current number of active connections. kafka.server:name=null,type=alter-partition-metrics,attribute=connection-count
+# TYPE kafka_server_alter_partition_metrics_connection_count untyped
+# HELP kafka_server_zookeeperclientmetrics_99thpercentile Attribute exposed for management kafka.server:name=ZooKeeperRequestLatencyMs,type=ZooKeeperClientMetrics,attribute=99thPercentile
+# TYPE kafka_server_zookeeperclientmetrics_99thpercentile untyped
+# HELP kafka_server_controller_channel_metrics_io_wait_time_ns_total The total time the I/O thread spent waiting kafka.server:name=null,type=controller-channel-metrics,attribute=io-wait-time-ns-total
+# TYPE kafka_server_controller_channel_metrics_io_wait_time_ns_total untyped
+# HELP kafka_server_controller_channel_metrics_successful_reauthentication_total The total number of successful re-authentication of connections kafka.server:name=null,type=controller-channel-metrics,attribute=successful-reauthentication-total
+# TYPE kafka_server_controller_channel_metrics_successful_reauthentication_total untyped
+# HELP kafka_server_brokertopicmetrics_fifteenminuterate Attribute exposed for management kafka.server:name=TotalFetchRequestsPerSec,type=BrokerTopicMetrics,attribute=FifteenMinuteRate
+# TYPE kafka_server_brokertopicmetrics_fifteenminuterate untyped
+# HELP kafka_server_socket_server_metrics_iotime_total *Deprecated* The total time the I/O thread spent doing I/O kafka.server:name=null,type=socket-server-metrics,attribute=iotime-total
+# TYPE kafka_server_socket_server_metrics_iotime_total untyped
+# HELP kafka_server_fetch_queue_size Tracks the size of the delay queue kafka.server:name=null,type=Fetch,attribute=queue-size
+# TYPE kafka_server_fetch_queue_size untyped
+# HELP kafka_server_socket_server_metrics_connections The number of connections with this client and version. kafka.server:name=null,type=socket-server-metrics,attribute=connections
+# TYPE kafka_server_socket_server_metrics_connections untyped
+# HELP kafka_controller_controllerchannelmanager_oneminuterate Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=OneMinuteRate
+# TYPE kafka_controller_controllerchannelmanager_oneminuterate untyped
+# HELP kafka_log_logcleanermanager_value Attribute exposed for management kafka.log:name=uncleanable-partitions-count,type=LogCleanerManager,attribute=Value
+# TYPE kafka_log_logcleanermanager_value untyped
+# HELP kafka_server_txn_marker_channel_metrics_io_ratio *Deprecated* The fraction of time the I/O thread spent doing I/O kafka.server:name=null,type=txn-marker-channel-metrics,attribute=io-ratio
+# TYPE kafka_server_txn_marker_channel_metrics_io_ratio untyped
+# HELP kafka_server_txn_marker_channel_metrics_successful_reauthentication_total The total number of successful re-authentication of connections kafka.server:name=null,type=txn-marker-channel-metrics,attribute=successful-reauthentication-total
+# TYPE kafka_server_txn_marker_channel_metrics_successful_reauthentication_total untyped
+# HELP kafka_server_alter_partition_metrics_connection_creation_rate The number of new connections established per second kafka.server:name=null,type=alter-partition-metrics,attribute=connection-creation-rate
+# TYPE kafka_server_alter_partition_metrics_connection_creation_rate untyped
+# HELP kafka_server_forwarding_metrics_io_ratio *Deprecated* The fraction of time the I/O thread spent doing I/O kafka.server:name=null,type=forwarding-metrics,attribute=io-ratio
+# TYPE kafka_server_forwarding_metrics_io_ratio untyped
+# HELP kafka_server_replicaalterlogdirsmanager_value Attribute exposed for management kafka.server:name=DeadThreadCount,type=ReplicaAlterLogDirsManager,attribute=Value
+# TYPE kafka_server_replicaalterlogdirsmanager_value untyped
+# HELP kafka_server_controller_channel_metrics_response_rate The number of responses received per second kafka.server:name=null,type=controller-channel-metrics,attribute=response-rate
+# TYPE kafka_server_controller_channel_metrics_response_rate untyped
+# HELP kafka_server_controller_channel_metrics_io_wait_time_ns_avg The average length of time the I/O thread spent waiting for a socket ready for reads or writes in nanoseconds. kafka.server:name=null,type=controller-channel-metrics,attribute=io-wait-time-ns-avg
+# TYPE kafka_server_controller_channel_metrics_io_wait_time_ns_avg untyped
+# HELP kafka_controller_controllerstats_oneminuterate Attribute exposed for management kafka.controller:name=ListPartitionReassignmentRateAndTimeMs,type=ControllerStats,attribute=OneMinuteRate
+# TYPE kafka_controller_controllerstats_oneminuterate untyped
+# HELP kafka_server_controller_channel_metrics_incoming_byte_total The total number of bytes read off all sockets kafka.server:name=null,type=controller-channel-metrics,attribute=incoming-byte-total
+# TYPE kafka_server_controller_channel_metrics_incoming_byte_total untyped
+# HELP kafka_controller_controllerchannelmanager_95thpercentile Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=95thPercentile
+# TYPE kafka_controller_controllerchannelmanager_95thpercentile untyped
+# HELP kafka_server_socket_server_metrics_successful_authentication_rate The number of connections with successful authentication per second kafka.server:name=null,type=socket-server-metrics,attribute=successful-authentication-rate
+# TYPE kafka_server_socket_server_metrics_successful_authentication_rate untyped
+# HELP kafka_server_group_coordinator_metrics_offset_commit_count The total number of committed offsets kafka.server:name=null,type=group-coordinator-metrics,attribute=offset-commit-count
+# TYPE kafka_server_group_coordinator_metrics_offset_commit_count untyped
+# HELP kafka_server_controller_channel_metrics_network_io_total The total number of network operations (reads or writes) on all connections kafka.server:name=null,type=controller-channel-metrics,attribute=network-io-total
+# TYPE kafka_server_controller_channel_metrics_network_io_total untyped
+# HELP kafka_network_requestmetrics_95thpercentile Attribute exposed for management kafka.network:name=ResponseQueueTimeMs,type=RequestMetrics,attribute=95thPercentile
+# TYPE kafka_network_requestmetrics_95thpercentile untyped
+# HELP kafka_server_alter_partition_metrics_request_size_max The maximum size of any request sent. kafka.server:name=null,type=alter-partition-metrics,attribute=request-size-max
+# TYPE kafka_server_alter_partition_metrics_request_size_max untyped
+# HELP kafka_server_txn_marker_channel_metrics_io_waittime_total *Deprecated* The total time the I/O thread spent waiting kafka.server:name=null,type=txn-marker-channel-metrics,attribute=io-waittime-total
+# TYPE kafka_server_txn_marker_channel_metrics_io_waittime_total untyped
+# HELP kafka_network_requestmetrics_99thpercentile Attribute exposed for management kafka.network:name=ResponseQueueTimeMs,type=RequestMetrics,attribute=99thPercentile
+# TYPE kafka_network_requestmetrics_99thpercentile untyped
+# HELP kafka_server_controller_channel_metrics_io_time_ns_avg The average length of time for I/O per select call in nanoseconds. kafka.server:name=null,type=controller-channel-metrics,attribute=io-time-ns-avg
+# TYPE kafka_server_controller_channel_metrics_io_time_ns_avg untyped
+# HELP kafka_server_fetchsessioncache_fifteenminuterate Attribute exposed for management kafka.server:name=IncrementalFetchSessionEvictionsPerSec,type=FetchSessionCache,attribute=FifteenMinuteRate
+# TYPE kafka_server_fetchsessioncache_fifteenminuterate untyped
+# HELP kafka_controller_controllerchannelmanager_99thpercentile Attribute exposed for management kafka.controller:name=RequestRateAndQueueTimeMs,type=ControllerChannelManager,attribute=99thPercentile
+# TYPE kafka_controller_controllerchannelmanager_99thpercentile untyped
+# HELP kafka_server_socket_server_metrics_io_time_ns_avg The average length of time for I/O per select call in nanoseconds. kafka.server:name=null,type=socket-server-metrics,attribute=io-time-ns-avg
+# TYPE kafka_server_socket_server_metrics_io_time_ns_avg untyped
+# HELP kafka_utils_throttler_count Attribute exposed for management kafka.utils:name=cleaner-io,type=Throttler,attribute=Count
+# TYPE kafka_utils_throttler_count untyped
+# HELP kafka_server_txn_marker_channel_metrics_request_rate The number of requests sent per second kafka.server:name=null,type=txn-marker-channel-metrics,attribute=request-rate
+# TYPE kafka_server_txn_marker_channel_metrics_request_rate untyped
+# HELP kafka_server_replicamanager_fiveminuterate Attribute exposed for management kafka.server:name=IsrExpandsPerSec,type=ReplicaManager,attribute=FiveMinuteRate
+# TYPE kafka_server_replicamanager_fiveminuterate untyped
+# HELP kafka_server_controller_channel_metrics_request_total The total number of requests sent kafka.server:name=null,type=controller-channel-metrics,attribute=request-total
+# TYPE kafka_server_controller_channel_metrics_request_total untyped
+# HELP kafka_server_socket_server_metrics_connection_accept_throttle_time Tracking average throttle-time, out of non-zero throttle times, per listener kafka.server:name=null,type=socket-server-metrics,attribute=connection-accept-throttle-time
+# TYPE kafka_server_socket_server_metrics_connection_accept_throttle_time untyped
+# HELP kafka_server_forwarding_metrics_io_time_ns_avg The average length of time for I/O per select call in nanoseconds. kafka.server:name=null,type=forwarding-metrics,attribute=io-time-ns-avg
+# TYPE kafka_server_forwarding_metrics_io_time_ns_avg untyped
+# HELP kafka_server_socket_server_metrics_reauthentication_latency_avg The average latency observed due to re-authentication kafka.server:name=null,type=socket-server-metrics,attribute=reauthentication-latency-avg
+# TYPE kafka_server_socket_server_metrics_reauthentication_latency_avg untyped
+# HELP kafka_server_group_coordinator_metrics_partition_load_time_avg The avg time it took to load the partitions in the last 30sec kafka.server:name=null,type=group-coordinator-metrics,attribute=partition-load-time-avg
+# TYPE kafka_server_group_coordinator_metrics_partition_load_time_avg untyped
+# HELP kafka_coordinator_group_groupmetadatamanager_value Attribute exposed for management kafka.coordinator.group:name=NumGroupsPreparingRebalance,type=GroupMetadataManager,attribute=Value
+# TYPE kafka_coordinator_group_groupmetadatamanager_value untyped
+# HELP kafka_server_controller_channel_metrics_connection_close_rate The number of connections closed per second kafka.server:name=null,type=controller-channel-metrics,attribute=connection-close-rate
+# TYPE kafka_server_controller_channel_metrics_connection_close_rate untyped
+# HELP kafka_server_alter_partition_metrics_outgoing_byte_total The total number of outgoing bytes sent to all servers kafka.server:name=null,type=alter-partition-metrics,attribute=outgoing-byte-total
+# TYPE kafka_server_alter_partition_metrics_outgoing_byte_total untyped
+# HELP kafka_controller_controllereventmanager_99thpercentile Attribute exposed for management kafka.controller:name=EventQueueTimeMs,type=ControllerEventManager,attribute=99thPercentile
+# TYPE kafka_controller_controllereventmanager_99thpercentile untyped
+# HELP kafka_server_alter_partition_metrics_io_wait_ratio *Deprecated* The fraction of time the I/O thread spent waiting kafka.server:name=null,type=alter-partition-metrics,attribute=io-wait-ratio
+# TYPE kafka_server_alter_partition_metrics_io_wait_ratio untyped
+# HELP kafka_server_alter_partition_metrics_successful_authentication_total The total number of connections with successful authentication kafka.server:name=null,type=alter-partition-metrics,attribute=successful-authentication-total
+# TYPE kafka_server_alter_partition_metrics_successful_authentication_total untyped
+# HELP kafka_server_alter_partition_metrics_io_time_ns_total The total time the I/O thread spent doing I/O kafka.server:name=null,type=alter-partition-metrics,attribute=io-time-ns-total
+# TYPE kafka_server_alter_partition_metrics_io_time_ns_total untyped
+# HELP kafka_server_replicamanager_oneminuterate Attribute exposed for management kafka.server:name=IsrExpandsPerSec,type=ReplicaManager,attribute=OneMinuteRate
+# TYPE kafka_server_replicamanager_oneminuterate untyped
+# HELP kafka_controller_controllereventmanager_max Attribute exposed for management kafka.controller:name=EventQueueTimeMs,type=ControllerEventManager,attribute=Max
+# TYPE kafka_controller_controllereventmanager_max untyped
+# HELP kafka_server_socket_server_metrics_select_total The total number of times the I/O layer checked for new I/O to perform kafka.server:name=null,type=socket-server-metrics,attribute=select-total
+# TYPE kafka_server_socket_server_metrics_select_total untyped
+# HELP kafka_server_controller_channel_metrics_iotime_total *Deprecated* The total time the I/O thread spent doing I/O kafka.server:name=null,type=controller-channel-metrics,attribute=iotime-total
+# TYPE kafka_server_controller_channel_metrics_iotime_total untyped
+# HELP kafka_network_acceptor_meanrate Attribute exposed for management kafka.network:name=AcceptorBlockedPercent,type=Acceptor,attribute=MeanRate
+# TYPE kafka_network_acceptor_meanrate untyped
+# HELP kafka_controller_controllereventmanager_95thpercentile Attribute exposed for management kafka.controller:name=EventQueueTimeMs,type=ControllerEventManager,attribute=95thPercentile
+# TYPE kafka_controller_controllereventmanager_95thpercentile untyped
+# HELP kafka_coordinator_transaction_transactionmarkerchannelmanager_value Attribute exposed for management kafka.coordinator.transaction:name=LogAppendRetryQueueSize,type=TransactionMarkerChannelManager,attribute=Value
+# TYPE kafka_coordinator_transaction_transactionmarkerchannelmanager_value untyped
+# HELP kafka_server_socket_server_metrics_request_total The total number of requests sent kafka.server:name=null,type=socket-server-metrics,attribute=request-total
+# TYPE kafka_server_socket_server_metrics_request_total untyped
+# HELP kafka_network_acceptor_oneminuterate Attribute exposed for management kafka.network:name=AcceptorBlockedPercent,type=Acceptor,attribute=OneMinuteRate
+# TYPE kafka_network_acceptor_oneminuterate untyped
+# HELP kafka_server_sessionexpirelistener_oneminuterate Attribute exposed for management kafka.server:name=ZooKeeperDisconnectsPerSec,type=SessionExpireListener,attribute=OneMinuteRate
+# TYPE kafka_server_sessionexpirelistener_oneminuterate untyped
+# HELP kafka_server_txn_marker_channel_metrics_failed_reauthentication_total The total number of failed re-authentication of connections kafka.server:name=null,type=txn-marker-channel-metrics,attribute=failed-reauthentication-total
+# TYPE kafka_server_txn_marker_channel_metrics_failed_reauthentication_total untyped

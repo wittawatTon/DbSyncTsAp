@@ -11,6 +11,8 @@ import {
   pauseConnector,
 } from '@kafka/debeziumControl/services/debeziumService.js';
 
+/* TODO: กรณี docker kafka down ต้องสร้าง connector ใหม่ */
+
 //สร้าง Pipeline ใหม่ โดยมีขั้นตอน
 //TODO:ตรวจสอบข้อมูล table source ที่ selected ต้องมี primarykey, name ของ Source ต้องไม่ซ้ำกับที่ใช้ไปแล้ว เพราะเอาไปตั้ง topic
 //1. ตรวจสอบว่า Source พร้อม CDC for mssql must run script ถ้าไม่ให้ Error แล้วให้ใช้ Service enableCDC เปิด
