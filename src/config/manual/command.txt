@@ -1,0 +1,49 @@
+docker-compose down
+docker-compose up -d
+docker-compose ps
+
+winpty docker exec -it debezium-cdc-connect-1 sh
+
+curl http://localhost:8083/
+
+curl -X POST -H "Content-Type: application/json" --data @mysql-connector.json http://localhost:8083/connectors
+
+curl -X POST -H "Content-Type: application/json" --data @postgresql-sink-connector.json http://localhost:8083/connectors
+
+
+winpty docker exec -it mysql mysql -u root -p 
+USE testdb;
+
+DROP TABLE customers;
+
+CREATE TABLE customers (
+  id INT PRIMARY KEY,
+  name VARCHAR(255)
+);
+
+INSERT INTO customers (id, name) VALUES (1, 'Alice'), (2, 'Bob');
+
+
+winpty docker exec -it debezium-cdc-kafka-1 \
+  kafka-console-consumer --bootstrap-server localhost:9092 \
+  --topic mysql.testdb.customers --from-beginning
+
+winpty docker exec -it debezium-cdc-kafka-1 \
+  kafka-topics --bootstrap-server localhost:9092 --list
+
+
+คุณเป็นผู้เชี่ยวชาญด้านการพัฒนาโปรแกรม ต้องการสร้าง โปรแกรมใหม่ เพื่อทำตลาด องค์กรธุรกิจที่ใช้งาน AS400 และ SME สำหรับการทำ Database replication เน้นที่ UI/UX ใช้งานง่าย zero coding โดยมี Feature ดังนี้ 
+1. Replication ทิศทางเดียว
+2. config ได้ง่าย รองรับ Database in และ Database out ได้หลาย Datasource
+3. มี Datatransform โดยแยกใช้อีก product 
+4. ผู้ใช้สามารถ ทดลอง config และเห็นข้อมูลจริงแบบ Real-time ก่อนการตั้งค่า Config
+5. สามารถจัดเก็บ Config ได้ง่าย และ เข้ารหัส Sensitive data
+6. แสดงสถานะ ข้อผิดพลาดที่พบในการทำงาน
+7. มี Dashboard สำหรับดูข้อมูลทางสถิติ ต่างๆ ช่วยคิดด้วยว่าควรมีอะไรบ้าง เท่าที่คิด มี Laging ของข้อมูล, sync Transaction by period, peak load
+8. รองรับภาษาไทย และ อังกฤษ
+9. ควบคุม License การใช้งาน
+10. มีการ Auth user
+เทคโนโลยีที่ใช้ 
+1.Chang Data capture: Debezium
+2.message broker: AutoMq
+ช่วยวิเคราะห์ความเหมาะสมของแนวคิดนี้ และ แนะนำแนวทางพัฒนาโปรแกรม  ทำ Product roadmap, product jorneys และ user journey

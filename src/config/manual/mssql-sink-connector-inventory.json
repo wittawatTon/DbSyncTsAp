@@ -1,0 +1,20 @@
+{
+  "name": "mssql_for_test_1746254640305",
+  "config": {
+    "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+    "tasks.max": "1",
+    "connection.url": "jdbc:sqlserver://192.168.0.169:1433;databaseName=testdb",
+    "connection.user": "sa",
+    "connection.password": "YourStrongPassword123",
+    "connection.driver": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+    "insert.mode": "upsert",
+    "pk.mode": "record_key",
+    "auto.create": "true",
+    "auto.evolve": "true",
+    "topics": "",
+    "transforms": "RenameTopic",
+    "transforms.RenameTopic.type": "org.apache.kafka.connect.transforms.RegexRouter",
+    "transforms.RenameTopic.regex": "([a-zA-Z0-9_]+)\\\\.([a-zA-Z0-9_]+)\\\\.(.*)",
+    "transforms.RenameTopic.replacement": "$3"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "name": "inventory_1751634273205",
+  "config": {
+    "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+    "database.hostname": "192.168.1.51",
+    "database.port": "1433",
+    "database.user": "cdc",
+    "database.password": "P@ss1234",
+    "database.names": "inventory",
+    "database.server.name": "inventory",
+    "database.encrypt": "false",
+    "table.include.list": "dbo.orders",
+    "column.include.list": "dbo.orders.id,dbo.orders.customer_id,dbo.orders.order_date",
+    "topic.prefix": "192_168_1_51",
+    "schema.history.internal.kafka.bootstrap.servers": "http://192.168.1.51:9092",
+    "schema.history.internal.kafka.topic": "schema_history.inventory",
+    "database.history.kafka.bootstrap.servers": "http://192.168.1.51:9092",
+    "database.history.kafka.topic": "dbhistory.inventory",
+    "snapshot.mode": "initial"
+  }
+}

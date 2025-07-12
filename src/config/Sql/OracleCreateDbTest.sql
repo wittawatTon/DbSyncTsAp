@@ -1,0 +1,19 @@
+CREATE TABLE "TESTCDC"."TEST" (
+  "ID" NUMBER(10, 0) PRIMARY KEY,
+  "CUS_ID" NUMBER(10, 0),
+  "ORDER_DATE" DATE);
+
+
+BEGIN
+  FOR i IN 1..20 LOOP
+    INSERT INTO TESTCDC.TEST (ID, CUS_ID, ORDER_DATE)
+    VALUES (
+      i,
+      1000 + i,
+      SYSDATE - DBMS_RANDOM.VALUE(1, 365)  -- สุ่มวันที่ย้อนหลัง 1-365 วัน
+    );
+  END LOOP;
+  COMMIT;
+END;
+/
+

@@ -1,0 +1,17 @@
+curl -L -o confluent-hub-client-latest.tar.gz http://client.hub.confluent.io/confluent-hub-client-latest.tar.gz
+tar -xzf confluent-hub-client-latest.tar.gz
+sudo mv bin/confluent-hub /usr/local/bin/
+sudo chmod +x /usr/local/bin/confluent-hub
+confluent-hub --help
+
+
+touch dummy.properties
+confluent-hub install confluentinc/kafka-connect-jdbc:10.6.1 \
+  --component-dir ./jdbc \
+  --worker-configs dummy.properties
+
+or
+
+confluent-hub install confluentinc/kafka-connect-jdbc:latest \
+  --component-dir ./jdbc \
+  --worker-configs dummy.properties
