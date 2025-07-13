@@ -51,7 +51,7 @@ const bootstrap = async () => {
   const loggerHttp = pinoHttp({
     logger,
     customLogLevel: (res, err) => {
-      if (res.statusCode >= 500 || err) return 'error';
+      if (res.statusCode >= 500 || err && err instanceof Error) return 'error';
       if (res.statusCode >= 400) return 'warn';
       return 'info'; // หยุด log อื่น เช่น 200 OK
     },

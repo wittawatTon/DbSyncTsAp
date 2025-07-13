@@ -2,6 +2,7 @@ import sql, { ConnectionPool } from 'mssql';
 import { DbIntrospector } from '../DbIntrospector.js';
 import { ITable } from '@core/models/table.model.js';
 import { IColumn } from '@core/models/column.model.js';
+import { IDbConnection } from '@core/models/dbConnection.model.js';
 
 export class MssqlIntrospector implements DbIntrospector {
   constructor(private pool: ConnectionPool) {}
@@ -95,5 +96,35 @@ export class MssqlIntrospector implements DbIntrospector {
       isPrimaryKey: r.is_primary_key,
       selected: false,
     }));
+  }
+
+  async createTableOnTarget(
+    config: IDbConnection,
+    tableName: string,
+    sqlCmd: string
+  ): Promise<boolean> {
+    try {
+      const request = this.pool.request();
+      request.input('tableName', sql.NVarChar, tableName);
+
+      const checkResult = await request.query(`
+        SELECT COUNT(*) AS count FROM information_schema.tables
+        WHERE table_name = @tableName
+      `);
+
+      const exists = checkResult.recordset[0].count > 0;
+
+      if (exists) {
+        throw new Error(`🚫 Table "${tableName}" already exists.`);
+      }
+
+      const cleanedSql = sqlCmd.trim().replace(/;$/, '');
+      await this.pool.request().query(cleanedSql);
+
+      return true;
+    } catch (err: any) {
+      console.error('[MssqlIntrospector] createTableOnTarget failed:', err.message);
+      throw new Error(err.message);
+    }
   }
 }

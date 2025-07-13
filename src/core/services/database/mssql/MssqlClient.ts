@@ -24,7 +24,7 @@ export class MssqlClient implements DatabaseClient {
         },
         options: {
           encrypt: this.dbConnection.ssl || false, // For Azure
-          trustServerCertificate: !this.dbConnection.ssl, // Change to true for local dev / self-signed certs
+          trustServerCertificate: this.dbConnection.ssl, // Change to true for local dev / self-signed certs
         },
       };
       this.pool = await new sql.ConnectionPool(config).connect();

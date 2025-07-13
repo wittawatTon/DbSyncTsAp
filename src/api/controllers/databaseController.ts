@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 import { IDbConnection } from '@core/models/dbConnection.model.js';
-import { getTables } from '@api/services/getTablesService_bak.js';
-import { testConnection } from '@api/services/databaseService_bak.js';
-import { createTableOnTarget } from '@api/services/createTableOnTarget.js'
+import { getTables, testDatabaseConnection, createTableOnTarget } from '@core/services/databaseService.js';
 
 // Define the expected shape of the request body
 interface FetchTablesRequestBody {
@@ -31,7 +29,7 @@ export const fetchTablesHandler = async (
 
   try {
     // 🛠️ ตรวจสอบการเชื่อมต่อก่อน
-    const isConnected = await testConnection(config);
+    const isConnected = await testDatabaseConnection(config);
     if (!isConnected) {
       res.status(500).json({ error: 'Connection Failed', message: `Unable to connect to ${config.dbType} database.` });
       return;
@@ -58,7 +56,7 @@ export const testConnectHandler = async (
   const { config } = req.body;
 
   try {
-    const isConnected = await testConnection(config);
+    const isConnected = await testDatabaseConnection(config);
     if (isConnected) {
       res.json({
         status: 'success',

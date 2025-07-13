@@ -1,7 +1,6 @@
 import { PipelineModel } from '@core/models/pipeline.model.js';
-import { createConnectionByDbType, closeConnection } from '@api/services/databaseService_bak.js';
+import { DatabaseFactory } from '@core/services/database/DatabaseFactory.js';
 import { ConnectionConfigDocument } from '@core/models/dbConnection.model.js';
-import { ConnectionPool } from 'mssql';
 
 /**
  * สร้าง SQL สำหรับเปิดใช้งาน CDC ทั้งระดับ Database และ Table
@@ -43,31 +42,41 @@ export async function CheckEnableCDC(
 
   if (!pipeline) throw new Error(`❌ Pipeline not found: ${pipelineId}`);
   const config = pipeline.sourceDbConnection;
-  const connection = await createConnectionByDbType(config);
+
+  // ใช้ DatabaseFactory สร้าง client ที่ implement DatabaseClient interface
+  const client = DatabaseFactory.create(config);
 
   try {
+    await client.connect();
+
     if (config.dbType !== 'mssql') {
       throw new Error(`❌ CDC is only supported for MSSQL, got "${config.dbType}"`);
     }
 
-    const mssqlConnection = connection as ConnectionPool;
     const tables = pipeline.sourceTables.map(t => t.name);
 
     // ตรวจสอบระดับ Database
-    const dbCheck = await mssqlConnection.request().query(`
-      SELECT is_cdc_enabled FROM sys.databases WHERE name = DB_NAME()
-    `);
-    const isDbCdcEnabled = dbCheck.recordset?.[0]?.is_cdc_enabled === true;
+    const dbCheckResult = await client.query<{ is_cdc_enabled: boolean }>(
+      `SELECT is_cdc_enabled FROM sys.databases WHERE name = DB_NAME()`
+    );
+    const isDbCdcEnabled = dbCheckResult[0]?.is_cdc_enabled === true;
 
     // ตรวจสอบระดับ Table โดยรวมเป็น IN (...)
+    if (tables.length === 0) {
+      // ไม่มี tables ให้ตรวจสอบ => ถือว่า enabled หาก DB enabled
+      return { enabled: isDbCdcEnabled };
+    }
+
     const tableList = tables.map(t => `'${t.replace(/'/g, "''")}'`).join(',');
-    const result = await mssqlConnection.request().query(`
-      SELECT name, is_tracked_by_cdc FROM sys.tables WHERE name IN (${tableList})
-    `);
+
+    const tableResult = await client.query<{ name: string; is_tracked_by_cdc: boolean }>(
+      `SELECT name, is_tracked_by_cdc FROM sys.tables WHERE name IN (${tableList})`
+    );
 
     const trackedTables = new Set(
-      result.recordset.filter(r => r.is_tracked_by_cdc === true).map(r => r.name)
+      tableResult.filter(r => r.is_tracked_by_cdc === true).map(r => r.name)
     );
+
     const tablesNotEnabled = tables.filter(t => !trackedTables.has(t));
 
     const isCdcFullyEnabled = isDbCdcEnabled && tablesNotEnabled.length === 0;
@@ -85,7 +94,7 @@ export async function CheckEnableCDC(
     console.error(`❌ Failed to check CDC: ${err.message}`);
     throw err;
   } finally {
-    await closeConnection(config.dbType, connection);
+    await client.disconnect();
   }
 }
 
@@ -107,16 +116,17 @@ export async function enableCDC(pipelineId: string): Promise<boolean> {
     throw new Error(`❌ CDC not enabled but no SQL returned to fix.`);
   }
 
-  const connection = await createConnectionByDbType(config);
+  const client = DatabaseFactory.create(config);
 
   try {
+    await client.connect();
+
     if (config.dbType !== 'mssql') {
       throw new Error(`❌ CDC is only supported for MSSQL, got "${config.dbType}"`);
     }
 
-    const mssqlConnection = connection as ConnectionPool;
     for (const sql of enableSql) {
-      await mssqlConnection.request().query(sql);
+      await client.query(sql);
     }
 
     return true;
@@ -124,7 +134,7 @@ export async function enableCDC(pipelineId: string): Promise<boolean> {
     console.error(`❌ Failed to enable CDC: ${err.message}`);
     throw new Error(`Fail to enable CDC for pipeline ID: ${pipelineId}`);
   } finally {
-    await closeConnection(config.dbType, connection);
+    await client.disconnect();
   }
 }
 

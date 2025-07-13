@@ -9,9 +9,9 @@
     "build": "tsc  && tsc-alias --project tsconfig.json --outDir dist/src",
     "build:exe": "npm run build && node build-exe.js",
     "test": "vitest",
-    "test:integration": "vitest run --config vitest.config.ts tests/api/databaseService.integration.test.ts",
+    "test:integration": "vitest run --config vitest.config.ts tests/api/",
     "test:debug": "node --inspect-brk ./node_modules/vitest/vitest.mjs run",
-    "test:debug:integration": "node --inspect-brk ./node_modules/vitest/vitest.mjs run tests/api/databaseService.integration.test.ts",
+    "test:debug:integration": "node --inspect-brk ./node_modules/vitest/vitest.mjs run tests/api/",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest run --coverage"
   },

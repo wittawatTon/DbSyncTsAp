@@ -1,125 +1,182 @@
 import { describe, it, expect, vi, afterEach, beforeEach } from 'vitest';
-import { Types } from 'mongoose';
+import { Types,Model  } from 'mongoose';
 import { ConnectionConfigService } from '@core/services/connectionConfig.service.js';
-import { ConnectionConfigModel } from '@core/models/connectionConfig.model.js';
+import { ConnectionConfigModel } from '@core/models/dbConnection.model.js';
 
-vi.mock('@core/models/connectionConfig.model', () => {
-  return {
-    ConnectionConfigModel: {
-      find: vi.fn(),
-      findById: vi.fn(),
-      findByIdAndUpdate: vi.fn(),
-      findByIdAndDelete: vi.fn(),
-    },
-  };
+
+// Correctly mock the model from its actual path
+vi.mock('@core/models/dbConnection.model.js', () => {
+  // Mock for instance method `save`
+  const mockSave = vi.fn();
+
+  // Create Mock Constructor Function (like new Model())
+  const MockModel = vi.fn().mockImplementation(data => ({
+    ...data,
+    save: mockSave,
+  }));
+
+  // Attach static methods
+  Object.assign(MockModel, {
+    find: vi.fn(),
+    findById: vi.fn(),
+    findByIdAndUpdate: vi.fn(),
+    findByIdAndDelete: vi.fn(),
+  });
+
+  // Attach mockSave to be accessible from test code
+  (MockModel as any).mockSave = mockSave;
+
+  return { ConnectionConfigModel: MockModel };
 });
+
+
+// Use vi.mocked to get a typed mock object
+const MockedConnectionConfigModel = vi.mocked(ConnectionConfigModel, true);
+const mockSave = (MockedConnectionConfigModel as any).mockSave;
 
 describe('ConnectionConfigService', () => {
   let service: ConnectionConfigService;
 
+  // Test Data
+  const mockId = new Types.ObjectId().toHexString();
+  const mockConfig = {
+    _id: mockId,
+    name: 'Test Config',
+    dbType: 'postgres',
+    host: 'localhost',
+    port: 5432,
+    username: 'user',
+    password: 'password',
+    database: 'testdb',
+  };
+
   beforeEach(() => {
-    // Create service instance before each test
-    service = new ConnectionConfigService(ConnectionConfigModel);
+    // The service now receives the mocked model constructor
+    service = new ConnectionConfigService(MockedConnectionConfigModel);
   });
 
   afterEach(() => {
     vi.clearAllMocks();
   });
 
-  it('should create new connection config with valid data', async () => {
-    const mockData = { name: 'TestConfig', value: 'abc' };
-    const mockSavedDoc = { ...mockData, _id: new Types.ObjectId() };
-    const mockSave = vi.fn().mockResolvedValue(mockSavedDoc);
+  describe('create', () => {
+    it('should create a new connection configuration successfully', async () => {
+      const newConfigData = { name: 'New DB', dbType: 'mysql' };
+      mockSave.mockResolvedValue({ ...newConfigData, _id: new Types.ObjectId() });
 
-    // Mock the model constructor to return an object with save method
-    const MockConstructor = vi.fn(() => ({
-      ...mockData,
-      save: mockSave,
-    }));
+      const result = await service.create(newConfigData as any);
 
-    // Temporarily override the model inside the service instance
-    (service as any).model = MockConstructor;
-
-    const result = await service.create(mockData as any);
-
-    expect(MockConstructor).toHaveBeenCalledWith(mockData);
-    expect(mockSave).toHaveBeenCalled();
-    expect(result).toEqual(mockSavedDoc);
-  });
-
-  it('should retrieve all connection configs', async () => {
-    const mockDocs = [
-      { _id: new Types.ObjectId(), name: 'A' },
-      { _id: new Types.ObjectId(), name: 'B' },
-    ];
-    const selectMock = vi.fn().mockResolvedValue(mockDocs);
-    (ConnectionConfigModel.find as any).mockReturnValue({ select: selectMock });
-
-    const result = await service.findAll();
-
-    expect(ConnectionConfigModel.find).toHaveBeenCalled();
-    expect(selectMock).toHaveBeenCalledWith('');
-    expect(result).toEqual(mockDocs);
-  });
-
-  it('should update connection config by id with valid data', async () => {
-    const id = new Types.ObjectId().toHexString();
-    const updateData = { value: 'updated' };
-    const updatedDoc = { _id: id, ...updateData };
-
-    (ConnectionConfigModel.findByIdAndUpdate as any).mockResolvedValue(updatedDoc);
-
-    const result = await service.updateById(id, updateData as any);
-
-    expect(ConnectionConfigModel.findByIdAndUpdate).toHaveBeenCalledWith(id, updateData, {
-      new: true,
-      runValidators: true,
+      expect(MockedConnectionConfigModel).toHaveBeenCalledWith(newConfigData);
+      expect(mockSave).toHaveBeenCalled();
+      expect(result.name).toBe(newConfigData.name);
+      expect(result.dbType).toBe(newConfigData.dbType);
     });
-    expect(result).toEqual(updatedDoc);
   });
 
-  it('should return null when finding by invalid id', async () => {
-    const invalidId = 'notavalidobjectid';
+  describe('findAll', () => {
+    it('should retrieve all connection configurations', async () => {
+      const mockConfigs = [mockConfig, { ...mockConfig, _id: new Types.ObjectId().toHexString(), name: 'Second Config' }];
+      const selectMock = vi.fn().mockResolvedValue(mockConfigs);
+      MockedConnectionConfigModel.find.mockReturnValue({ select: selectMock } as any);
 
-    const result = await service.findById(invalidId);
+      const result = await service.findAll();
 
-    expect(result).toBeNull();
-    expect(ConnectionConfigModel.findById).not.toHaveBeenCalled();
-  });
-
-  it('should return null when updating nonexistent id', async () => {
-    const id = new Types.ObjectId().toHexString();
-    const updateData = { value: 'noexist' };
-
-    (ConnectionConfigModel.findByIdAndUpdate as any).mockResolvedValue(null);
-
-    const result = await service.updateById(id, updateData as any);
-
-    expect(ConnectionConfigModel.findByIdAndUpdate).toHaveBeenCalledWith(id, updateData, {
-      new: true,
-      runValidators: true,
+      expect(MockedConnectionConfigModel.find).toHaveBeenCalled();
+      expect(selectMock).toHaveBeenCalledWith('');
+      expect(result).toEqual(mockConfigs);
+      expect(result.length).toBe(2);
     });
-    expect(result).toBeNull();
   });
 
-  it('should return null when deleting with invalid id', async () => {
-    const invalidId = 'invalid';
+  describe('findById', () => {
+    it('should return a connection config for a valid ID', async () => {
+      const selectMock = vi.fn().mockResolvedValue(mockConfig);
+      MockedConnectionConfigModel.findById.mockReturnValue({ select: selectMock } as any);
 
-    const result = await service.deleteById(invalidId);
+      const result = await service.findById(mockId);
 
-    expect(result).toBeNull();
-    expect(ConnectionConfigModel.findByIdAndDelete).not.toHaveBeenCalled();
+      expect(MockedConnectionConfigModel.findById).toHaveBeenCalledWith(mockId);
+      expect(selectMock).toHaveBeenCalledWith('');
+      expect(result).toEqual(mockConfig);
+    });
+
+    it('should return null if the ID format is invalid', async () => {
+      const invalidId = 'invalid-id';
+      const result = await service.findById(invalidId);
+      
+      expect(result).toBeNull();
+      expect(MockedConnectionConfigModel.findById).not.toHaveBeenCalled();
+    });
+
+    it('should return null if no document is found for a valid ID', async () => {
+      const selectMock = vi.fn().mockResolvedValue(null);
+      MockedConnectionConfigModel.findById.mockReturnValue({ select: selectMock } as any);
+
+      const result = await service.findById(mockId);
+
+      expect(MockedConnectionConfigModel.findById).toHaveBeenCalledWith(mockId);
+      expect(selectMock).toHaveBeenCalledWith('');
+      expect(result).toBeNull();
+    });
   });
 
-  it('should delete connection config with valid id', async () => {
-    const validId = new Types.ObjectId().toHexString();
-    const deletedDoc = { _id: validId, name: 'ToDelete' };
+  describe('updateById', () => {
+    it('should update a connection config successfully', async () => {
+      const updateData = { host: 'new-host.com' };
+      const updatedDoc = { ...mockConfig, ...updateData };
+      MockedConnectionConfigModel.findByIdAndUpdate.mockResolvedValue(updatedDoc);
 
-    (ConnectionConfigModel.findByIdAndDelete as any).mockResolvedValue(deletedDoc);
+      const result = await service.updateById(mockId, updateData as any);
 
-    const result = await service.deleteById(validId);
+      expect(MockedConnectionConfigModel.findByIdAndUpdate).toHaveBeenCalledWith(
+        mockId,
+        updateData,
+        { new: true, runValidators: true }
+      );
+      expect(result).toEqual(updatedDoc);
+      expect(result?.host).toBe('new-host.com');
+    });
 
-    expect(ConnectionConfigModel.findByIdAndDelete).toHaveBeenCalledWith(validId);
-    expect(result).toEqual(deletedDoc);
+    it('should return null when trying to update a non-existent config', async () => {
+      const updateData = { host: 'new-host.com' };
+      MockedConnectionConfigModel.findByIdAndUpdate.mockResolvedValue(null);
+
+      const result = await service.updateById(mockId, updateData as any);
+
+      expect(MockedConnectionConfigModel.findByIdAndUpdate).toHaveBeenCalledWith(
+        mockId,
+        updateData,
+        { new: true, runValidators: true }
+      );
+      expect(result).toBeNull();
+    });
+  });
+
+  describe('deleteById', () => {
+    it('should delete a connection config successfully', async () => {
+      MockedConnectionConfigModel.findByIdAndDelete.mockResolvedValue(mockConfig);
+
+      const result = await service.deleteById(mockId);
+
+      expect(MockedConnectionConfigModel.findByIdAndDelete).toHaveBeenCalledWith(mockId);
+      expect(result).toEqual(mockConfig);
+    });
+
+    it('should return null when trying to delete a non-existent config', async () => {
+      MockedConnectionConfigModel.findByIdAndDelete.mockResolvedValue(null);
+
+      const result = await service.deleteById(mockId);
+
+      expect(MockedConnectionConfigModel.findByIdAndDelete).toHaveBeenCalledWith(mockId);
+      expect(result).toBeNull();
+    });
+
+    it('should return null if the ID format is invalid', async () => {
+      const invalidId = 'invalid-id';
+      const result = await service.deleteById(invalidId);
+
+      expect(result).toBeNull();
+      expect(MockedConnectionConfigModel.findByIdAndDelete).not.toHaveBeenCalled();
+    });
   });
 });

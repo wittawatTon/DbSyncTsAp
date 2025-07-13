@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest';
 import { IDbConnection } from '@core/models/dbConnection.model.js';
-import { testDatabaseConnection, getTables } from '@api/services/databaseService.js';
-import { MssqlClient } from '@api/services/database/mssql/MssqlClient.js';
+import { testDatabaseConnection, getTables } from '@core/services/databaseService.js';
+import { MssqlClient } from '@core/services/database/mssql/MssqlClient.js';
 
 // Load environment variables from .env.test
 import dotenv from 'dotenv';

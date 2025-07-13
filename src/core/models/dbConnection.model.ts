@@ -27,7 +27,7 @@ export interface ConnectionConfigDocument extends IDbConnection, Document {
 
 // ✅ 4. Schema
 const connectionConfigSchema = new Schema<ConnectionConfigDocument>({
-  name: { type: String, required: true },
+  name: { type: String, required: false },
   dbType: { type: String, enum: SUPPORTED_DB_TYPES, required: true },
   host: { type: String, required: true },
   port: { type: Number, required: true },
@@ -38,7 +38,7 @@ const connectionConfigSchema = new Schema<ConnectionConfigDocument>({
   sslCertPath: { type: String, required: false },
   sslKeyPath: { type: String, required: false },
   sslCaPath: { type: String, required: false },
-  dbSchema: { type: String, required: true },
+  dbSchema: { type: String, required: false },
 }, { timestamps: true });
 
 // ✅ 5. Model

@@ -1,7 +1,7 @@
 import { DatabaseClient } from './DatabaseClient.js';
 import { OracleClient } from './oracle/OracleClient.js';
 import { PostgresClient } from './postgres/PostgresClient.js';
-import { MysqlClient } from './mysql/mysqlClient.js';
+import { MysqlClient } from './mysql/MysqlClient.js';
 import { MssqlClient } from './mssql/MssqlClient.js';
 import { IDbConnection } from '@core/models/dbConnection.model.js';
 

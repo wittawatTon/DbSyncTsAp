@@ -1,6 +1,4 @@
 import mongoose, { Schema, Document, Types, Model } from "mongoose";
-import "@core/models/pipelineHistory.model.js"; 
-import "@core/models/connectionConfig.model.js";
 import { TableDocument, tableSchema } from "@core/models/tableWithMap.model.js";
 import { PipelineSettingModel } from "@core/models/type.js"
 import { ConnectionConfigDocument } from "@core/models/dbConnection.model.js"
@@ -48,6 +46,7 @@ const pipelineSettingSchema = new Schema<PipelineSettingModel>({
  * Defines the structure of a Pipeline document in the database.
  */
 export type PipelineDocument = MongoDoc<{
+  name?: string;
   description?: string;
   status: 'draft' | 'active' | 'paused' | 'stopped' | 'error' |'deleted';
 

@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { IDbConnection } from '@core/models/dbConnection.model.js';
-import { testDatabaseConnection, getTables } from '@api/services/databaseService.js';
+import { testDatabaseConnection, getTables } from '@core/services/databaseService.js';
 
 // Load environment variables from .env.test
 import dotenv from 'dotenv';

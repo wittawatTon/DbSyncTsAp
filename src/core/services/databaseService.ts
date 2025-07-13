@@ -39,3 +39,37 @@ export async function getTables(config: IDbConnection,withColumn: boolean = true
     await client.disconnect();
   }
 }
+
+
+/**
+ * สร้างตารางบนฐานข้อมูลปลายทาง หากยังไม่มีตารางนั้นอยู่
+ */
+export async function createTableOnTarget(
+  config: IDbConnection,
+  tableName: string,
+  sqlCmd: string
+): Promise<boolean> {
+  const client = DatabaseFactory.create(config);
+  try {
+    await client.connect();
+    const pool = client.getPool();
+    const introspector = IntrospectorFactory.create(config.dbType, pool);
+
+    // ตรวจสอบว่าตารางมีอยู่หรือยัง
+    const tables = await introspector.getTablesAndCols(false);
+    const exists = tables.some(t => t.name === tableName);
+    if (exists) {
+      throw new Error(`Table "${tableName}" already exists.`);
+    }
+
+    // สั่งสร้างตารางด้วย SQL command ที่ส่งมา
+    await introspector.createTableOnTarget(config, tableName, sqlCmd);
+
+    return true;
+  } catch (err: any) {
+    console.error(`[databaseService] createTableOnTarget failed:`, err.message);
+    throw err;
+  } finally {
+    await client.disconnect();
+  }
+}

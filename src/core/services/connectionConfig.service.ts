@@ -1,5 +1,5 @@
 import { GenericService } from "./genericCrud.service.js";
-import { ConnectionConfigDocument, ConnectionConfigModel } from "@core/models/connectionConfig.model.js";
+import { ConnectionConfigDocument, ConnectionConfigModel } from "@core/models/dbConnection.model.js"
 
 export class ConnectionConfigService extends GenericService<ConnectionConfigDocument> {
   constructor(model: typeof ConnectionConfigModel) {
