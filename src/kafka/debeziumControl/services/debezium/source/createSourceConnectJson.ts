@@ -4,6 +4,8 @@ import getNextSequence from "@core/services/getNextSequence.js";
 import { ConnectionConfigDocument } from "@core/models/connectionConfig.model.js";
 import { buildMysqlConnectorConfig } from "./mysqlConnector.js";
 import { buildMssqlConnectorConfig } from "./mssqlConnector.js";
+import { buildOracleConnectorConfig } from "./oracleConnector.js";
+
 
 /**
  * สร้าง Debezium connector config ตาม dbType
@@ -26,6 +28,9 @@ export const createSourceConnectJson = async (
   const serverId = await getNextSequence("serverId");
 
   switch (sourceConnection.dbType) {
+    case "oracle":
+      //TODO: Create/Modify config json for OpenLogReplication
+      return buildOracleConnectorConfig(pipeline.id, sourceConnection, tables, serverId);
     case "mysql":
       throw new Error(`❌ Unsupported dbType: ${sourceConnection.dbType}`);
       //return buildMysqlConnectorConfig(sourceConnection, tables, serverId);

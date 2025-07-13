@@ -1,5 +1,5 @@
 import { IDbConnection, DbType } from '@core/models/dbConnection.model.js';
-import { createConnectionByDbType, closeConnection } from '@api/services/databaseService.js';
+import { createConnectionByDbType, closeConnection } from '@api/services/databaseService_bak.js';
 import { ITable } from '@core/models/table.model.js';
 import { IColumn } from '@core/models/column.model.js';
 
@@ -23,7 +23,7 @@ const getColumnsByTable: Record<
     }));
   },
 
-  postgresql: async (connection, tableName) => {
+  postgres: async (connection, tableName) => {
     const result = await connection.query(`
       SELECT
         a.attname AS name,
@@ -181,7 +181,7 @@ export const getTables = async (
         tableNames = rows.map((row: any) => row[`Tables_in_${config.database}`]);
         break;
       }
-      case 'postgresql': {
+      case 'postgres': {
         const result = await connection.query(`
           SELECT table_name
           FROM information_schema.tables

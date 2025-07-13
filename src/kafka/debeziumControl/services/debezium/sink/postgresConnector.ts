@@ -2,7 +2,7 @@ import { IDebeziumConnectorConfig } from "@core/models/type.js";
 import { ConnectionConfigDocument } from "@core/models/dbConnection.model.js";
 import { TableDocument } from "@core/models/tableWithMap.model.js";
 
-export function buildMssqlSinkConnectorConfig(
+export function buildPostgresSinkConnectorConfig(
   pipelineId: string,
   source: ConnectionConfigDocument,
   target: ConnectionConfigDocument,
@@ -18,15 +18,17 @@ export function buildMssqlSinkConnectorConfig(
   const tableTopics = selectedTables.map(
     (table) => `${topicPrefix}.${database}.${schema}.${table.name}`
   );
+
+//oracle->postgres
   return {
     name: `source.${topicPrefix}.${database}.${schema}.${pipelineId}`,
     config: {
       "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
       "tasks.max": "1",
-      "connection.url": `jdbc:sqlserver://${target.host}:${target.port};databaseName=${target.database}`,
+      "connection.url": `jdbc:postgresql://${target.host}:${target.port}/${target.database}`,
       "connection.user": target.username,
       "connection.password": target.password,
-      "connection.driver": "com.microsoft.sqlserver.jdbc.SQLServerDriver",
+      "connection.driver": "org.postgresql.Driver",
       "insert.mode": "upsert",
       "pk.mode": "record_key",
       "auto.create": "true",

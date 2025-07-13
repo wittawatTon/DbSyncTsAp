@@ -6,6 +6,7 @@ export interface ITable {
   name: string;
   selected: boolean;
   columns: IColumn[];
+  schema?: string;
 }
 
 // สร้าง TableSchema ด้วย type annotation

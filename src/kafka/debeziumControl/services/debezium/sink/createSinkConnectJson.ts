@@ -4,6 +4,8 @@ import getNextSequence from "@core/services/getNextSequence.js";
 import { ConnectionConfigDocument } from "@core/models/connectionConfig.model.js";
 import { buildMssqlSinkConnectorConfig } from "./mssqlConnector.js";
 import { buildOracleSinkConnectorConfig } from "./oracleConnector.js";
+import { buildPostgresSinkConnectorConfig } from "./postgresConnector.js";
+
 
 
 /**
@@ -32,6 +34,8 @@ export const createSinkConnectJson = async (
   switch (targetConnection.dbType) {
     case "oracle":
       return buildOracleSinkConnectorConfig(pipeline.id, sourceConnection, targetConnection, tables);
+    case "postgres":
+      return buildPostgresSinkConnectorConfig(pipeline.id, sourceConnection, targetConnection, tables);
     case "mssql":
       throw new Error(`❌ Unsupported dbType: ${sourceConnection.dbType}`);
       //return buildMssqlSinkConnectorConfig(pipeline,sourceConnection, targetConnection, tables);

@@ -1,10 +1,12 @@
+import { IDbConnection } from '@core/models/dbConnection.model.js';
+
 export interface Pipeline extends Document {
   name: string;
   description?: string;
   status: 'draft' | 'active' | 'paused' | 'stopped' | 'error' | 'deleted';
 
-  sourceDbConnection: ConnectionConfig;
-  targetDbConnection: ConnectionConfig;
+  sourceDbConnection: IDbConnection;
+  targetDbConnection: IDbConnection;
 
   sourceTables: Table[];
   targetTables: Table[];
@@ -24,17 +26,6 @@ export interface Pipeline extends Document {
   updatedAt: Date;
 }
 
-
-export interface ConnectionConfig {
-dbType: 'mysql' | 'mssql' | 'postgresql' | 'oracle' | 'db2i' | 'db2luw';
-  host: string;
-  port: number;
-  username: string;
-  password: string;
-  database: string;
-  ssl: boolean;
-  dbSchema?: string;
-}
 
 export interface ColumnMapping {
   sourceColumn: string;

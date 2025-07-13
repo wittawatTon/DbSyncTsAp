@@ -120,7 +120,7 @@ services:
       - "1521:1521"
     volumes:
       - ./oracle_data:/opt/oracle/oradata
-      #- ./oracle-arch:/opt/oracle/homes/OraDBHome21cXE/dbs/arch
+      - ./oracle_arch:/opt/oracle/homes/OraDBHome21cXE/dbs/arch
     networks:
       - kafka-net
 

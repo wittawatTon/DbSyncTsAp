@@ -9,6 +9,9 @@
     "build": "tsc  && tsc-alias --project tsconfig.json --outDir dist/src",
     "build:exe": "npm run build && node build-exe.js",
     "test": "vitest",
+    "test:integration": "vitest run --config vitest.config.ts tests/api/databaseService.integration.test.ts",
+    "test:debug": "node --inspect-brk ./node_modules/vitest/vitest.mjs run",
+    "test:debug:integration": "node --inspect-brk ./node_modules/vitest/vitest.mjs run tests/api/databaseService.integration.test.ts",
     "test:watch": "vitest --watch",
     "test:coverage": "vitest run --coverage"
   },
@@ -56,7 +59,6 @@
   "devDependencies": {
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.1",
-    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.9",
     "@types/module-alias": "^2.0.4",
     "@types/mongoose": "^5.11.97",
@@ -72,7 +74,6 @@
     "nodemon": "^3.1.10",
     "pkg": "^5.8.0",
     "supertest": "^7.1.0",
-    "ts-jest": "^29.3.4",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "tsc-alias": "^1.8.16",

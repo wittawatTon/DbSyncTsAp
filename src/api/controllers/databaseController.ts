@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { IDbConnection } from '@core/models/dbConnection.model.js';
-import { getTables } from '@api/services/getTablesService.js';
-import { testConnection } from '@api/services/databaseService.js';
+import { getTables } from '@api/services/getTablesService_bak.js';
+import { testConnection } from '@api/services/databaseService_bak.js';
 import { createTableOnTarget } from '@api/services/createTableOnTarget.js'
 
 // Define the expected shape of the request body

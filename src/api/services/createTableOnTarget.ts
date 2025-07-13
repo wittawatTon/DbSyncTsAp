@@ -1,5 +1,5 @@
 import { IDbConnection, DbType } from '@core/models/dbConnection.model.js';
-import { createConnectionByDbType, closeConnection } from '@api/services/databaseService.js';
+import { createConnectionByDbType, closeConnection } from '@api/services/databaseService_bak.js';
 import { ITable } from '@core/models/table.model.js';
 import { IColumn } from '@core/models/column.model.js';
 
@@ -33,7 +33,7 @@ export const createTableOnTarget = async (
         tableExists = mysqlRows[0].count > 0;
         break;
 
-      case 'postgresql':
+      case 'postgres':
         checkQuery = `SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public' AND table_name = '${tableName}'`;
         const pgResult = await connection.query(checkQuery);
         tableExists = parseInt(pgResult.rows[0].count) > 0;
@@ -70,7 +70,7 @@ export const createTableOnTarget = async (
     // Execute SQL command
     switch (dbType) {
       case 'mysql':
-      case 'postgresql':
+      case 'postgres':
       case 'db2i':
         await connection.query(sqlCmd);
         break;
