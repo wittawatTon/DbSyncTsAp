@@ -21,10 +21,10 @@ export function buildPostgresSinkConnectorConfig(
 
 //oracle->postgres
   return {
-    name: `source.${topicPrefix}.${database}.${schema}.${pipelineId}`,
+    name: `sink.${topicPrefix}.${database}.${schema}.${pipelineId}`,
     config: {
       "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
-      "tasks.max": "1",
+      "tasks.max": "3",
       "connection.url": `jdbc:postgresql://${target.host}:${target.port}/${target.database}`,
       "connection.user": target.username,
       "connection.password": target.password,
@@ -33,7 +33,17 @@ export function buildPostgresSinkConnectorConfig(
       "pk.mode": "record_key",
       "auto.create": "true",
       "auto.evolve": "true",
-      topics: tableTopics.join(","),
+      "max.retries": "10",             
+      "retry.backoff.ms": "1000",      
+
+      "max.poll.records": "1500",
+      "consumer.fetch.max.bytes": "104857600",
+      "batch.size": "1000", 
+      "linger.ms": "80",
+      "flush.size": "1500",
+
+      //topics: tableTopics.join(","),
+      topics: "192_168_1_51.C__TESTCDC.TEST",
       transforms: "RenameTopic,unwrap",
       "transforms.RenameTopic.type": "org.apache.kafka.connect.transforms.RegexRouter",
       "transforms.RenameTopic.regex": "([a-zA-Z0-9_]+)\\.([a-zA-Z0-9_]+)\\.(.*)",

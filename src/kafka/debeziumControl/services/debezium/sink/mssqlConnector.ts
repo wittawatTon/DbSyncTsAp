@@ -19,7 +19,7 @@ export function buildMssqlSinkConnectorConfig(
     (table) => `${topicPrefix}.${database}.${schema}.${table.name}`
   );
   return {
-    name: `source.${topicPrefix}.${database}.${schema}.${pipelineId}`,
+    name: `sink.${topicPrefix}.${database}.${schema}.${pipelineId}`,
     config: {
       "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
       "tasks.max": "1",

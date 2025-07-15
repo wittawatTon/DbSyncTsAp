@@ -1,7 +1,7 @@
 import { IDebeziumConnectorConfig } from "@core/models/type.js";
 import { PipelineModel } from "@core/models/pipeline.model.js";
 import getNextSequence from "@core/services/getNextSequence.js";
-import { ConnectionConfigDocument } from "@core/models/connectionConfig.model.js";
+import { ConnectionConfigDocument } from "@core/models/dbConnection.model.js";
 import { buildMssqlSinkConnectorConfig } from "./mssqlConnector.js";
 import { buildOracleSinkConnectorConfig } from "./oracleConnector.js";
 import { buildPostgresSinkConnectorConfig } from "./postgresConnector.js";
