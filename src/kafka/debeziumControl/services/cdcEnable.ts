@@ -1,4 +1,4 @@
-import { PipelineModel } from '@core/models/pipeline.model.js';
+import { PipelineService  } from "@core/services/pipeline.service.js";
 import { DatabaseFactory } from '@core/services/database/DatabaseFactory.js';
 import { ConnectionConfigDocument } from '@core/models/dbConnection.model.js';
 
@@ -36,9 +36,9 @@ export function buildEnableCDCSql(
 export async function CheckEnableCDC(
   pipelineId: string
 ): Promise<{ enabled: boolean; enableSql?: string[] }> {
-  const pipeline = await PipelineModel.findById(pipelineId)
-    .populate<{ sourceDbConnection: ConnectionConfigDocument }>('sourceDbConnection')
-    .exec();
+  const pipelineService = new PipelineService();
+  const pipeline = await pipelineService.findByIdWithPopulate(pipelineId)
+
 
   if (!pipeline) throw new Error(`❌ Pipeline not found: ${pipelineId}`);
   const config = pipeline.sourceDbConnection;
@@ -102,9 +102,8 @@ export async function CheckEnableCDC(
  * เปิดใช้งาน CDC หากยังไม่ได้เปิด (ระดับ DB และ Table)
  */
 export async function enableCDC(pipelineId: string): Promise<boolean> {
-  const pipeline = await PipelineModel.findById(pipelineId)
-    .populate<{ sourceDbConnection: ConnectionConfigDocument }>('sourceDbConnection')
-    .exec();
+  const pipelineService = new PipelineService();
+  const pipeline = await pipelineService.findByIdWithPopulate(pipelineId)
 
   if (!pipeline) throw new Error(`❌ Pipeline not found: ${pipelineId}`);
   const config = pipeline.sourceDbConnection;

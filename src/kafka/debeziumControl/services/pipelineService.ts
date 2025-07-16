@@ -1,8 +1,11 @@
 import { PipelineWithConnections } from "@core/models/pipeline.model.js";
-import { createDebeziumConnectorConfig } from "./createConnectorJson.js"
 import { PipelineService } from "@core/services/pipeline.service.js";
 import { PipelineConnectorLogService } from "@core/services/pipelineConnectorLog.service.js";
 import { CDCNotEnabledError, CheckEnableCDC } from "./cdcEnable.js";
+import { ConnectorFactory } from "./debezium/ConnectorFactory.js";
+import { createConnectorBuildData } from "./debezium/createConnectorBuildData.js";
+import { getSummaryStatus } from "./debeziumService.js";
+import { ConnectorType } from "@core/models/type.js";
 
 import {
   createConnector,
@@ -75,31 +78,27 @@ export const toggleConnectorByPipelineId = async (
   const logService = new PipelineConnectorLogService();
 
   try {
-    // ดึง log ล่าสุดของ type นี้จาก pipeline
-    const latestLogs = await logService.findLatestByPipeline(pipelineId);
-    const latestLog = latestLogs[type];
-    let status;
-    let connectorName: string | undefined;
 
-    if (latestLog) {
-      connectorName = latestLog.connectorName;
-      const isRunning = latestLog.action === "start" && latestLog.status === "success";
-      if (isRunning) {
-        status = await getConnectorStatus(connectorName);
-      }
+    const buildData = await createConnectorBuildData(pipelineId);
+    const builder = await ConnectorFactory.getBuilder(
+      type === "source"
+        ? buildData.pipeline.sourceDbConnection.dbType
+        : buildData.pipeline.targetDbConnection.dbType,
+      type
+    );
+
+const config = await builder.build(buildData);
+    if (!config?.name) {
+      throw new Error(`Cannot resolve connector config or name for pipeline ${pipelineId}`);
     }
 
-    if (action === "start") {
+    const connectorName = config.name;
+    const resp = await getConnectorStatus(connectorName);
+    const status = resp ? await getSummaryStatus(resp) : null;
+
+
+    if (action === "start" ) {
       if (!status) {
-        // connector not found → create
-        const config = await createDebeziumConnectorConfig(pipelineId, type);
-
-        if (!config?.name) {
-          throw new Error(`Cannot resolve connector config or name for pipeline ${pipelineId}`);
-        }
-
-        connectorName = config.name;
-
         await createConnector(config);
 
         await logService.createLog({
@@ -115,28 +114,30 @@ export const toggleConnectorByPipelineId = async (
         return "started";
       }
 
-      if (status.connector.state === "RUNNING") {
+      else if (status === "RUNNING") {
         return "skipped"; // already running
       }
 
-      // resume existing connector
-      await resumeConnector(connectorName!);
+      else if (status === "PAUSED") {
+        // resume existing connector
+        await resumeConnector(connectorName!);
 
-      await logService.createLog({
-        pipelineId,
-        connectorName,
-        connectorType: type,
-        action: "start",
-        status: "success",
-        message: `Resumed existing connector`,
-        createdBy,
-      });
+        await logService.createLog({
+          pipelineId,
+          connectorName,
+          connectorType: type,
+          action: "start",
+          status: "success",
+          message: `Resumed existing connector`,
+          createdBy,
+        });
+      }
 
       return "started";
     }
 
     if (action === "stop") {
-      if (!status || status.connector.state !== "RUNNING") {
+      if (!status || status !== "RUNNING") {
         return "skipped"; // already stopped or not exist
       }
 
@@ -171,6 +172,42 @@ export const toggleConnectorByPipelineId = async (
     console.error(`❌ Failed to ${action} connector [${type}] for pipeline ${pipelineId}:`, err);
     return "error";
   }
+
+
+  
 };
 
 
+
+
+
+export type ConnectorNamePair = Record<ConnectorType, string>;
+
+export async function generateConnectorNamesFromPipeline(
+  pipelineId: string
+): Promise<ConnectorNamePair | null> {
+  const pipelineService = new PipelineService();
+  const pipeline = await pipelineService.findByIdWithPopulate(pipelineId);
+
+  if (!pipeline || !pipeline.sourceDbConnection || !pipeline.targetDbConnection) {
+    return null;
+  }
+
+  const clean = (str: string | undefined) => (str || "").replace(/\./g, "_");
+
+  const sourceTopicPrefix = clean(pipeline.sourceDbConnection.host);
+  const targetTopicPrefix = clean(pipeline.targetDbConnection.host);
+  const sourceDb = clean(pipeline.sourceDbConnection.database);
+  const targetDb = clean(pipeline.targetDbConnection.database);
+
+  const sourceSchema = clean(pipeline.sourceDbConnection.dbSchema || "dbo");
+  const targetSchema = clean(pipeline.targetDbConnection.dbSchema || "dbo");
+
+  const sourceConnector = `source.${sourceTopicPrefix}.${sourceDb}.${sourceSchema}.${pipeline._id}`;
+  const sinkConnector = `sink.${targetTopicPrefix}.${targetDb}.${targetSchema}.${pipeline._id}`;
+
+  return {
+    source: sourceConnector,
+    sink: sinkConnector,
+  };
+}

@@ -1,12 +1,15 @@
 import { PipelineModel, PipelineDocument, PipelineWithConnections } from "@core/models/pipeline.model.js";
 import '@core/models/pipelineHistory.model.js';
-import { ConnectionConfigModel , IDbConnection } from "@core/models/dbConnection.model.js";
+import { ConnectionConfigModel ,ConnectionConfigDocument, IDbConnection } from "@core/models/dbConnection.model.js";
 import { GenericService } from "@core/services/genericCrud.service.js";
 import { Types } from "mongoose";
 import { updatePipelineSchema } from "@core/validators/pipeline.schema.js";
 import { z } from "zod";
 
+
 type PipelineSchemaKeys = keyof typeof updatePipelineSchema.shape;
+
+
 
 //TODO: when create or update pipeline, check if a pipeline with the same source Table and
 // target table already exists in same source and target connection return error
@@ -152,12 +155,10 @@ async findAllWithPopulate(query: {
 
   const skip = (page - 1) * limit;
 
-  // เพิ่มเงื่อนไขให้ status ไม่เท่ากับ 'deleted'
   const finalFilter = {
     ...filter,
     status: { $ne: "deleted" },
   };
-
 
   const [data, total] = await Promise.all([
     PipelineModel.find(finalFilter)
@@ -170,7 +171,7 @@ async findAllWithPopulate(query: {
       .sort(sort)
       .skip(skip)
       .limit(limit),
-    PipelineModel.countDocuments(filter),
+    PipelineModel.countDocuments(finalFilter),
   ]);
 
   return {
@@ -190,11 +191,8 @@ async findAllWithPopulate(query: {
     if (!Types.ObjectId.isValid(id)) return null;
     return await PipelineModel.findById(id)
       .select(projection)
-      .populate([
-        { path: "sourceDbConnection" },
-        { path: "targetDbConnection" },
-        { path: "historyLogs" },
-      ])
+      .populate<{ sourceDbConnection: ConnectionConfigDocument }>("sourceDbConnection")
+      .populate<{ targetDbConnection: ConnectionConfigDocument }>("targetDbConnection")
       .exec() as PipelineWithConnections;
   }
 
@@ -271,6 +269,6 @@ async updateById(id: string, update: Partial<PipelineDocument>) {
 
     return updated;
   }
-
-
 }
+
+

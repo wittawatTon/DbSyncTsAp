@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from 'axios';
 import dotenv from 'dotenv';
 dotenv.config();  // ถ้าเรียกซ้ำก็ไม่เป็นไร มันจะโหลดแค่ครั้งเดียว
-
+import { DebeziumStatus  } from "@app/core/models/type.js";
 
 const CONNECT_URL: string = process.env.DEBEZIUM_CONNECT_URL || 'http://localhost:8083';
 
@@ -91,9 +91,36 @@ export const pauseConnector = async (
  */
 export const getConnectorStatus = async (
   connectorName: string
-): Promise<any> => {
-  const response: AxiosResponse = await axios.get(
-    `${CONNECT_URL}/connectors/${encodeURIComponent(connectorName)}/status`
-  );
-  return response.data;
+): Promise<any | null> => {
+  try {
+    const response: AxiosResponse = await axios.get(
+      `${CONNECT_URL}/connectors/${encodeURIComponent(connectorName)}/status`
+    );
+    return response.data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error) && error.response?.status === 404) {
+      console.warn(`Connector not found: ${connectorName}`);
+      return null;
+    }
+    throw error; // โยน error อื่นๆ ตามปกติ
+  }
 };
+
+
+// ===== 🔍 สร้าง summary_status จาก connector/task state =====
+export function getSummaryStatus(status: any): DebeziumStatus {
+  const connectorState = status?.connector?.state || "UNKNOWN";
+  const taskStates = (status?.tasks || []).map(t => t.state);
+
+  if (connectorState === "FAILED") return "FAILED";
+  if (connectorState === "PAUSED") return "PAUSED";
+  if (connectorState === "UNKNOWN") return "UNDEFINED";
+  if (connectorState === "UNASSIGNED") return "UNASSIGNED";
+
+  if (connectorState === "RUNNING") {
+    if (taskStates.every(s => s === "RUNNING")) return "RUNNING";
+    if (taskStates.some(s => s === "FAILED")) return "PARTIALLY_FAILED";
+    return "RUNNING_WITH_WARNINGS";
+  }
+  return connectorState as DebeziumStatus;
+}

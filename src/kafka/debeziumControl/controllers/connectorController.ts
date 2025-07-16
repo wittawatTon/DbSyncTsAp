@@ -30,33 +30,33 @@ export const deleteConnector = async (req: Request, res: Response): Promise<void
 /**
  * Start Kafka Connector
  */
-export const startConnector = async (req: Request, res: Response): Promise<void> => {
+export const resumeConnector = async (req: Request, res: Response): Promise<void> => {
   try {
     const { connectorName } = req.params;
     const result = await debeziumService.resumeConnector(connectorName);
     res.status(200).json(result);
   } catch (error: any) {
-    res.status(500).json({ message: 'Error starting connector', error: error.message });
+    res.status(500).json({ message: 'Error resume connector', error: error.message });
   }
 };
 
 /**
  * Stop Kafka Connector
  */
-export const stopConnector = async (req: Request, res: Response): Promise<void> => {
+export const pauseConnector = async (req: Request, res: Response): Promise<void> => {
   try {
     const { connectorName } = req.params;
     const result = await debeziumService.pauseConnector(connectorName);
     res.status(200).json(result);
   } catch (error: any) {
-    res.status(500).json({ message: 'Error stopping connector', error: error.message });
+    res.status(500).json({ message: 'Error pause connector', error: error.message });
   }
 };
 
 /**
  * ตรวจสอบสถานะของ Connector
  */
-export const monitorConnectorStatus = async (req: Request, res: Response): Promise<void> => {
+export const ConnectorStatus = async (req: Request, res: Response): Promise<void> => {
   try {
     const { connectorName } = req.params;
     const status = await debeziumService.getConnectorStatus(connectorName);

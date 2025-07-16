@@ -12,7 +12,10 @@ type MongoDoc<T> = T & Document & {
 };
 
 // ประกาศชนิดที่ populate แล้ว
-export type PipelineWithConnections = PipelineDocument & {
+export type PipelineWithConnections = Omit<
+  PipelineDocument,
+  "sourceDbConnection" | "targetDbConnection"
+> & {
   sourceDbConnection: ConnectionConfigDocument;
   targetDbConnection: ConnectionConfigDocument;
 };

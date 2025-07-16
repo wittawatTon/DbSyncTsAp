@@ -1,8 +1,10 @@
 import mongoose, { Schema, Document, Types, Model } from "mongoose";
+import { ConnectorType } from "@core/models/type.js";
+
 export interface PipelineConnectorLogDocument extends Document {
   pipelineId: Types.ObjectId;
   connectorName: string;
-  connectorType: "source" | "sink"; // 👈 ใหม่: แยกชนิด connector ชัดเจน
+  connectorType: ConnectorType;
   action: "start" | "stop";
   status: "success" | "failed";
   message?: string;

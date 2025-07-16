@@ -1,44 +1,38 @@
-
-//import 'module-alias/register';
-//import 'tsconfig-paths/register';
 import dotenv from 'dotenv';
-//import moduleAlias from 'module-alias';
-import path from 'path';
-// Load environment variables before importing other modules
 dotenv.config();
+
+import path from 'path';
 
 import { connectDatabase } from '@core/database.js';
 import app from './app.js';
 import { fileURLToPath } from 'url';
-/*
-// This replaces __dirname in ES Modules
+import { PipelineLastSuccessUpdater } from '@kafka/monitor/PipelineLastSuccessUpdater.js';
+
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-moduleAlias.addAliases({
-  '@api': path.join(__dirname, 'api'),
-  '@app': path.join(__dirname, 'app'),
-  '@controllers': path.join(__dirname, 'api/controllers'),
-  '@routes': path.join(__dirname, 'api/routes'),
-  '@middleware': path.join(__dirname, 'api/middleware'),
-  '@models': path.join(__dirname, 'api/models'),
-  '@apiServices': path.join(__dirname, 'api/services'),
-  '@core': path.join(__dirname, 'core'),
-  '@coreServices': path.join(__dirname, 'core/services'),
-  '@kafka': path.join(__dirname, 'kafka'),
-  '@config': path.join(__dirname, 'config'),
-  '@utils': path.join(__dirname, 'core/utils'),
-});*/
+
+
+
 const port: number = parseInt(process.env.PORT || '5000', 10);
 
 async function startServer() {
   try {
     await connectDatabase();
+
+      const updater = new PipelineLastSuccessUpdater(process.env.PROMETHEUS_URL || 'http://192.168.1.51:9090');
+
+    // เรียก update ครั้งแรก
+    await updater.updateAll();
+
+    setInterval(() => {
+      updater.updateAll().catch(err => {
+        console.error('Error during periodic updateAll:', err);
+      });
+    }, 5 * 60 * 1000);
+
     app.listen(port, () => {
-      // eslint-disable-next-line no-console
       console.log(`Server is running on port ${port}`);
     });
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error('Failed to connect to database:', err);
     process.exit(1);
   }

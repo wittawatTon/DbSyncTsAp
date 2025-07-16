@@ -9,6 +9,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import * as pinoModule from 'pino';
+import { setupStatusStreamEndpoint } from '@app/server/sse/statusStream.js';
 
 const pino = (pinoModule as any).default ?? pinoModule;
 
@@ -124,6 +125,8 @@ const bootstrap = async () => {
     next();
   });
 
+
+  setupStatusStreamEndpoint(app);
 
   // Routes
   const authRoutes = (await import('@routes/authRoutes.js')).default;

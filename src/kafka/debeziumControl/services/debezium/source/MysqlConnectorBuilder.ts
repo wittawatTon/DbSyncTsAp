@@ -1,23 +1,27 @@
 import { IDebeziumConnectorConfig } from "@core/models/type.js";
-import { ConnectionConfigDocument } from "@core/models/dbConnection.model.js";
-import { TableDocument } from "@core/models/tableWithMap.model.js";
+import { IConnectorBuilder, IConnectorBuildData } from "../IConnectorBuilder.js";
+import { ConnectorType } from "@core/models/type.js";
 
-export function buildMssqlConnectorConfig(
-  pipelineId: string,
-  connection: ConnectionConfigDocument,
-  tables: TableDocument[],
-  serverId: number
-): IDebeziumConnectorConfig {
+
+export class  MysqlConnectorBuilder implements IConnectorBuilder  {
+  name = "mysql";
+  type: ConnectorType = "source";
+
+  build(buildData: IConnectorBuildData): IDebeziumConnectorConfig {
+  const { name, pipeline, serverId } = buildData;
+
   const kafkaServer = process.env.KAFKA_CONNECT_URL || "localhost:9092";
+  const connection = pipeline.sourceDbConnection;
+
   const database = connection.database.replace(/\./g, "_").toLowerCase();
-  const topicPrefix = connection.host.replace(/\./g, "_");
+  const topicPrefix =connection.host.replace(/\./g, "_");
   const schema = (connection.dbSchema || "dbo").replace(/\./g, "_");
 
-  const selectedTables = tables
+  const selectedTables = pipeline.sourceTables
     .filter((t) => t.isSelected)
     .map((t) => `${schema}.${t.name}`);
 
-  const selectedColumns = tables.flatMap((table) =>
+  const selectedColumns = pipeline.sourceTables.flatMap((table) =>
     table.isSelected
       ? table.columns
           .filter((col) => col.isSelected)
@@ -27,14 +31,14 @@ export function buildMssqlConnectorConfig(
   //Debezium จะสร้าง topic ตามรูปแบบ:<topic.prefix>.<database>.<schema>_<table>
 
   return {
-    name: `source.${topicPrefix}.${database}.${schema}.${pipelineId}`,
+    name: name?.source,
     config: {
-      "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector",
+      "connector.class": "io.debezium.connector.mysql.MySqlConnector",
       "database.hostname": connection.host,
       "database.port": connection.port.toString(),
       "database.user": connection.username,
       "database.password": connection.password,
-      "database.names": connection.database,
+      "database.include.list": connection.database,
       "database.server.name": database,
       "database.encrypt": "false",
       "table.include.list": selectedTables.join(","),
@@ -46,8 +50,6 @@ export function buildMssqlConnectorConfig(
       "database.history.kafka.topic": `dbhistory.${database}`,
       "snapshot.mode": "initial",
       "snapshot.fetch.size": 30000,
-      "snapshot.mode.parallel": true,
-      "snapshot.num.threads": 4,
       // Improve downstream compatibility
       "datatype.propagate.source.type": "true",
       "time.precision.mode": "connect", // preserve logical types like Date/Timestamp
@@ -57,7 +59,7 @@ export function buildMssqlConnectorConfig(
       "key.converter.schemas.enable": "true",
       "value.converter.schemas.enable": "true"
 
-    },
-  };
+      },
+    };
+  }
 }
-

@@ -1,5 +1,8 @@
 import { IDbConnection } from '@core/models/dbConnection.model.js';
 
+export type DebeziumStatus = "UNASSIGNED" | "RUNNING" | "PAUSED" | "FAILED" | "UNDEFINED" | "PARTIALLY_FAILED" | "RUNNING_WITH_WARNINGS";
+export type ConnectorType = 'source' | 'sink';
+
 export interface Pipeline extends Document {
   name: string;
   description?: string;
