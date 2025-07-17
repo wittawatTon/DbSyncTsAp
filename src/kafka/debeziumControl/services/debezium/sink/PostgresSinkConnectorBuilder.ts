@@ -19,9 +19,17 @@ export class PostgresSinkConnectorBuilder implements IConnectorBuilder {
 
     const selectedTables = pipeline.sourceTables.filter((t) => t.isSelected);
 
-    const tableTopics = selectedTables.map(
-      (table) => `${topicPrefix}.${database}.${schema}.${table.name}`
-    );
+  const tableTopics = selectedTables.map((table) => {
+    if (source.dbType == "oracle") {
+      const schema  = (source.username).replace(/[.#]/g, "_");
+
+      // Oracle: topic = <topicPrefix>.<SCHEMA>.<TABLE>
+      return `${topicPrefix}.${schema}.${table.name}`;
+    } else {
+      // JDBC: topic = <topicPrefix>.<DB>.<SCHEMA>.<TABLE>
+      return `${topicPrefix}.${database}.${schema}.${table.name}`;
+    }
+  });
 
     return {
       name: name?.sink ?? `sink.${topicPrefix}.${database}.${schema}.${pipeline._id}`,
@@ -36,14 +44,19 @@ export class PostgresSinkConnectorBuilder implements IConnectorBuilder {
         "pk.mode": "record_key",
         "auto.create": "true",
         "auto.evolve": "true",
-        "max.retries": "10",
+        "max.retries": "5",
         "retry.backoff.ms": "1000",
 
-        "max.poll.records": "1500",
-        "consumer.fetch.max.bytes": "104857600",
-        "batch.size": "1000",
-        "linger.ms": "80",
-        "flush.size": "1500",
+        // เพิ่มประสิทธิภาพ consumer & batch
+        "max.poll.records": "45000",            // ดึงทีละ 1500 records
+        "consumer.fetch.max.bytes": "104857600", // 100 MB fetch
+        "batch.size": "30000",                   // ส่ง batch 1000 record ต่อครั้ง
+        "linger.ms": "80",                      // รอรวม batch สั้นๆ ก่อนส่ง
+        "flush.size": "30000",                   // จำนวน record ที่ flush ไปยัง DB
+
+        "consumer.override.max.poll.records": "30000",
+
+
 
         "topics": tableTopics.join(","),
 
@@ -51,14 +64,16 @@ export class PostgresSinkConnectorBuilder implements IConnectorBuilder {
 
         // ✅ Rename topic to just table name
         "transforms.RenameTopic.type": "org.apache.kafka.connect.transforms.RegexRouter",
-        "transforms.RenameTopic.regex": `^${topicPrefix}\\.${database}\\.${schema}\\.(.*)$`,
-        "transforms.RenameTopic.replacement": "$1",
+        "transforms.RenameTopic.regex": "([a-zA-Z0-9_]+)\\.([a-zA-Z0-9_]+)\\.(.*)",
+        "transforms.RenameTopic.replacement": "$3",
 
         // ✅ Unwrap Debezium payload
         "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
         "transforms.unwrap.drop.tombstones": "false",
         "transforms.unwrap.delete.handling.mode": "rewrite",
         "transforms.unwrap.add.fields": "op,table",
+
+
       },
     };
   }

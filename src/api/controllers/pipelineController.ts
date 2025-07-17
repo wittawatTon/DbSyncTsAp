@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { PipelineService } from "@core/services/pipeline.service.js";
-import { build, toggleConnectorByPipelineId } from "@kafka/debeziumControl/services/pipelineService.js"
+import { build, pause, toggleConnectorByPipelineId } from "@kafka/debeziumControl/services/pipelineService.js"
 import { enableCDC, CDCNotEnabledError} from "kafka/debeziumControl/services/cdcEnable.js"
 
 const pipelineService = new PipelineService();
@@ -236,6 +236,33 @@ async findAllWithPopulate(req: Request, res: Response) {
       });
     }
   }
+
+  async pause(req: Request, res: Response) {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ success: false, error: "Pipeline ID is required" });
+  }
+
+  try {
+    const resultMessage = await pause(id); 
+
+    return res.json({
+      success: true,
+      message: resultMessage,
+      data: { pipelineId: id },
+    });
+
+  } catch (err: any) {
+    console.error("Pause pipeline failed:", err);
+
+    return res.status(500).json({
+      success: false,
+      error: "Failed to pause pipeline",
+      message: err.message,
+    });
+  }
+}
 
 }
 

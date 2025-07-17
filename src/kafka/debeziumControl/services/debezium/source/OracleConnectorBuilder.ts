@@ -10,7 +10,7 @@ export class OracleConnectorBuilder implements IConnectorBuilder {
 
   build(buildData: IConnectorBuildData): IDebeziumConnectorConfig {
     const { name, pipeline, serverId } = buildData;
-    const kafkaServer = process.env.KAFKA_CONNECT_URL || "localhost:9092";
+    const kafkaServer = process.env.KAFKA_SERVER || "localhost:9092";
     const connection = pipeline.sourceDbConnection;
 
     const database = connection.database.replace(/\./g, "_");
@@ -52,18 +52,29 @@ export class OracleConnectorBuilder implements IConnectorBuilder {
 
         // Oracle-specific: ใช้ schema และ table แบบ fully qualified
         "table.include.list": selectedTables.join(","),
-        "column.include.list": selectedColumns.join(","),
+        "column.exclude.list": "",
+        //"column.include.list": selectedColumns.join(","),
 
         "topic.prefix": topicPrefix,
+
         "schema.history.internal.kafka.bootstrap.servers": kafkaServer,
         "schema.history.internal.kafka.topic": `schema_history.${database}`,
-        "database.history.kafka.bootstrap.servers": kafkaServer,
-        "database.history.kafka.topic": `dbhistory.${database}`,
+        "schema.history.internal.recovery.attempts": "3",
+
 
         "snapshot.mode": "initial",
-        "snapshot.fetch.size": 30000,
-        "snapshot.mode.parallel": true,
-        "snapshot.num.threads": 4,
+        "snapshot.max.threads": 4,           // ทำ snapshot พร้อมกัน 4 ตาราง (ถ้าใช้ได้)
+        "snapshot.fetch.size": 30000,        // ดึงข้อมูลทีละ 30,000 แถว
+        "snapshot.delay.ms": "0",
+
+        "max.batch.size": 30000,             // ส่งข้อมูลเป็น batch ทีละ 30,000
+        "max.queue.size": 120000,            // ขนาด queue สำหรับ batch data
+        "poll.interval.ms": 5000,            // ดึงข้อมูลทุก 5 วินาที
+
+        // Kafka Producer tuning
+        "producer.override.batch.size": "30000000",   // batch ใหญ่
+        "producer.override.linger.ms": "100",         // รอรวบรวมข้อมูลสั้น ๆ ก่อนส่ง
+        "producer.override.compression.type": "lz4",  // บีบอัดข้อมูลแบบ lz4
 
         "datatype.propagate.source.type": "true",
         "time.precision.mode": "connect",

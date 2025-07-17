@@ -44,8 +44,6 @@ async fetchLatestCommitTimeForConnector(connectorName: string): Promise<Date | n
 }
 
 
-
-
   // แปลง connectorName เป็น pipelineId ตาม pattern sink.####.####.pipelineId
   parsePipelineIdFromConnector(connectorName: string): string | null {
     const parts = connectorName.split('.');
@@ -65,7 +63,7 @@ async fetchLatestCommitTimeForConnector(connectorName: string): Promise<Date | n
       if (latestCommitTime === null) continue;
 
       const cachedTime = this.cache[connectorName];
-      if (cachedTime === latestCommitTime) {
+      if (cachedTime?.getTime() === latestCommitTime.getTime()) {
         // ข้อมูลไม่เปลี่ยนแปลง ข้าม
         continue;
       }

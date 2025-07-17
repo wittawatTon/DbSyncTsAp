@@ -67,14 +67,46 @@ export const build = async (pipelineId: string): Promise<string> => {
   }
 };
 
+export const pause = async (pipelineId: string): Promise<string> => {
+  const pipelineService = new PipelineService();
+
+  try {
+    // ดึงข้อมูล pipeline พร้อม populate connection
+    const pipeline = await pipelineService.findByIdWithPopulate(pipelineId) as PipelineWithConnections;
+
+    if (!pipeline) {
+      throw new Error(`No pipeline found for ID: ${pipelineId}`);
+    }
+
+    // 2. สำหรับ MSSQL ตรวจสอบ CDC พร้อม ถ้าไม่เปิดให้ error
+    if (pipeline.sourceDbConnection.dbType === "mssql") {
+      const { enabled, enableSql } = await CheckEnableCDC(pipelineId);
+      if (!enabled) {
+        throw new CDCNotEnabledError(
+          `CDC not enabled for MSSQL database in pipeline ${pipelineId}`,
+          enableSql
+        );
+      }
+    }
+
+    // 3. เรียกเปิด connector ทั้ง source และ sink
+    await toggleConnectorByPipelineId(pipelineId, "source", "pause");
+    await toggleConnectorByPipelineId(pipelineId, "sink", "pause");
+
+    return "✅ Pipeline is paused";
+  } catch (error) {
+    console.error("❌ Pause failed:", error);
+    throw error;
+  }
+};
 
 
 export const toggleConnectorByPipelineId = async (
   pipelineId: string,
   type: "source" | "sink",
-  action: "start" | "stop",
+  action: "start" | "pause",
   createdBy = "system"
-): Promise<"started" | "stopped" | "skipped" | "error"> => {
+): Promise<"started" | "paused" | "skipped" | "error"> => {
   const logService = new PipelineConnectorLogService();
 
   try {
@@ -87,7 +119,7 @@ export const toggleConnectorByPipelineId = async (
       type
     );
 
-const config = await builder.build(buildData);
+    const config = await builder.build(buildData);
     if (!config?.name) {
       throw new Error(`Cannot resolve connector config or name for pipeline ${pipelineId}`);
     }
@@ -136,7 +168,7 @@ const config = await builder.build(buildData);
       return "started";
     }
 
-    if (action === "stop") {
+    if (action === "pause") {
       if (!status || status !== "RUNNING") {
         return "skipped"; // already stopped or not exist
       }
@@ -147,13 +179,13 @@ const config = await builder.build(buildData);
         pipelineId,
         connectorName,
         connectorType: type,
-        action: "stop",
+        action: "pause",
         status: "success",
         message: `Paused connector`,
         createdBy,
       });
 
-      return "stopped";
+      return "paused";
     }
 
     throw new Error("Invalid action");

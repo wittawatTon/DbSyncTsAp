@@ -12,6 +12,11 @@ router.post('/:id/actions/build', (req: Request, res: Response) => {
   pipelineController.build(req, res);
 });
 
+// Pause a pipeline
+router.post('/:id/actions/pause', (req: Request, res: Response) => {
+  pipelineController.pause(req, res);
+});
+
 // enableCDC a pipeline
 router.post('/:id/actions/enable-cdc', (req: Request, res: Response) => {
   pipelineController.enableCDC(req, res);

@@ -1,7 +1,7 @@
 import { PipelineConnectorLogModel, PipelineConnectorLogDocument } from "@core/models/PipelineConnectorLog.js";
 import { Types } from "mongoose";
 
-type LogAction = "start" | "stop";
+type LogAction = "start" | "pause";
 type LogStatus = "success" | "failed";
 type ConnectorType = "source" | "sink";
 
