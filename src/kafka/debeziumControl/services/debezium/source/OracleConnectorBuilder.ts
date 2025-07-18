@@ -4,6 +4,7 @@ import { IDebeziumConnectorConfig } from "@core/models/type.js";
 import { IConnectorBuilder, IConnectorBuildData } from "../IConnectorBuilder.js";
 import { ConnectorType } from "@core/models/type.js";
 
+
 export class OracleConnectorBuilder implements IConnectorBuilder {
   name = "oracle";
   type: ConnectorType = "source";
@@ -33,7 +34,6 @@ export class OracleConnectorBuilder implements IConnectorBuilder {
       name: name?.source,
       config: {
         "connector.class": "io.debezium.connector.oracle.OracleConnector",
-        "tasks.max": "1",
         "database.hostname": connection.host,
         "database.port": connection.port.toString(),
         "database.user": connection.username,
@@ -62,26 +62,56 @@ export class OracleConnectorBuilder implements IConnectorBuilder {
         "schema.history.internal.recovery.attempts": "3",
 
 
+        "key.converter": "io.confluent.connect.avro.AvroConverter",
+        "value.converter": "io.confluent.connect.avro.AvroConverter",
+        "key.converter.schema.registry.url": "http://schema-registry:8081",
+        "value.converter.schema.registry.url": "http://schema-registry:8081",
+        "value.converter.schemas.enable": "true",
+        "key.converter.schemas.enable": "true",
+
+        "tasks.max": "1",
+        "topic.creation.enable": "true",
+        "topic.partitions": "4",
+        
+        "topic.creation.default.partitions": "4",
+        "topic.creation.default.cleanup.policy": "compact",
+        "topic.creation.default.replication.factor": "1",
+        "topic.creation.default.compression.type": "lz4",
+
+        // ขอสร้างกลุ่มพิเศษสำหรับ schema history topic
+        "topic.creation.groups": "history",
+        "topic.creation.history.include": "schema_history\\..*",
+        "topic.creation.history.partitions": "1",
+        "topic.creation.history.replication.factor": "1",
+
+        // กำหนด group ใหม่สำหรับ topic เฉพาะนี้
+        "topic.creation.customTestTopic.include": "192_168_1_51\\.C__TESTCDC\\.TEST",
+        "topic.creation.customTestTopic.partitions": "4",
+        "topic.creation.customTestTopic.replication.factor": "1",
+        "topic.creation.customTestTopic.cleanup.policy": "compact",
+        "topic.creation.customTestTopic.compression.type": "lz4",
+
         "snapshot.mode": "initial",
         "snapshot.max.threads": 4,           // ทำ snapshot พร้อมกัน 4 ตาราง (ถ้าใช้ได้)
-        "snapshot.fetch.size": 30000,        // ดึงข้อมูลทีละ 30,000 แถว
+        "snapshot.fetch.size": 50000,        // ดึงข้อมูลทีละ 30,000 แถว
         "snapshot.delay.ms": "0",
 
-        "max.batch.size": 30000,             // ส่งข้อมูลเป็น batch ทีละ 30,000
-        "max.queue.size": 120000,            // ขนาด queue สำหรับ batch data
+
+        "incremental.snapshot.chunk.size": 50000,
+        "max.batch.size": 50000,             // ส่งข้อมูลเป็น batch ทีละ 30,000
+        "max.queue.size": 300000,            // ขนาด queue สำหรับ batch data
         "poll.interval.ms": 5000,            // ดึงข้อมูลทุก 5 วินาที
 
         // Kafka Producer tuning
-        "producer.override.batch.size": "30000000",   // batch ใหญ่
+        "producer.override.batch.size": "1000000",   // batch ใหญ่
         "producer.override.linger.ms": "100",         // รอรวบรวมข้อมูลสั้น ๆ ก่อนส่ง
         "producer.override.compression.type": "lz4",  // บีบอัดข้อมูลแบบ lz4
+        "producer.override.max.request.size": "3000000",
 
         "datatype.propagate.source.type": "true",
         "time.precision.mode": "connect",
         "decimal.handling.mode": "double",
 
-        "key.converter.schemas.enable": "true",
-        "value.converter.schemas.enable": "true",
       },
     };
   }

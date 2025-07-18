@@ -30,12 +30,17 @@ export class PostgresSinkConnectorBuilder implements IConnectorBuilder {
       return `${topicPrefix}.${database}.${schema}.${table.name}`;
     }
   });
+/*
+  return {
+      name: name?.sink ?? `sink.${topicPrefix}.${database}.${schema}.${pipeline._id}`,
+      config: {}    
+    };*/
+
 
     return {
       name: name?.sink ?? `sink.${topicPrefix}.${database}.${schema}.${pipeline._id}`,
       config: {
         "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
-        "tasks.max": "3",
         "connection.url": `jdbc:postgresql://${target.host}:${target.port}/${target.database}`,
         "connection.user": target.username,
         "connection.password": target.password,
@@ -48,15 +53,20 @@ export class PostgresSinkConnectorBuilder implements IConnectorBuilder {
         "retry.backoff.ms": "1000",
 
         // เพิ่มประสิทธิภาพ consumer & batch
-        "max.poll.records": "45000",            // ดึงทีละ 1500 records
+        "tasks.max": "4",
+        "max.poll.records": "10000",            // ดึงทีละ 1500 records
         "consumer.fetch.max.bytes": "104857600", // 100 MB fetch
-        "batch.size": "30000",                   // ส่ง batch 1000 record ต่อครั้ง
-        "linger.ms": "80",                      // รอรวม batch สั้นๆ ก่อนส่ง
-        "flush.size": "30000",                   // จำนวน record ที่ flush ไปยัง DB
+        "consumer.fetch.min.bytes": "1048576", // 1 MB fetch
+        "batch.size": "8000",                   // ส่ง batch 1000 record ต่อครั้ง
+        "linger.ms": "200",                      // รอรวม batch สั้นๆ ก่อนส่ง
+        "flush.size": "8000",                   // จำนวน record ที่ flush ไปยัง DB
 
-        "consumer.override.max.poll.records": "30000",
+        "consumer.override.max.poll.records": "10000",
 
-
+        "key.converter": "io.confluent.connect.avro.AvroConverter",
+        "value.converter": "io.confluent.connect.avro.AvroConverter",
+        "key.converter.schema.registry.url": "http://schema-registry:8081",
+        "value.converter.schema.registry.url": "http://schema-registry:8081",
 
         "topics": tableTopics.join(","),
 

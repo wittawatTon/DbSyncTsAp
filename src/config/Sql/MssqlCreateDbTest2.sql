@@ -1,3 +1,14 @@
+IF NOT EXISTS (SELECT * FROM sys.server_principals WHERE name = N'cdc_user')
+BEGIN
+    PRINT 'Creating LOGIN [cdc_user]...';
+    CREATE LOGIN [cdc_user] WITH PASSWORD = N'P@ss1234';
+END
+ELSE
+BEGIN
+    PRINT 'LOGIN [cdc_user] already exists.';
+END
+GO
+
 -- ตรวจสอบและสร้างฐานข้อมูล
 IF NOT EXISTS (SELECT name FROM sys.databases WHERE name = 'inventory')
 BEGIN
@@ -7,6 +18,25 @@ GO
 
 USE inventory;
 GO
+
+
+
+IF NOT EXISTS (SELECT * FROM sys.database_principals WHERE name = N'cdc_user')
+BEGIN
+    PRINT 'Creating USER [cdc_user] in database [inventory]...';
+    CREATE USER [cdc_user] FOR LOGIN [cdc_user];
+END
+ELSE
+BEGIN
+    PRINT 'USER [cdc_user] already exists in database [inventory].';
+END
+GO
+
+-- [3] ให้สิทธิ์ user ใช้งานฐานข้อมูล (เลือกหนึ่ง)
+
+-- ✅ ทางเลือกง่ายสุด: ให้ db_owner (สำหรับ Dev/Test)
+EXEC sp_addrolemember 'db_owner', 'cdc_user';
+
 
 -- ตารางที่ 1: categories
 CREATE TABLE categories (
