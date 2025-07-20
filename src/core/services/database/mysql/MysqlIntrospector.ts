@@ -1,11 +1,14 @@
 import { Pool } from 'mysql2/promise';
-import { DbIntrospector } from '../DbIntrospector.js';
 import { ITable } from '@core/models/table.model.js';
 import { IColumn } from '@core/models/column.model.js';
 import { IDbConnection } from '@core/models/dbConnection.model.js';
+import { DbIntrospectorBase } from '../DbIntrospectorBase.js';
 
-export class MysqlIntrospector implements DbIntrospector {
-  constructor(private pool: Pool) {}
+
+export class MysqlIntrospector extends DbIntrospectorBase {
+  constructor(private pool: Pool) {
+    super();
+  }
 
   async testConnect(): Promise<boolean> {
     let connection;
@@ -110,4 +113,32 @@ private async getTableColumns(connection: any, tableName: string): Promise<IColu
       if (connection) connection.release();
     }
   }
+
+  protected quoteIdentifier(name: string): string {
+  return name
+    .split('.')
+    .map(part => part.startsWith('`') ? part : `\`${part}\``)
+    .join('.');
+}
+async countRows(tableName: string): Promise<number> {
+  if (!this.isSafeTableName(tableName)) {
+    throw new Error(`Invalid table name: ${tableName}`);
+  }
+
+  const safeName = this.quoteIdentifier(tableName);
+
+  let connection;
+  try {
+    connection = await this.pool.getConnection();
+
+    const [rows]: any = await connection.query(`SELECT COUNT(*) AS count FROM ${safeName}`);
+    return rows[0].count;
+  } catch (err: any) {
+    console.error('[MysqlIntrospector] countRows failed:', err.message);
+    throw err;
+  } finally {
+    if (connection) connection.release();
+  }
+}
+
 }

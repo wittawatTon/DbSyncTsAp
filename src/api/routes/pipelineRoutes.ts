@@ -22,6 +22,10 @@ router.post('/:id/actions/enable-cdc', (req: Request, res: Response) => {
   pipelineController.enableCDC(req, res);
 });
 
+// toggleStatus connector in pipeline
+router.post('/:id/actions/toggleStatus', (req: Request, res: Response) => {
+  pipelineController.toggleStatus(req, res);
+});
 
 // Create a new pipeline
 router.post('/', (req: Request, res: Response) => {
@@ -60,12 +64,6 @@ router.put('/:id/settings', (req: Request, res: Response) => {
 // Update a specific field of a pipeline
 router.patch('/:id/field', (req: Request, res: Response) => {
   pipelineController.updateFieldById(req, res);
-});
-
-
-// Toggle pipeline status
-router.patch('/:id/status', (req: Request, res: Response) => {
-  pipelineController.toggleStatus(req, res);
 });
 
 // Delete a pipeline

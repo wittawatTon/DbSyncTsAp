@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { getConnectorStatus, getSummaryStatus } from "@kafka/debeziumControl/services/debeziumService.js";
 import { generateConnectorNamesFromPipeline } from "@kafka/debeziumControl/services/pipelineService.js";
+import { ConnectorType } from "@core/models/type.js";
 
-type ConnectorType = "source" | "sink";
+
 
 const clients: { res: Response; pipelineIds: string[] }[] = [];
 let pollingInterval: NodeJS.Timeout | null = null;
@@ -144,6 +145,7 @@ async function pollAndBroadcast() {
       cachedConnectorsToMonitor = await getAllConnectorsToMonitor();
       lastPipelineSnapshot = currentPipelineSnapshot;
       needsRefreshConnectors = false;
+      Object.keys(lastStatusMap).forEach((key) => delete lastStatusMap[key]);
       console.log("🔄 Connectors to monitor refreshed");
     }
 

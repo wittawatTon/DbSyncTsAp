@@ -1,0 +1,20 @@
+[Unit]
+Description=OpenLogReplicator Service
+After=network.target
+
+[Service]
+ExecStart=/home/wnr/kafka-cdc-stack/OpenLogReplicator/build/OpenLogReplicator -f /home/wnr/kafka-cdc-stack/OpenLogReplicator/build/scripts/OpenLogReplicator.json
+WorkingDirectory=/home/wnr/kafka-cdc-stack/OpenLogReplicator/build
+Restart=always
+User=wnr
+
+# Environment variables
+Environment=CHECKPOINT_DIR=/home/wnr/kafka-cdc-stack/OpenLogReplicator/checkpoint
+Environment=OCI_LIB_DIR=/opt/oracle/instantclient_23_8
+Environment=OCI_INCLUDE_DIR=/opt/oracle/instantclient_23_8/sdk/include
+Environment=LD_LIBRARY_PATH=/opt/oracle/instantclient_23_8:/home/wnr/kafka-cdc-stack/OpenLogReplicator/instantclient_23_8
+
+
+
+[Install]
+WantedBy=multi-user.target

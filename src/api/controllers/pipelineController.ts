@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { PipelineService } from "@core/services/pipeline.service.js";
 import { build, pause, toggleConnectorByPipelineId } from "@kafka/debeziumControl/services/pipelineService.js"
 import { enableCDC, CDCNotEnabledError} from "kafka/debeziumControl/services/cdcEnable.js"
+import { LogConnectorAction } from "@core/services/pipelineConnectorLog.service.js";
+
 
 const pipelineService = new PipelineService();
 
@@ -146,23 +148,23 @@ async findAllWithPopulate(req: Request, res: Response) {
 
   async toggleStatus(req: Request, res: Response) {
     const { id } = req.params; // pipelineId
-    const { type, action } = req.body; // type: "source" | "sink", action: "start" | "stop"
+    const { type, action } = req.body; 
     const createdBy = req.user as string || "system"; // ดึงจาก session หรือ token ถ้ามี
 
-    if (!["source", "sink"].includes(type) || !["start", "stop"].includes(action)) {
+    if (!["source", "sink"].includes(type) || !["build", "pause"].includes(action)) {
       return res.status(400).json({ error: "Invalid type or action" });
     }
 
     try {
-      const result = await toggleConnectorByPipelineId(id, type, action, createdBy);
+      const result = await toggleConnectorByPipelineId(id, type, action as LogConnectorAction, createdBy);
 
       return res.json({
         success: true,
         data: {
           pipelineId: id,
-          connectorType: type,
+          connectorType: type as "source" | "sink",
           action,
-          result, // "started" | "stopped" | "skipped" | "error"
+          result, // "started" | "paused" | "skipped" | "error"
         },
       });
     } catch (err) {
@@ -265,5 +267,3 @@ async findAllWithPopulate(req: Request, res: Response) {
 }
 
 }
-
-

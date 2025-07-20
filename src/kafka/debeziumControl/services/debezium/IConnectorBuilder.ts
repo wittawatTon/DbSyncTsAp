@@ -1,7 +1,7 @@
 import { IDebeziumConnectorConfig } from "@core/models/type.js";
 import { PipelineWithConnections } from "@core/models/pipeline.model.js";
 import { ConnectorType } from "@core/models/type.js";
-import { ConnectorNamePair } from "@core/services/pipeline.service.js";
+import { ConnectorNamePair } from "@kafka/debeziumControl/services/pipelineService.js";
 
 
 export interface IConnectorBuilder {

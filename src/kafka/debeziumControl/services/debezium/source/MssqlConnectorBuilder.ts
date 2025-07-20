@@ -3,8 +3,10 @@
 import { IDebeziumConnectorConfig } from "@core/models/type.js";
 import { IConnectorBuilder, IConnectorBuildData } from "../IConnectorBuilder.js";
 import { ConnectorType } from "@core/models/type.js";
+import { ConnectorBuilderBase } from "./ConnectorBuilderBase.js";
 
-export class MssqlConnectorBuilder implements IConnectorBuilder {
+
+export class MssqlConnectorBuilder extends ConnectorBuilderBase {
   name = "mssql";
   type: ConnectorType = "source";
 
@@ -17,18 +19,6 @@ export class MssqlConnectorBuilder implements IConnectorBuilder {
     const topicPrefix = connection.host.replace(/\./g, "_");
     const schema = (connection.dbSchema || "dbo").replace(/\./g, "_");
 
-    const selectedTables = pipeline.sourceTables
-      .filter((t) => t.isSelected)
-      .map((t) => `${schema}.${t.name}`);
-
-    const selectedColumns = pipeline.sourceTables.flatMap((table) =>
-      table.isSelected
-        ? table.columns
-            .filter((col) => col.isSelected)
-            .map((col) => `${schema}.${table.name}.${col.name}`)
-        : []
-    );
-
     return {
       name: name?.source,
       config: {
@@ -40,9 +30,8 @@ export class MssqlConnectorBuilder implements IConnectorBuilder {
         "database.names": connection.database,
         "database.server.name": database,
         "database.encrypt": "false",
-
-        "table.include.list": selectedTables.join(","),
-        "column.include.list": selectedColumns.join(","),
+        ...this.getConnectorTableConfig(pipeline, schema), 
+        ...this.getConnectorColumnConfig(pipeline, schema),        
         "topic.prefix": topicPrefix,
 
         "schema.history.internal.kafka.bootstrap.servers": kafkaServer,

@@ -3,9 +3,9 @@
 import { IDebeziumConnectorConfig } from "@core/models/type.js";
 import { IConnectorBuilder, IConnectorBuildData } from "../IConnectorBuilder.js";
 import { ConnectorType } from "@core/models/type.js";
+import { ConnectorBuilderBase } from "./ConnectorBuilderBase.js";
 
-
-export class OracleConnectorBuilder implements IConnectorBuilder {
+export class OracleConnectorBuilder  extends ConnectorBuilderBase {
   name = "oracle";
   type: ConnectorType = "source";
 
@@ -30,6 +30,7 @@ export class OracleConnectorBuilder implements IConnectorBuilder {
         : []
     );
 
+    //TOPIC: <topicPrefix>.<schemaName>.<tableName>
     return {
       name: name?.source,
       config: {
@@ -50,15 +51,13 @@ export class OracleConnectorBuilder implements IConnectorBuilder {
         // Optional: ปิด encryption ถ้าไม่ต้องใช้
         "database.encrypt": "false",
 
-        // Oracle-specific: ใช้ schema และ table แบบ fully qualified
-        "table.include.list": selectedTables.join(","),
-        "column.exclude.list": "",
-        //"column.include.list": selectedColumns.join(","),
+        ...this.getConnectorTableConfig(pipeline, schema), 
+        ...this.getConnectorColumnConfig(pipeline, schema),   
 
         "topic.prefix": topicPrefix,
 
         "schema.history.internal.kafka.bootstrap.servers": kafkaServer,
-        "schema.history.internal.kafka.topic": `schema_history.${database}`,
+        "schema.history.internal.kafka.topic": `schema_history.${topicPrefix}.${database}`,
         "schema.history.internal.recovery.attempts": "3",
 
 

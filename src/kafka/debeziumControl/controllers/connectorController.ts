@@ -1,5 +1,6 @@
 import type { Request, Response, NextFunction } from 'express';
 import * as debeziumService from '../services/debeziumService.js';
+import { ConnectorType } from '@app/core/models/type.js';
 
 /**
  * สร้าง Kafka Connector
@@ -27,6 +28,24 @@ export const deleteConnector = async (req: Request, res: Response): Promise<void
   }
 };
 
+
+
+export const deleteConnectorByPipeline = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { pipelineId } = req.params;
+    const type = req.query.type?.toString();
+
+    if (!pipelineId || (type !== 'source' && type !== 'sink')) {
+      res.status(400).json({ message: 'Invalid pipelineId or type' });
+      return;
+    }
+
+    const result = await debeziumService.deleteConnectorByPipeline(pipelineId, type as ConnectorType);
+    res.status(200).json(result);
+  } catch (error: any) {
+    res.status(500).json({ message: 'Error deleting connector', error: error.message });
+  }
+};
 /**
  * Start Kafka Connector
  */

@@ -1,11 +1,14 @@
 import oracledb, { Pool } from 'oracledb';
-import { DbIntrospector } from '../DbIntrospector.js';
 import { ITable } from '@core/models/table.model.js';
 import { IColumn } from '@core/models/column.model.js';
 import { IDbConnection } from '@core/models/dbConnection.model.js';
+import { DbIntrospectorBase } from '../DbIntrospectorBase.js';
 
-export class OracleIntrospector implements DbIntrospector {
-  constructor(private pool: Pool) {}
+
+export class OracleIntrospector extends DbIntrospectorBase {
+  constructor(private pool: Pool) {
+    super();
+  }
 
   async testConnect(): Promise<boolean> {
     let connection;
@@ -132,4 +135,39 @@ export class OracleIntrospector implements DbIntrospector {
       selected: false,
     }));
   }
+
+  protected quoteIdentifier(name: string): string {
+  return name
+    .split('.')
+    .map(part => part.startsWith('"') ? part : `"${part.toUpperCase()}"`)
+    .join('.');
+}
+async countRows(tableName: string): Promise<number> {
+  if (!this.isSafeTableName(tableName)) {
+    throw new Error(`Invalid table name: ${tableName}`);
+  }
+
+  let connection;
+  try {
+    connection = await this.pool.getConnection();
+
+    // ใส่ quoteIdentifier ครอบ tableName เพื่อความปลอดภัย เช่น "SCHEMA"."TABLE"
+    const safeName = this.quoteIdentifier(tableName);
+
+    const sql = `SELECT COUNT(*) AS COUNT FROM ${safeName}`;
+
+    const result = await connection.execute(sql, [], { outFormat: oracledb.OUT_FORMAT_OBJECT });
+
+    // result.rows[0].COUNT เป็นจำนวนแถว
+    const count = result.rows?.[0]?.COUNT ?? 0;
+
+    return count;
+  } catch (err: any) {
+    console.error('[OracleIntrospector] countRows failed:', err.message);
+    throw err;
+  } finally {
+    if (connection) await connection.close();
+  }
+}
+
 }

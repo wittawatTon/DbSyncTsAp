@@ -6,6 +6,7 @@ import { ConnectorFactory } from "./debezium/ConnectorFactory.js";
 import { createConnectorBuildData } from "./debezium/createConnectorBuildData.js";
 import { getSummaryStatus } from "./debeziumService.js";
 import { ConnectorType } from "@core/models/type.js";
+import { LogConnectorAction } from "@core/services/pipelineConnectorLog.service.js";
 
 import {
   createConnector,
@@ -57,8 +58,8 @@ export const build = async (pipelineId: string): Promise<string> => {
     }
 
     // 3. เรียกเปิด connector ทั้ง source และ sink
-    await toggleConnectorByPipelineId(pipelineId, "source", "start");
-    await toggleConnectorByPipelineId(pipelineId, "sink", "start");
+    await toggleConnectorByPipelineId(pipelineId, "source", "build");
+    await toggleConnectorByPipelineId(pipelineId, "sink", "build");
 
     return "✅ Build pipeline success";
   } catch (error) {
@@ -78,18 +79,6 @@ export const pause = async (pipelineId: string): Promise<string> => {
       throw new Error(`No pipeline found for ID: ${pipelineId}`);
     }
 
-    // 2. สำหรับ MSSQL ตรวจสอบ CDC พร้อม ถ้าไม่เปิดให้ error
-    if (pipeline.sourceDbConnection.dbType === "mssql") {
-      const { enabled, enableSql } = await CheckEnableCDC(pipelineId);
-      if (!enabled) {
-        throw new CDCNotEnabledError(
-          `CDC not enabled for MSSQL database in pipeline ${pipelineId}`,
-          enableSql
-        );
-      }
-    }
-
-    // 3. เรียกเปิด connector ทั้ง source และ sink
     await toggleConnectorByPipelineId(pipelineId, "source", "pause");
     await toggleConnectorByPipelineId(pipelineId, "sink", "pause");
 
@@ -103,8 +92,8 @@ export const pause = async (pipelineId: string): Promise<string> => {
 
 export const toggleConnectorByPipelineId = async (
   pipelineId: string,
-  type: "source" | "sink",
-  action: "start" | "pause",
+  type: ConnectorType,
+  action: LogConnectorAction,
   createdBy = "system"
 ): Promise<"started" | "paused" | "skipped" | "error"> => {
   const logService = new PipelineConnectorLogService();
@@ -129,7 +118,7 @@ export const toggleConnectorByPipelineId = async (
     const status = resp ? await getSummaryStatus(resp) : null;
 
 
-    if (action === "start" ) {
+    if (action === "build" ) {
       if (!status) {
         await createConnector(config);
 
@@ -137,7 +126,7 @@ export const toggleConnectorByPipelineId = async (
           pipelineId,
           connectorName,
           connectorType: type,
-          action: "start",
+          action: "build",
           status: "success",
           message: `Created and started connector`,
           createdBy,
@@ -158,7 +147,7 @@ export const toggleConnectorByPipelineId = async (
           pipelineId,
           connectorName,
           connectorType: type,
-          action: "start",
+          action: "build",
           status: "success",
           message: `Resumed existing connector`,
           createdBy,

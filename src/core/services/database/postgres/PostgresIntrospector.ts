@@ -3,9 +3,13 @@ import { DbIntrospector } from '../DbIntrospector.js';
 import { ITable } from '@core/models/table.model.js';
 import { IColumn } from '@core/models/column.model.js';
 import { IDbConnection } from '@core/models/dbConnection.model.js';
+import { DbIntrospectorBase } from '../DbIntrospectorBase.js';
 
-export class PostgresIntrospector implements DbIntrospector {
-  constructor(private pool: Pool) {}
+
+export class PostgresIntrospector extends DbIntrospectorBase  {
+  constructor(private pool: Pool) {
+    super();
+  }
 
   async testConnect(): Promise<boolean> {
     let client;
@@ -123,4 +127,40 @@ export class PostgresIntrospector implements DbIntrospector {
       client?.release();
     }
   }
+
+  async countRows(tableName: string): Promise<number> {
+  if (!this.isSafeTableName(tableName)) {
+    throw new Error(`Invalid table name: ${tableName}`);
+  }
+
+  let client;
+  try {
+    client = await this.pool.connect();
+
+    // ใช้ quoteIdentifier ครอบ tableName เช่น "schema"."table"
+    const safeName = this.quoteIdentifier(tableName);
+
+    const result = await client.query(`SELECT COUNT(*) AS count FROM ${safeName}`);
+    return parseInt(result.rows[0].count, 10);
+  } catch (err: any) {
+    console.error('[PostgresIntrospector] countRows failed:', err.message);
+    throw err;
+  } finally {
+    client?.release();
+  }
+}
+
+// ถ้ายังไม่มี ให้เพิ่ม method quoteIdentifier (Oracle กับ Postgres ใช้ " ครอบ identifier)
+protected quoteIdentifier(name: string): string {
+  return name
+    .split('.')
+    .map(part => part.startsWith('"') ? part : `"${part}"`)
+    .join('.');
+}
+
+// isSafeTableName (ใช้ regex ให้เหมาะสม)
+protected isSafeTableName(name: string): boolean {
+  return /^[\w\.""]+$/.test(name);
+}
+
 }

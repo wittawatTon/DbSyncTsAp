@@ -1,8 +1,9 @@
 import { IDebeziumConnectorConfig } from "@core/models/type.js";
 import { IConnectorBuilder, IConnectorBuildData } from "../IConnectorBuilder.js";
 import { ConnectorType } from "@core/models/type.js";
+import { ConnectorBuilderBase } from "./ConnectorBuilderBase.js";
 
-export class MysqlSinkConnectorBuilder implements IConnectorBuilder {
+export class MysqlSinkConnectorBuilder extends ConnectorBuilderBase {
   name = "mysql";
   type: ConnectorType = "sink";
 

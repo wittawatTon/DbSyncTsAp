@@ -15,6 +15,8 @@ robocopy  "%source%" "%destination%"  /XO /FFT /R:2 /W:2
 
 
 
+robocopy  Z:\OpenLogReplicator\openlogreplicator.service  E:\WNR\projects\dbRep\DbSyncTsApi\src\config\OpenLogReplicator\
+
 set source=Z:\OpenLogReplicator\build\scripts
 set destination=E:\WNR\projects\dbRep\DbSyncTsApi\src\config\OpenLogReplicator\build\scripts
 

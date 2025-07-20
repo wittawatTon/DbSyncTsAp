@@ -1,9 +1,9 @@
 import { IDebeziumConnectorConfig } from "@core/models/type.js";
 import { IConnectorBuilder, IConnectorBuildData } from "../IConnectorBuilder.js";
 import { ConnectorType } from "@core/models/type.js";
+import { ConnectorBuilderBase } from "./ConnectorBuilderBase.js";
 
-
-export class  MysqlConnectorBuilder implements IConnectorBuilder  {
+export class  MysqlConnectorBuilder  extends ConnectorBuilderBase {
   name = "mysql";
   type: ConnectorType = "source";
 
@@ -28,6 +28,7 @@ export class  MysqlConnectorBuilder implements IConnectorBuilder  {
           .map((col) => `${schema}.${table.name}.${col.name}`)
       : []
   );
+  
   //Debezium จะสร้าง topic ตามรูปแบบ:<topic.prefix>.<database>.<schema>_<table>
 
   return {

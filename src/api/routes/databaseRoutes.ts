@@ -1,20 +1,13 @@
-import { Router, Request, Response, NextFunction } from 'express';
-import { fetchTablesHandler,testConnectHandler, createTableHandler } from '@controllers/databaseController.js';
-
+import { Router } from 'express';
+import { DatabaseController } from '@controllers/databaseController.js';
 
 const router: Router = Router();
+const databaseController = new DatabaseController();
 
-// หาก fetchTablesHandler มี type ที่แน่นอน สามารถระบุ type ได้ เช่น (req: Request, res: Response, next: NextFunction)
-router.post('/get-tables', (req: Request, res: Response) => {
-  fetchTablesHandler(req, res);
-});
-
-router.post('/create-table', (req: Request, res: Response) => {
-  createTableHandler(req, res);
-});
-
-router.post('/test-connection', testConnectHandler);
-
+router.post('/get-tables', databaseController.fetchTables);
+router.post('/create-table', databaseController.createTableHandler);
+router.post('/test-connection', databaseController.testConnect);
+router.post('/data-diff-count-row', databaseController.dataDiffcountRow);
 
 
 export default router;

@@ -3,8 +3,9 @@
 import { IDebeziumConnectorConfig } from "@core/models/type.js";
 import { IConnectorBuilder, IConnectorBuildData } from "../IConnectorBuilder.js";
 import { ConnectorType } from "@core/models/type.js";
+import { ConnectorBuilderBase } from "./ConnectorBuilderBase.js";
 
-export class PostgresSinkConnectorBuilder implements IConnectorBuilder {
+export class PostgresSinkConnectorBuilder extends ConnectorBuilderBase {
   name = "postgres";
   type: ConnectorType = "sink";
 
@@ -70,19 +71,7 @@ export class PostgresSinkConnectorBuilder implements IConnectorBuilder {
 
         "topics": tableTopics.join(","),
 
-        "transforms": "RenameTopic,unwrap",
-
-        // ✅ Rename topic to just table name
-        "transforms.RenameTopic.type": "org.apache.kafka.connect.transforms.RegexRouter",
-        "transforms.RenameTopic.regex": "([a-zA-Z0-9_]+)\\.([a-zA-Z0-9_]+)\\.(.*)",
-        "transforms.RenameTopic.replacement": "$3",
-
-        // ✅ Unwrap Debezium payload
-        "transforms.unwrap.type": "io.debezium.transforms.ExtractNewRecordState",
-        "transforms.unwrap.drop.tombstones": "false",
-        "transforms.unwrap.delete.handling.mode": "rewrite",
-        "transforms.unwrap.add.fields": "op,table",
-
+        ...this.createSmtConfig(pipeline),
 
       },
     };

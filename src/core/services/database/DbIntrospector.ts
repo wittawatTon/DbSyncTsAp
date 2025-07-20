@@ -9,6 +9,7 @@ export interface DbIntrospector {
     tableName: string,
     sqlCmd: string
   ): Promise<boolean>;
+  countRows(tableName: string): Promise<number>;
 }
 
 

@@ -106,11 +106,16 @@ services:
     volumes:
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
+      - ./connect-log4j.properties:/etc/kafka/connect-log4j.properties
       - ./plugins/confluent:/kafka/connect/confluent
       - ./plugins/debezium:/kafka/connect/debezium
       - ./jmx-exporter:/opt/jmx-exporter
+      - ./logs:/kafka/connect/logs
+
     networks:
       - kafka-net
+
+
 
   schema-registry:
     image: confluentinc/cp-schema-registry:7.5.0

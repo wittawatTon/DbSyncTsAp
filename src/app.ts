@@ -134,12 +134,14 @@ const bootstrap = async () => {
   const dashboardRoutes = (await import('@api/routes/dashboardRoutes.js')).default;
   const pipelineRoutes = (await import('@api/routes/pipelineRoutes.js')).default;
   const connectionConfigsRoutes = (await import('@api/routes/connectionConfigsRoutes.js')).default;
+  const connectorRoutes = (await import('@kafka/debeziumControl/routes/connectorRoutes.js')).default;
 
   app.use('/api/auth', authRoutes);
   app.use('/api/db', databaseRoutes);
   app.use('/api/dashboard', dashboardRoutes);
   app.use('/api/pipelines', pipelineRoutes);
   app.use('/api/connection-configs', connectionConfigsRoutes);
+  app.use('/api/connectors', connectorRoutes);
 
   // Error handler
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

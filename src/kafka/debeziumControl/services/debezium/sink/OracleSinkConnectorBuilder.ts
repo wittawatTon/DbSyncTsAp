@@ -3,8 +3,9 @@
 import { IDebeziumConnectorConfig } from "@core/models/type.js";
 import { IConnectorBuilder, IConnectorBuildData } from "../IConnectorBuilder.js";
 import { ConnectorType } from "@core/models/type.js";
+import { ConnectorBuilderBase } from "./ConnectorBuilderBase.js";
 
-export class OracleSinkConnectorBuilder implements IConnectorBuilder {
+export class OracleSinkConnectorBuilder extends ConnectorBuilderBase {
   name = "oracle";
   type: ConnectorType = "sink";
 

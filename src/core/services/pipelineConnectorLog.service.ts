@@ -1,15 +1,15 @@
 import { PipelineConnectorLogModel, PipelineConnectorLogDocument } from "@core/models/PipelineConnectorLog.js";
 import { Types } from "mongoose";
+import { ConnectorType } from "../models/type.js";
 
-type LogAction = "start" | "pause";
+export type LogConnectorAction = "build" | "pause";
 type LogStatus = "success" | "failed";
-type ConnectorType = "source" | "sink";
 
 export interface CreateConnectorLogInput {
   pipelineId: string | Types.ObjectId;
   connectorName: string;
   connectorType: ConnectorType;
-  action: LogAction;
+  action: LogConnectorAction;
   status: LogStatus;
   message?: string;
   createdBy: string;

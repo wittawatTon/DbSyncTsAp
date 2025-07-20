@@ -1,12 +1,15 @@
 import sql, { ConnectionPool } from 'mssql';
-import { DbIntrospector } from '../DbIntrospector.js';
 import { ITable } from '@core/models/table.model.js';
 import { IColumn } from '@core/models/column.model.js';
 import { IDbConnection } from '@core/models/dbConnection.model.js';
+import { DbIntrospectorBase } from '../DbIntrospectorBase.js';
 
-export class MssqlIntrospector implements DbIntrospector {
-  constructor(private pool: ConnectionPool) {}
+export class MssqlIntrospector extends DbIntrospectorBase {
+  constructor(private pool: ConnectionPool) {
+    super();
+  }
 
+  /** ตรวจสอบการเชื่อมต่อกับ MSSQL */
   async testConnect(): Promise<boolean> {
     try {
       await this.pool.request().query('SELECT 1');
@@ -17,6 +20,7 @@ export class MssqlIntrospector implements DbIntrospector {
     }
   }
 
+  /** ดึงตารางทั้งหมด (พร้อม columns ถ้าระบุ) */
   async getTablesAndCols(withColumn: boolean = true): Promise<ITable[]> {
     try {
       const request = this.pool.request();
@@ -42,10 +46,7 @@ export class MssqlIntrospector implements DbIntrospector {
 
       const tables: ITable[] = [];
       for (const tableData of tablesData) {
-        const columns = await this.getColumns(
-          tableData.TABLE_NAME,
-          tableData.TABLE_SCHEMA
-        );
+        const columns = await this.getColumns(tableData.TABLE_NAME, tableData.TABLE_SCHEMA);
         tables.push({
           name: tableData.TABLE_NAME,
           schema: tableData.TABLE_SCHEMA,
@@ -56,18 +57,13 @@ export class MssqlIntrospector implements DbIntrospector {
 
       return tables;
     } catch (err: any) {
-      console.error(
-        '[MssqlIntrospector] getTablesAndCols failed:',
-        err.message
-      );
+      console.error('[MssqlIntrospector] getTablesAndCols failed:', err.message);
       throw err;
     }
   }
 
-  private async getColumns(
-    tableName: string,
-    tableSchema: string
-  ): Promise<IColumn[]> {
+  /** ดึง columns ของตารางจาก schema */
+  private async getColumns(tableName: string, tableSchema: string): Promise<IColumn[]> {
     const request = this.pool.request();
     request.input('tableName', sql.NVarChar, tableName);
     request.input('tableSchema', sql.NVarChar, tableSchema);
@@ -98,11 +94,8 @@ export class MssqlIntrospector implements DbIntrospector {
     }));
   }
 
-  async createTableOnTarget(
-    config: IDbConnection,
-    tableName: string,
-    sqlCmd: string
-  ): Promise<boolean> {
+  /** สร้างตารางใหม่จาก SQL command */
+  async createTableOnTarget(config: IDbConnection, tableName: string, sqlCmd: string): Promise<boolean> {
     try {
       const request = this.pool.request();
       request.input('tableName', sql.NVarChar, tableName);
@@ -127,4 +120,24 @@ export class MssqlIntrospector implements DbIntrospector {
       throw new Error(err.message);
     }
   }
+
+  protected quoteIdentifier(name: string): string {
+  return name
+    .split('.')
+    .map(part => part.startsWith('[') ? part : `[${part}]`)
+    .join('.');
+  }
+
+  /** นับจำนวน row ในตาราง (ตรวจสอบชื่อก่อน) */
+async countRows(tableName: string): Promise<number> {
+  if (!this.isSafeTableName(tableName)) {
+    throw new Error(`Invalid table name: ${tableName}`);
+  }
+
+  // ใส่ [] ครอบแต่ละส่วน (เช่น dbo.MyTable → [dbo].[MyTable])
+  const safeTableName = this.quoteIdentifier(tableName);
+
+  const result = await this.pool.request().query(`SELECT COUNT(*) as count FROM ${safeTableName}`);
+  return result.recordset[0].count;
+}
 }
